@@ -10,7 +10,4 @@ import { FormGroup } from '@angular/forms';
 export class FotoEmpleadoComponent {
   formGroup = input.required<FormGroup>();
 
-  get fotoUrl(): string | null {
-    return this.formGroup().get('foto')?.value || null;
-  }
 }

@@ -1,0 +1,18 @@
+<!-- employee-filter.component.html -->
+<div class="bg-white p-4 rounded shadow-xl mb-4">
+  <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+    <input (input)="onInputChange(valorBuscado.value)" (keyup.enter)="onSearch(valorBuscado.value)" type="text"
+      class="border border-gray-300 rounded px-4 py-2 w-full md:w-1/2" placeholder="Buscar empleados" #valorBuscado />
+
+    <div class="flex gap-2">
+      <button (click)="onSearch(valorBuscado.value)"
+        class="bg-green-600 hover:bg-green-700 text-white font-semibold rounded p-2">
+        Buscar
+      </button>
+      <button (click)="limpiar(valorBuscado)"
+        class="bg-blue-600 hover:bg-blue-700 text-white font-semibold p-2 rounded">
+        Limpiar
+      </button>
+    </div>
+  </div>
+</div>

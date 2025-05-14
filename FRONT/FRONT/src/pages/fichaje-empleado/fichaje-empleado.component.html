@@ -1,0 +1,23 @@
+<div class="p-6 bg-white rounded shadow max-w-md mx-auto text-center space-y-4">
+  <h2 class="text-xl font-semibold">Registro de fichaje</h2>
+
+  <div class="text-gray-700">
+    Estado actual:
+    <span [ngClass]="{
+      'text-green-600': estadoActual() === 'entrada',
+      'text-red-600': estadoActual() === 'salida',
+      'text-gray-500': estadoActual() === 'ninguno'
+    }">
+      {{ estadoActual() === 'ninguno' ? 'Sin fichaje' : estadoActual() | titlecase }}
+    </span>
+  </div>
+
+  <div class="flex justify-center gap-4">
+    <button class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700" (click)="marcarEntrada()">
+      Fichar entrada
+    </button>
+    <button class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700" (click)="marcarSalida()">
+      Fichar salida
+    </button>
+  </div>
+</div>

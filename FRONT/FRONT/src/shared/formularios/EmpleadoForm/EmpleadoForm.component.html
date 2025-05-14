@@ -1,0 +1,35 @@
+<div class="w-full max-w-6xl mx-auto bg-base-100 text-base-content rounded shadow p-6 flex flex-col">
+  <div class="flex">
+    <!-- Aside izquierdo -->
+    <aside class="w-1/4 pr-4 border-r">
+      <app-foto-empleado [formGroup]="formGroup"></app-foto-empleado>
+      <ul class="space-y-2">
+        <li *ngFor="let tab of tabs; let i = index" (click)="setActiveTab(i)" [class.bg-green-100]="i === activeTab"
+          class="cursor-pointer px-3 py-2 rounded flex items-center gap-2 hover:bg-green-50">
+          <span class="font-semibold text-green-600">{{ i + 1 }}</span>
+          <span class="text-sm">{{ tab.label }}</span>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- Sección del formulario -->
+    <section class="w-3/4 pl-6">
+      <ng-container [ngSwitch]="activeTab" *ngIf="formGroup">
+        <app-datos-generales *ngSwitchCase="0" [formGroup]="formGroup"></app-datos-generales>
+        <app-datos-laborales *ngSwitchCase="1" [formGroup]="formGroup"></app-datos-laborales>
+        <app-calendario *ngSwitchCase="2" [formGroup]="formGroup"></app-calendario>
+        <app-metodo-registro *ngSwitchCase="3" [formGroup]="formGroup"></app-metodo-registro>
+        <app-permisos *ngSwitchCase="4" [formGroup]="formGroup"></app-permisos>
+        <app-activacion *ngSwitchCase="5" [formGroup]="formGroup"></app-activacion>
+      </ng-container>
+    </section>
+  </div>
+
+  <!-- Footer -->
+  <div class="flex justify-end gap-4 mt-6">
+    <button (click)="cancelar()" class="border border-gray-300 px-4 py-2 rounded">Cancelar</button>
+    <button (click)="guardar()" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+      {{ estaEditando() ? 'Guardar cambios' : 'Crear empleado' }}
+    </button>
+  </div>
+</div>

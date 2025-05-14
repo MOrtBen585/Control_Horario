@@ -1,0 +1,79 @@
+<div [formGroup]="formGroup()">
+  <!-- Subir foto del empleado -->
+  <app-foto-uploader [formGroup]="formGroup()"></app-foto-uploader>
+
+  <!-- Campos laborales -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div>
+      <label class="block text-sm font-medium mb-1">Convenio</label>
+      <select formControlName="convenio" class="w-full border px-3 py-2 rounded">
+        <option value="">Selecciona un convenio</option>
+        <option *ngFor="let opt of ['Convenio A', 'Convenio B']" [value]="opt">{{ opt }}</option>
+      </select>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium mb-1">Horario laboral</label>
+      <select formControlName="horario" class="w-full border px-3 py-2 rounded">
+        <option value="">Selecciona un horario</option>
+        <option value="mañana">Mañana</option>
+        <option value="tarde">Tarde</option>
+        <option value="completo">Jornada completa</option>
+      </select>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium mb-1">Tipo de contrato</label>
+      <select formControlName="tipoContrato" class="w-full border px-3 py-2 rounded">
+        <option value="">Selecciona tipo</option>
+        <option value="indefinido">Indefinido</option>
+        <option value="temporal">Temporal</option>
+      </select>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium mb-1">Contrato desde</label>
+      <input type="date" formControlName="contratoDesde" class="w-full border px-3 py-2 rounded" />
+    </div>
+
+    <div class="col-span-2 flex items-center gap-2">
+      <input type="checkbox" formControlName="indefinido" class="checkbox" />
+      <label class="text-sm">Duración indefinida</label>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium mb-1">Centro</label>
+      <select formControlName="centro" class="w-full border px-3 py-2 rounded">
+        <option value="">Selecciona un centro</option>
+        <option *ngFor="let centro of ['Madrid', 'Barcelona']" [value]="centro">{{ centro }}</option>
+      </select>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium mb-1">Puesto</label>
+      <select formControlName="puesto" class="w-full border px-3 py-2 rounded">
+        <option value="">Selecciona un puesto</option>
+        <option *ngFor="let puesto of ['Administrativo', 'Técnico']" [value]="puesto">{{ puesto }}</option>
+      </select>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium mb-1">Política de vacaciones</label>
+      <select formControlName="politicaVacaciones" class="w-full border px-3 py-2 rounded">
+        <option value="">Selecciona una política</option>
+        <option value="estándar">Estándar</option>
+        <option value="personalizada">Personalizada</option>
+      </select>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium mb-1">Frecuencia firma jornadas</label>
+      <select formControlName="frecuenciaFirma" class="w-full border px-3 py-2 rounded">
+        <option value="">Selecciona una opción</option>
+        <option value="diaria">Diaria</option>
+        <option value="semanal">Semanal</option>
+        <option value="mensual">Mensual</option>
+      </select>
+    </div>
+  </div>
+</div>

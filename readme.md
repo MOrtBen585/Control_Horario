@@ -18,6 +18,7 @@
 - **Pasos para la Instalación**: 
   1. Instalar Eclipse para ejecutar el backend con Spring y Tomcat.
   2. Instalar Node.js y Angular para la parte frontend.
+  3. Instalar una base de datos MariaDb
 - **Configuración Inicial**: 
   - Las variables de entorno se descargarán de una base de datos específica para cada empresa. El frontend recibirá estas variables del backend y las renderizará en consecuencia.
 

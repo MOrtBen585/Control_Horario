@@ -1,0 +1,16 @@
+
+<div class="p-6">
+  <h1 class="text-3xl font-bold mb-4">Angular + DaisyUI Themes</h1>
+
+  <select class="select select-bordered mb-4" (change)="cambiarTema($event.target.value)">
+    <option disabled selected>Selecciona un tema</option>
+    <option *ngFor="let tema of temas" [value]="tema">{{ tema }}</option>
+  </select>
+
+  <div class="card bg-base-100 shadow-xl p-6 space-y-4">
+    <p>Este contenido cambia con el tema.</p>
+    <button class="btn btn-primary">Botón primario</button>
+    <button class="btn btn-secondary">Secundario</button>
+    <button class="btn btn-accent">Acento</button>
+  </div>
+</div>

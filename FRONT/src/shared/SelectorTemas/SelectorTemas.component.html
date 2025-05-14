@@ -1,0 +1,12 @@
+<!-- safelist -->
+<div class="hidden bg-base-100 text-base-content btn-primary"></div>
+<div class="card bg-base-100 text-base-content shadow-xl p-4">
+  <h2 class="card-title">¡Tema aplicado!</h2>
+  <p>Esto debería verse diferente en cada tema.</p>
+  <button class="btn btn-primary">Botón</button>
+</div>
+
+<select #selector class="select select-bordered w-full max-w-xs" (change)="cambiarTema(selector.value)">
+  <option disabled selected>Selecciona un tema</option>
+  <option *ngFor="let tema of temas" [value]="tema">{{ tema }}</option>
+</select>

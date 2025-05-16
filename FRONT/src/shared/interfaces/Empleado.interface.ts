@@ -23,7 +23,7 @@ export interface Empleado {
   convenio: string;
   horario: string;
   tipoContrato: string;
-  contratoDesde: string;
+  contratoDesde: Date;
   indefinido: boolean;
   centro: string;
   puesto: string;

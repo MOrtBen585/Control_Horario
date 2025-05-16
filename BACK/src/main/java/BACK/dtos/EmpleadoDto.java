@@ -30,6 +30,8 @@ public class EmpleadoDto {
 
     @Past(message = "La fecha de nacimiento debe ser en el pasado")
     private LocalDate fechaNacimiento;
+    
+    private LocalDate contratoDesde;
 
     private boolean activo;
 }

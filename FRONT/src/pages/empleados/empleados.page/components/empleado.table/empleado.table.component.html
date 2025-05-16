@@ -49,7 +49,7 @@
         </td>
 
         <!-- Columna 5: Contrato (calendario) -->
-        <td class="px-4 py-2">{{ empleado.calendario }}</td>
+        <td class="px-4 py-2">{{ empleado.contratoDesde | date: 'dd/MM/yyyy' }}</td>
 
         <!-- Columna 6: Docs. Pendientes (placeholder) -->
         <td class="px-4 py-2 text-center">0</td>

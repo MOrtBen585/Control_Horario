@@ -1,11 +1,13 @@
 import { Empleado } from './../../../shared/interfaces/Empleado.interface';
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, resource, signal } from '@angular/core';
 import { EmpleadoTableComponent } from './components/empleado.table/empleado.table.component';
 import { CommonModule } from '@angular/common';
 import { EmpleadoFilterComponent } from './components/empleado.filter/empleado.filter.component';
 import { EmpleadoFormComponent } from "../../../shared/formularios/EmpleadoForm/EmpleadoForm.component";
-import { SelectorTemasComponent } from "../../../shared/SelectorTemas/SelectorTemas.component";
 import { MockService } from '../../../app/services/Mock.service';
+import { EmpleadoService } from '../../../app/services/Empleado.service';
+import { rxResource } from '@angular/core/rxjs-interop';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'home-empleados-page',
@@ -15,17 +17,26 @@ import { MockService } from '../../../app/services/Mock.service';
 })
 export class EmpleadosPageComponent {
 
-  filteredEmployees = signal<Empleado[]>([]);
+
   showAddEmpleado = false;
   empleadoSeleccionado = signal<Empleado | undefined>(undefined);
-  mockService = inject(MockService);
-
+  empleadoService = inject(EmpleadoService);
   empleados = signal<Empleado[]>([]);
 
+
+  filteredEmployees = signal<Empleado[]>([]);
+
   constructor() {
-    this.empleados.set(this.mockService.empleados);
-    this.filteredEmployees.set(this.empleados());
+    console.log('Cargando empleados en el constructor...');
+    this.empleadoService.getAll().subscribe(data => {
+      console.log('data', data);
+      console.log('Cargando empleados...');
+      this.empleados.set(data);
+      this.filteredEmployees.set(data);
+    });
   }
+
+
 
 
   abrirFormulario(empleado?: Empleado) {
@@ -68,16 +79,32 @@ export class EmpleadosPageComponent {
 
   guardarEmpleado($event: Empleado) {
     console.log('Guardando empleado...');
-    this.mockService.empleados.push($event);
-    this.cerrarFormulario();
-    this.actualizarEmpleados();
+
+    this.empleadoService.create($event).subscribe({
+      next: (nuevoEmpleado) => {
+        this.actualizarEmpleados();
+        this.cerrarFormulario();
+      },
+      error: (err) => {
+        console.error('Error al guardar empleado:', err);
+      }
+    });
   }
 
+
   actualizarEmpleados() {
-    this.empleados.set(this.mockService.empleados);
-    this.filteredEmployees.set(this.empleados());
-    this.onSearch('');
+    this.empleadoService.getAll().subscribe({
+      next: (empleadosActualizados) => {
+        this.empleados.set(empleadosActualizados);
+        this.filteredEmployees.set(empleadosActualizados);
+        this.onSearch(''); // opcional: limpia filtro de búsqueda
+      },
+      error: (err) => {
+        console.error('Error al actualizar empleados:', err);
+      }
+    });
   }
+
 
 
 }

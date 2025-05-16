@@ -17,6 +17,7 @@ public class EmpleadoMapper {
         dto.setTelefono(empleado.getTelefono());
         dto.setPuesto(empleado.getPuesto());
         dto.setFechaNacimiento(empleado.getFechaNacimiento());
+        dto.setContratoDesde(empleado.getContratoDesde());
         dto.setActivo(empleado.isActivo());
         return dto;
     }

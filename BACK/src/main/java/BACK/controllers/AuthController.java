@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -107,12 +108,15 @@ public class AuthController {
     }
 
     @GetMapping("/role")
-    public String getRol(Authentication authentication) {
-        return authentication.getAuthorities().stream()
+    public Map<String, String> getRol(Authentication authentication) {
+        String rol = authentication.getAuthorities().stream()
                 .findFirst()
                 .map(GrantedAuthority::getAuthority)
                 .orElse("SIN_ROL");
+
+        return Map.of("role", rol); // clave 'role' esperada por Angular
     }
+
 
 
 }

@@ -1,5 +1,5 @@
-<div class="space-y-6">
-  <app-foto-uploader [formGroup]="formGroup"></app-foto-uploader>
+<div class="space-y-6" [formGroup]="formGroup()">
+  <app-foto-uploader [formGroup]="formGroup()"></app-foto-uploader>
 
   <h2 class="text-xl font-semibold">Permisos especiales</h2>
 
@@ -7,11 +7,17 @@
     <!-- Columna 1: permisos por defecto -->
     <div class="space-y-2">
       <label class="block text-sm font-medium">Permisos por defecto*</label>
-      <select class="w-full border rounded px-3 py-2" [formControl]="permisosPorDefectoCtrl">
+      <select class="w-full border rounded px-3 py-2" formControlName="permisosPorDefecto">
         <option value="base">Base</option>
         <option value="intermedio">Intermedio</option>
         <option value="admin">Administrador</option>
       </select>
+
+      <select class="w-full border rounded px-3 py-2" formControlName="rol">
+        <option value="ADMIN">Administrador</option>
+        <option value="EMPLEADO">Empleado</option>
+      </select>
+
       <div class="bg-blue-100 text-blue-800 text-sm p-3 rounded border border-blue-300">
         Permisos por defecto configurados para un empleado.
       </div>
@@ -20,12 +26,13 @@
     <!-- Columna 2: permisos extra -->
     <div class="space-y-2">
       <label class="block text-sm font-medium">Permisos extra</label>
-      <select class="w-full border rounded px-3 py-2" [formControl]="permisosExtraCtrl">
+      <select class="w-full border rounded px-3 py-2" formControlName="permisosExtra">
         <option value="">Sin permisos extra</option>
         <option value="ver-fichajes">Ver fichajes</option>
         <option value="editar-vacaciones">Editar vacaciones</option>
         <option value="reportes">Ver reportes</option>
       </select>
+
       <div class="bg-blue-100 text-blue-800 text-sm p-3 rounded border border-blue-300">
         Puedes asignar permisos especiales previamente seteados para este empleado.
       </div>

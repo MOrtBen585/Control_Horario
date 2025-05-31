@@ -1,13 +1,12 @@
 <div class="h-full bg-gray-300 text-black">
-
-  <div class="h-full bg-gray-300 text-black pl-6 p-6">
+  <div class="min-h-screen bg-gray-300 text-black pl-6 p-6">
     <h2 class="text-xl font-semibold mb-4 pl-6">Informe de fichajes</h2>
     <p class="text-sm text-gray-600 pb-6">
       Crea equipos para agrupar a tus empleados/as y filtrar información en diferentes informes.
     </p>
     <app-filtro-fichajes [fichajesOriginales]="fichajes()" (filtrar)="actualizarFiltro($event)"></app-filtro-fichajes>
-    <app-tabla-fichajes [fichajes]="fichajesFiltrados()"></app-tabla-fichajes>
+    <app-pagination [pages]="fichajesResource.value()?.totalPages ? fichajesResource.value()!.totalPages : 0"
+      [currentPage]="paginationService.currentPage()"></app-pagination>
+    <app-tabla-fichajes [fichajes]="fichajesResource.value()?.items || []"></app-tabla-fichajes>
   </div>
-
-
 </div>

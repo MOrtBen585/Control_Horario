@@ -1,4 +1,3 @@
-
 package BACK.config;
 
 import org.springframework.context.annotation.Bean;
@@ -15,13 +14,22 @@ public class CorsConfig {
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://localhost:4200")); // ⚠️ especifica origen del frontend
+
+        // ❗IMPORTANTE: No se puede usar "*" si allowCredentials = true
+        config.setAllowedOrigins(List.of(
+                "http://localhost:8100",
+                "https://localhost",
+                "http://localhost:4200",
+                "capacitor://localhost",
+                "https://www.mortizb.dev"
+        ));
+
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
-        config.setAllowCredentials(true); // importante si usas cookies o Authorization headers
+        config.setAllowCredentials(true); // Solo permitido con orígenes explícitos
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", config); // aplica globalmente
+        source.registerCorsConfiguration("/**", config); // Aplica globalmente
         return new CorsFilter(source);
     }
 }

@@ -2,10 +2,13 @@ package BACK.controllers;
 
 import BACK.dtos.request.AuthRequestDto;
 import BACK.dtos.response.AuthResponseDto;
+import BACK.repositories.models.Empleado;
 import BACK.security.JwtUtil;
+import BACK.services.EmpleadoService;
 import BACK.services.RefreshTokenService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -16,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 
-@CrossOrigin(origins = "http://localhost:4200")
+
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -24,11 +27,13 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
     private final RefreshTokenService refreshTokenService;
+    private final EmpleadoService empladoService;
 
-    public AuthController(AuthenticationManager authenticationManager, JwtUtil jwtUtil, RefreshTokenService refreshTokenService) {
+    public AuthController(AuthenticationManager authenticationManager, JwtUtil jwtUtil, RefreshTokenService refreshTokenService, EmpleadoService empladoService) {
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
         this.refreshTokenService = refreshTokenService;
+        this.empladoService = empladoService;
     }
 
     @PostMapping("/logout")
@@ -51,7 +56,7 @@ public class AuthController {
 
         String accessToken = jwtUtil.generateToken(authRequest.getEmail(), role);
         String refreshToken = jwtUtil.generateRefreshToken(authRequest.getEmail()); // ahora lo hacemos
-
+        System.out.println("🔑 Acceso válido para: " + authRequest.getEmail());
         return new AuthResponseDto(accessToken, refreshToken);
     }
 
@@ -72,15 +77,21 @@ public class AuthController {
 
 
     @GetMapping("/whoami")
-    public Map<String, String> whoami(Authentication authentication) {
-        Map<String, String> info = new HashMap<>();
-        info.put("email", authentication.getName());
+    public Map<String, Object> whoami(Authentication authentication) {
+        String email = authentication.getName();
+
+        Empleado empleado = empladoService.findByEmail(email);
+
+        Map<String, Object> info = new HashMap<>();
+        info.put("id", empleado.getId());
+        info.put("email", empleado.getEmail());
         info.put("rol", authentication.getAuthorities().stream()
                 .findFirst()
                 .map(GrantedAuthority::getAuthority)
                 .orElse("SIN_ROL"));
         return info;
     }
+
 
     @GetMapping("/debug")
     public Map<String, Object> debugAuth(Authentication authentication) {
@@ -107,6 +118,7 @@ public class AuthController {
         return ResponseEntity.ok("Token válido ✅");
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/role")
     public Map<String, String> getRol(Authentication authentication) {
         String rol = authentication.getAuthorities().stream()

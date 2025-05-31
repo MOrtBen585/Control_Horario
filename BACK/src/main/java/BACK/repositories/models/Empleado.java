@@ -1,5 +1,6 @@
 package BACK.repositories.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -15,12 +16,16 @@ public class Empleado {
 
     // Datos personales
     private String ccc;
-    private String foto;
+
+    @Lob
+    @Column(name = "foto", columnDefinition = "MEDIUMBLOB")
+    private byte[] foto;
     private String nombre;
     private String apellidos;
     private String calendario;
     private String dni;
     private String telefono;
+    @Column(nullable = false, unique = true)
     private String email;
     private String password;
     @Column(nullable = false)
@@ -32,6 +37,7 @@ public class Empleado {
     private String convenio;
     private String horario;
     private String tipoContrato;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate contratoDesde;
     private boolean indefinido;
     private String centro;
@@ -48,19 +54,14 @@ public class Empleado {
     private boolean activo;
 
     // Métodos de registro
-    @Embedded
-    @AttributeOverrides({
-            @AttributeOverride(name = "email", column = @Column(name = "metodo_email")),
-            @AttributeOverride(name = "telefono", column = @Column(name = "metodo_telefono")),
-            @AttributeOverride(name = "appMovil", column = @Column(name = "metodo_app_movil")),
-            @AttributeOverride(name = "appWeb", column = @Column(name = "metodo_app_web"))
-    })
-    private MetodosContacto metodos;
+    private boolean appMovil;
+    private boolean appWeb;
 
 
     // Otros flags
     private boolean marcarInicio;
     private boolean geolocalizable;
+    private boolean geocercas;
     private boolean permitirCorreccion;
     private boolean permitirHorasExtra;
 

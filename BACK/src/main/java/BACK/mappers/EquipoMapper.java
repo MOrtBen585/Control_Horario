@@ -4,11 +4,15 @@ import BACK.dtos.EquipoDto;
 import BACK.repositories.EmpleadoRepository;
 import BACK.repositories.models.Empleado;
 import BACK.repositories.models.Equipo;
+import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
+
 import java.util.stream.Collectors;
+
 
 @Component
 public class EquipoMapper {
+
 
     private final EmpleadoRepository empleadoRepository;
 

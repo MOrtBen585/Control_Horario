@@ -1,0 +1,183 @@
+🚀 DESPLEGAR ANGULAR + BACKEND SPRING BOOT EN UN SERVIDOR CON NGINX
+1. 📦 Compilar tu proyecto Angular
+En tu máquina local (o en el servidor si prefieres compilar ahí):
+
+bash
+Copiar
+Editar
+ng build --configuration production
+Esto genera una carpeta dist/<nombre-del-proyecto> con los archivos HTML/CSS/JS listos.
+
+2. 📂 Subir los archivos al servidor
+Súbelos a una carpeta como:
+
+bash
+Copiar
+Editar
+/var/www/miapp-front/
+Puedes usar scp, rsync o cualquier cliente SFTP (como FileZilla).
+
+3. ⚙️ Configurar Nginx
+Instalar Nginx si no lo tienes:
+bash
+Copiar
+Editar
+sudo apt update && sudo apt install nginx
+Crear una configuración para tu app:
+bash
+Copiar
+Editar
+sudo nano /etc/nginx/sites-available/miapp
+Pega lo siguiente:
+
+nginx
+Copiar
+Editar
+server {
+    listen 80;
+    server_name tu-dominio.com;  # o la IP pública si no tienes dominio
+
+    root /var/www/miapp-front;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    location /api/ {
+        proxy_pass http://localhost:8080/;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+}
+Activar el sitio:
+bash
+Copiar
+Editar
+sudo ln -s /etc/nginx/sites-available/miapp /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl reload nginx
+4. 🔒 (Opcional pero recomendado) Instalar HTTPS con Let's Encrypt
+Si tienes un dominio, puedes instalar HTTPS fácilmente:
+
+bash
+Copiar
+Editar
+sudo apt install certbot python3-certbot-nginx
+sudo certbot --nginx
+5. 🔁 Asegúrate de que tu Angular consuma la API correctamente
+En Angular, configura las peticiones a usar /api/ en vez de http://localhost:8080.
+
+Ejemplo en environment.prod.ts:
+
+ts
+Copiar
+Editar
+export const environment = {
+  production: true,
+  apiUrl: '/api'
+};
+Y luego en tus servicios:
+
+ts
+Copiar
+Editar
+this.http.get(`${environment.apiUrl}/usuarios`);
+✅ Resultado
+Tu frontend Angular se sirve desde http://tu-dominio.com
+
+Tu backend responde a las APIs en http://tu-dominio.com/api/...
+
+Todo funciona en un mismo dominio, sin problemas de CORS
+
+Perfecto. Si ya tienes un certificado SSL instalado con Certbot, entonces solo necesitas modificar tu configuración de Nginx para servir el frontend Angular y el backend Spring Boot por HTTPS, usando ese certificado.
+
+Vamos paso a paso.
+
+✅ 1. Verifica tu certificado SSL
+Certbot suele guardar los certificados en:
+
+bash
+Copiar
+Editar
+/etc/letsencrypt/live/tu-dominio.com/fullchain.pem
+/etc/letsencrypt/live/tu-dominio.com/privkey.pem
+Para listar los certificados existentes, puedes usar:
+
+bash
+Copiar
+Editar
+sudo certbot certificates
+✅ 2. Configurar Nginx con HTTPS
+Edita tu archivo de configuración:
+
+bash
+Copiar
+Editar
+sudo nano /etc/nginx/sites-available/miapp
+Y reemplázalo con lo siguiente (adaptando tu-dominio.com):
+
+nginx
+Copiar
+Editar
+server {
+    listen 80;
+    server_name tu-dominio.com;
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl;
+    server_name tu-dominio.com;
+
+    root /var/www/miapp-front;
+    index index.html;
+
+    ssl_certificate /etc/letsencrypt/live/tu-dominio.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/tu-dominio.com/privkey.pem;
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    location /api/ {
+        proxy_pass http://localhost:8080/;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+}
+Este bloque hace lo siguiente:
+
+Redirige todo HTTP (:80) a HTTPS (:443)
+
+Usa los certificados de Let's Encrypt
+
+Sirve Angular desde /
+
+Redirige /api/ al backend local en Spring Boot
+
+✅ 3. Verifica y recarga Nginx
+bash
+Copiar
+Editar
+sudo nginx -t
+sudo systemctl reload nginx
+✅ 4. Asegúrate de que tu Angular use URLs relativas (ya lo estás haciendo)
+Si en environment.prod.ts estás usando:
+
+ts
+Copiar
+Editar
+apiUrl: '/api'
+entonces todo debería funcionar sin cambios, ya que el frontend llamará a /api/... en el mismo dominio, ahora servido por HTTPS.
+
+✅ Resultado
+Tu sitio está en: https://tu-dominio.com
+
+Tu backend se accede desde el frontend mediante /api
+
+Todo el tráfico está cifrado
+
+No hay problemas de CORS ni configuraciones complicadas de puertos

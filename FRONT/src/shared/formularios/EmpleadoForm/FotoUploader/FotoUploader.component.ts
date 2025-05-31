@@ -8,10 +8,8 @@ import { FormGroup } from '@angular/forms';
   templateUrl: './FotoUploader.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
 export class FotoUploaderComponent {
   formGroup = input.required<FormGroup>();
-
   cdr = inject(ChangeDetectorRef);
 
   onFileChange(event: any) {
@@ -20,11 +18,10 @@ export class FotoUploaderComponent {
 
     const reader = new FileReader();
     reader.onload = () => {
-      this.formGroup().get('foto')?.setValue(reader.result);
+      const base64 = (reader.result as string).split(',')[1]; // quitar el prefijo MIME
+      this.formGroup().get('foto')?.setValue(base64);
       this.cdr.markForCheck();
     };
     reader.readAsDataURL(file);
-
-    console.log(this.formGroup().get('foto'));
   }
 }

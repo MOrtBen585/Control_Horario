@@ -6,6 +6,8 @@ import BACK.repositories.models.Fichaje;
 import BACK.dtos.request.FichajeRequestDto;
 import org.springframework.stereotype.Component;
 
+import java.time.DayOfWeek;
+
 @Component
 public class FichajeMapper {
 
@@ -28,22 +30,32 @@ public class FichajeMapper {
         return fichaje;
     }
 
-    public FichajeDto toDto(Fichaje entity) {
+    public FichajeDto toDto(Fichaje fichaje, Empleado empleado) {
         FichajeDto dto = new FichajeDto();
-        dto.setId(entity.getId());
-        dto.setEstado(entity.getEstado());
-        dto.setFecha(entity.getFecha());
-        dto.setTipo(entity.getTipo());
-        dto.setMetodoRegistro(entity.getMetodoRegistro());
-        dto.setGeolocalizacion(entity.isGeolocalizacion());
-        dto.setLatitud(entity.getLatitud());
-        dto.setLongitud(entity.getLongitud());
-
-        if (entity.getEmpleado() != null) {
-            dto.setEmpleadoNombre(entity.getEmpleado().getNombre());
-        }
-
+        dto.setId(fichaje.getId());
+        dto.setEmpleadoId(fichaje.getEmpleado().getId());
+        dto.setEstado(fichaje.getEstado());
+        dto.setFecha(fichaje.getFecha());
+        dto.setDiaSemana(traducirDia(fichaje.getFecha().getDayOfWeek()));
+        dto.setHorario(empleado.getHorario());
+        dto.setMetodoRegistro(fichaje.getMetodoRegistro());
+        dto.setGeolocalizacion(fichaje.isGeolocalizacion());
+        dto.setGeocercas(fichaje.isGeocercas());
+        dto.setEmpleado(empleado);
         return dto;
+    }
+
+    private static String traducirDia(DayOfWeek dia) {
+        switch (dia) {
+            case MONDAY: return "Lunes";
+            case TUESDAY: return "Martes";
+            case WEDNESDAY: return "Miércoles";
+            case THURSDAY: return "Jueves";
+            case FRIDAY: return "Viernes";
+            case SATURDAY: return "Sábado";
+            case SUNDAY: return "Domingo";
+            default: return "";
+        }
     }
 
 }

@@ -2,19 +2,22 @@ import { Routes } from '@angular/router';
 import { LoginPageComponent } from '../pages/login.page/login.page.component';
 
 
-import { authGuard } from './guards/auth.guard';
 import { WelcomePageComponent } from '../pages/Welcome.page/Welcome.page.component';
 import { HomePageComponent } from '../pages/Home-page/Home-page.component';
 import { FichajeEmpleadoComponent } from '../pages/fichaje-empleado/fichaje-empleado.component';
 import { adminGuard } from './guards/admin.guard';
 import { UnauthorizedComponent } from '../pages/unauthorized/unauthorized.component';
+import { NotAuthenticatedGuard } from './guards/not-authenticated.guard';
+import { FichajeCardComponent } from '../pages/empleados/fichaje-card/fichaje-card.component';
 
 export const routes: Routes = [
   { path: '', component: WelcomePageComponent },
-  { path: 'login', component: LoginPageComponent },
+  {
+    path: 'login', component: LoginPageComponent, canMatch: [NotAuthenticatedGuard]
+  },
   {
     path: 'ficha',
-    component: FichajeEmpleadoComponent,
+    component: FichajeCardComponent,
   },
   {
     path: 'home',

@@ -1,0 +1,39 @@
+<!-- Controles de paginación -->
+<nav *ngIf="numOfPages() > 1" class="mb-4">
+  <ul class="flex justify-center items-center gap-1">
+    <!-- Botón Anterior -->
+    <li>
+      <button class="px-3 py-1 border rounded text-sm hover:bg-gray-100 disabled:opacity-50"
+        [disabled]="paginaActual() === 0" (click)="actualizarPagina(paginaActual() - 1)">
+        Anterior
+      </button>
+    </li>
+
+    <!-- Botones de página -->
+    <li *ngFor="let _ of [].constructor(numOfPages()); let i = index">
+      <button class="px-3 py-1 border rounded text-sm" [ngClass]="{
+                'bg-blue-500 text-white': i === paginaActual(),
+                'hover:bg-gray-100': i !== paginaActual()
+              }" (click)="actualizarPagina(i)">
+        {{ i + 1 }}
+      </button>
+    </li>
+
+
+    <!-- Botón Siguiente -->
+    <li>
+      <button class="px-3 py-1 border rounded text-sm hover:bg-gray-100 disabled:opacity-50"
+        [disabled]="paginaActual() === numOfPages() - 1" (click)="actualizarPagina(paginaActual() + 1)">
+        Siguiente
+      </button>
+    </li>
+  </ul>
+
+  <!-- Selector de tamaño de página -->
+  <div class="flex gap-2 items-center">
+    <label for="pageSize" class="text-sm text-gray-700">Ver:</label>
+    <select class="border text-sm px-2 py-1 rounded" [value]="pageSize()" (change)="onPageSizeChange($event)">
+      <option *ngFor="let size of [10, 25, 50, 100]" [value]="size">{{ size }}</option>
+    </select>
+  </div>
+</nav>

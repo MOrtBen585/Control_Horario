@@ -5,14 +5,17 @@ import BACK.mappers.EquipoMapper;
 import BACK.repositories.models.Equipo;
 import BACK.services.EquipoService;
 import jakarta.validation.Valid;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 @RestController
 @RequestMapping("/api/equipos")
+@PreAuthorize("hasRole('ADMIN')")
 public class EquipoController {
 
     private final EquipoService equipoService;
@@ -22,7 +25,7 @@ public class EquipoController {
         this.equipoService = equipoService;
         this.equipoMapper = equipoMapper;
     }
-
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public List<EquipoDto> getAll() {
         return equipoService.findAll().stream()

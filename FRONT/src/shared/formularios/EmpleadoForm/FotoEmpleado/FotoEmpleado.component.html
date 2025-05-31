@@ -1,7 +1,7 @@
 <div *ngIf="formGroup()" class="flex flex-col items-center gap-2 mb-4">
   <div class="w-32 h-32 border rounded-full overflow-hidden bg-base-100 shadow">
     <ng-container *ngIf="formGroup().get('foto')?.value as foto; else placeholder">
-      <img [src]="foto" alt="Foto del empleado" class="w-full h-full object-cover" />
+      <img [src]="'data:image/jpeg;base64,' + foto" alt="Foto del empleado" class="w-full h-full object-cover" />
     </ng-container>
     <ng-template #placeholder>
       <div class="w-full h-full flex items-center justify-center text-sm text-gray-400">

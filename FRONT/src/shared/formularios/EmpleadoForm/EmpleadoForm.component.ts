@@ -9,8 +9,9 @@ import { DatosLaboralesComponent } from './DatosLaborales/DatosLaborales.compone
 import { FotoEmpleadoComponent } from './FotoEmpleado/FotoEmpleado.component';
 import { CalendarioComponent } from './CalendarioPest/CalendarioPest.component';
 import { MetodoRegistroComponent } from './MetodoRegistro/MetodoRegistro.component';
-import { PermisosComponent } from './components/Permisos/Permisos.component';
 import { ActivacionComponent } from './activacion/activacion.component';
+import { PermisosComponent } from './components/Permisos/Permisos.component';
+
 
 @Component({
   selector: 'app-empleado-form',
@@ -57,8 +58,10 @@ export class EmpleadoFormComponent implements OnInit, OnChanges {
       apellidos: [''],
       calendario: [''],
       dni: [''],
+      rol: [''],
       telefono: [''],
       email: [''],
+      password: [''],
       fechaNacimiento: [''],
       genero: [''],
       convenio: [''],
@@ -104,12 +107,22 @@ export class EmpleadoFormComponent implements OnInit, OnChanges {
 
   cargarEmpleadoSiAplica() {
     if (this.empleado) {
+      if (!this.empleado.metodos) {
+        this.empleado.metodos = {
+          appMovil: false,
+          appWeb: false,
+          telefono: false,
+          email: false,
+        };
+      }
+
       this.formGroup.patchValue(this.empleado);
       this.estaEditando.set(true);
     } else {
       this.formGroup.reset();
     }
   }
+
 
 
   setActiveTab(index: number) {
@@ -119,16 +132,25 @@ export class EmpleadoFormComponent implements OnInit, OnChanges {
   guardar() {
     if (this.formGroup.valid) {
       const datosEmpleado = this.formGroup.value;
-      // TODO Aquí hay que traer el empleado del back para asignarle el ID
-      datosEmpleado.id = 10;
-      console.log('Datos completos del formulario:', datosEmpleado);
-      // Aquí podrías emitir un evento o llamar a un servicio
+
+      datosEmpleado.id = this.empleado?.id;
+
+      // Extraer foto desde el FormGroup correctamente
+      // const fotoRaw = this.formGroup.get('foto')?.value;
+      // const fotoBase64 = fotoRaw?.split(',')[1] ?? null;
+
+      // datosEmpleado.foto = fotoBase64;
+
+      // console.log('Foto base64:', fotoBase64);
+      // console.log('Datos completos del formulario:', datosEmpleado);
+
       this.guardarEmpleado.emit(datosEmpleado as Empleado);
     } else {
       console.log('Formulario inválido');
       this.formGroup.markAllAsTouched();
     }
   }
+
 
   cancelar() {
     // Aquí puedes emitir un evento para cerrar el modal si lo necesitas

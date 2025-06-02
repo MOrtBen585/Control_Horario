@@ -1,57 +1,137 @@
-# Documentación del Proyecto de Desarrollo de Aplicaciones Web
+# 🕒 Control Horario
 
-## 1. Introducción
-- **Nombre del Proyecto**: Control Horario
-- **Descripción**: Debido a la nueva reforma que entra en vigor este año, que obliga a las empresas a tener un control de las horas de los trabajadores, voy a desarrollar una aplicación capaz de almacenar los horarios y permitir que cada trabajador fiche en la hora de entrada y salida, registrando todo para posibles auditorías por parte del estado y de los inspectores.
-- **Tecnologías Utilizadas**: 
-  - Backend: Framework Spring
-  - Frontend: Angular con Tailwind CSS
+**Proyecto de Desarrollo de Aplicaciones Web - TFC**
 
-## 2. Requisitos del Sistema
-- **Hardware**: 
-  - **Especificaciones Mínimas**: Procesador de 2 GHz, 4 GB de RAM, 10 GB de espacio en disco.
-  - **Especificaciones Recomendadas**: Procesador de 3 GHz, 8 GB de RAM, 20 GB de espacio en disco.
-- **Software**: 
-  - Compatible con cualquier sistema operativo que tenga un navegador web actualizado.
+Este proyecto nace como respuesta a la normativa vigente que obliga a las empresas a registrar el horario laboral de sus trabajadores. Desarrollé esta solución completa, capaz de gestionar entradas/salidas, roles de usuario, y adaptarse a cada empresa mediante configuración dinámica.
 
-## 3. Instalación
-- **Pasos para la Instalación**: 
-  1. Instalar Eclipse para ejecutar el backend con Spring y Tomcat.
-  2. Instalar Node.js y Angular para la parte frontend.
-  3. Instalar una base de datos MariaDb
-- **Configuración Inicial**: 
-  - Las variables de entorno se descargarán de una base de datos específica para cada empresa. El frontend recibirá estas variables del backend y las renderizará en consecuencia.
+---
 
-## 4. Uso
-- **Guía de Usuario**: 
-  - Al loguearse, el usuario cargará las variables específicas de su empresa para ofrecerle el frontend adecuado.
-  - Cada usuario tendrá acceso a diferentes partes de la aplicación según su rol (trabajador, admin, usuario principal).
-- **Funcionalidades Principales**: 
-  - Interfaz diferente según el usuario logueado.
-  - Usuario principal: Gestiona el alta de la empresa y configuraciones de la aplicación.
-  - Usuario admin: Gestiona altas de trabajadores, grupos de trabajadores, horarios, horas extras.
-  - Usuario trabajador: Ficha en el horario y ve las horas extras y horarios asignados.
+## 📌 Índice
 
-## 5. Desarrollo
-- **Estructura del Proyecto**: Pendiente de organización.
-- **Guía de Desarrollo**: 
-  - Solo habrá un único desarrollador (yo).
+1. [Introducción](#introducción)
+2. [Tecnologías Utilizadas](#tecnologías-utilizadas)
+3. [Requisitos del Sistema](#requisitos-del-sistema)
+4. [Instalación](#instalación)
+5. [Uso](#uso)
+6. [Desarrollo](#desarrollo)
+7. [Pruebas](#pruebas)
+8. [Despliegue](#despliegue)
+9. [Mantenimiento](#mantenimiento)
+10. [Conclusión](#conclusión)
 
-## 6. Pruebas
-- **Tipos de Pruebas**: No se realizarán pruebas inicialmente.
-- **Cómo Ejecutar las Pruebas**: No se detallará cómo hacerlas por ahora.
+---
 
-## 7. Despliegue
-- **Pasos para el Despliegue**: 
-  - Desplegar en un hosting alquilado de dondominio.
-- **Configuración de Producción**: 
-  - Necesitaré una base de datos, un servidor para el backend y otro para el frontend, o aunarlos en uno solo.
+## 🧭 Introducción
 
-## 8. Mantenimiento
-- **Actualizaciones**: 
-  - Las actualizaciones se realizarán en local y se subirán cuando estén terminadas.
-- **Solución de Problemas**: No se incluirá esta parte hasta que la funcionalidad esté acabada.
+- **Nombre del Proyecto**: Control Horario  
+- **Objetivo**: Gestionar la jornada laboral de trabajadores y permitir auditorías por parte del estado.
+- **Autor**: Manuel Ortiz Benítez  
+- **Instituto**: IES Fuentezuelas  
 
-## 9. Conclusión
-- **Agradecimientos**: A mis profesores del instituto IES las Fuentezuelas.
-- **Contacto**: me@mortizb.dev
+---
+
+## 🧑‍💻 Tecnologías Utilizadas
+
+- **Backend**: Spring Boot (Java)
+- **Frontend**: Angular + Tailwind CSS
+- **Base de Datos**: MariaDB
+- **Control de versiones**: Git + GitHub
+
+---
+
+## 💻 Requisitos del Sistema
+
+### Hardware
+
+| Mínimo               | Recomendado         |
+|----------------------|---------------------|
+| Procesador: 2 GHz     | Procesador: 3 GHz   |
+| Memoria RAM: 4 GB     | Memoria RAM: 8 GB   |
+| Almacenamiento: 10 GB | Almacenamiento: 20 GB |
+
+### Software
+
+- Compatible con cualquier sistema operativo con navegador moderno.
+- Java 17
+- Node.js y Angular CLI
+
+---
+
+## ⚙️ Instalación
+
+1. **Backend**:  
+   - Abrir el proyecto en Eclipse.  
+   - Instalar dependencias Maven.  
+   - Ejecutar el proyecto Spring Boot.
+
+2. **Frontend**:  
+   - Instalar Node.js  
+   - `npm install` dentro del proyecto Angular  
+   - `ng serve` para iniciar
+
+3. **Base de Datos**:  
+   - Instalar MariaDB  
+   - Crear esquema y credenciales según configuración del backend.
+
+---
+
+## 🧪 Uso
+
+Al iniciar sesión, el usuario recibe una configuración personalizada según su empresa.
+
+### Roles y Funcionalidades
+
+- 👤 **Trabajador**  
+  - Fichar entrada/salida  
+  - Ver horarios y horas extra
+
+- 🔐 **Administrador**  
+  - Alta de trabajadores  
+  - Gestión de grupos y horarios  
+
+- 🛠 **Usuario Principal**  
+  - Alta de empresa  
+  - Configuración general del sistema
+
+---
+
+## 🛠 Desarrollo
+
+- Proyecto desarrollado íntegramente por Manuel Ortiz Benítez.
+- Actualmente en fase de desarrollo.
+- Arquitectura dividida por capas en backend y estructura modular en frontend.
+
+---
+
+## 🚫 Pruebas
+
+- No se han definido pruebas automatizadas por el momento.
+- Las pruebas serán consideradas tras la fase de desarrollo funcional.
+
+---
+
+## 🚀 Despliegue
+
+1. Contratar hosting (ej. DonDominio)
+2. Subir backend con base de datos configurada
+3. Deploy de frontend como SPA o desde el mismo backend (si se empaqueta con `ng build`)
+
+---
+
+## 🔧 Mantenimiento
+
+- Actualizaciones se desarrollan en local y se suben tras validación manual.
+- La solución de errores se documentará una vez estable.
+
+---
+
+## 🎓 Conclusión
+
+Este proyecto ha sido una experiencia clave en mi formación como desarrollador fullstack. Agradezco el apoyo de mis profesores del IES Fuentezuelas por su orientación y dedicación.
+
+---
+
+## 📬 Contacto
+
+- **Email**: [me@mortizb.dev](mailto:me@mortizb.dev)
+- **GitHub**: [MOrtBen585](https://github.com/MOrtBen585)

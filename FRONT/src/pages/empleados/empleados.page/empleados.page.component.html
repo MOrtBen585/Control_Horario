@@ -1,5 +1,5 @@
 <!-- employee-page.component.html -->
-<div class="p-6 bg-gray-300 h-full text-black">
+<div class="p-6 bg-gray-300 min-h-screen text-black">
   <!-- Header -->
   <div class="flex justify-between items-center mb-1">
     <div class="flex-row flex">
@@ -23,16 +23,94 @@
   </p>
 
   <!-- Filtro -->
-  <empleado-filter (search)="onSearch($event)"></empleado-filter>
+  <empleado-filter (search)="searchTerm.set($event)"></empleado-filter>
+  @if(filteredEmployees().length === 0) {
 
+  <!-- Paginador -->
+  <app-pagination [pages]="empleados.value()?.totalPages ? empleados.value()!.totalPages : 0"
+    [currentPage]="paginationService.currentPage()"></app-pagination>
+  }
+  @if (empleados.isLoading()) {
+
+  <div class="animate-fade-down"
+    style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 300px; gap: 16px;">
+    <!-- <h3> Cargando</h3>
+    <div class="flex flex-col items-center justify-center">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-green-600" viewBox="0 0 24 24">
+        <path fill="currentColor" d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,20a9,9,0,1,1,9-9A9,9,0,0,1,12,21Z"
+          transform="matrix(0 0 0 0 12 12)">
+          <animateTransform id="svgSpinnersPulseRings20" attributeName="transform"
+            begin="0;svgSpinnersPulseRings21.begin+0.6s" calcMode="spline" dur="1.2s" keySplines=".52,.6,.25,.99"
+            type="translate" values="12 12;0 0" />
+          <animateTransform additive="sum" attributeName="transform" begin="0;svgSpinnersPulseRings21.begin+0.6s"
+            calcMode="spline" dur="1.2s" keySplines=".52,.6,.25,.99" type="scale" values="0;1" />
+          <animate attributeName="opacity" begin="0;svgSpinnersPulseRings21.begin+0.6s" calcMode="spline" dur="1.2s"
+            keySplines=".52,.6,.25,.99" values="1;0" />
+        </path>
+        <path fill="currentColor" d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,20a9,9,0,1,1,9-9A9,9,0,0,1,12,21Z"
+          transform="matrix(0 0 0 0 12 12)">
+          <animateTransform id="svgSpinnersPulseRings21" attributeName="transform"
+            begin="svgSpinnersPulseRings20.begin+0.6s" calcMode="spline" dur="1.2s" keySplines=".52,.6,.25,.99"
+            type="translate" values="12 12;0 0" />
+          <animateTransform additive="sum" attributeName="transform" begin="svgSpinnersPulseRings20.begin+0.6s"
+            calcMode="spline" dur="1.2s" keySplines=".52,.6,.25,.99" type="scale" values="0;1" />
+          <animate attributeName="opacity" begin="svgSpinnersPulseRings20.begin+0.6s" calcMode="spline" dur="1.2s"
+            keySplines=".52,.6,.25,.99" values="1;0" />
+        </path>
+      </svg>
+    </div> -->
+    <div>
+
+      <svg xmlns="http://www.w3.org/2000/svg" style="width: 100px; height: 100px;" viewBox="0 0 24 24">
+        <rect width="10" height="10" x="1" y="1" fill="currentColor" rx="1">
+          <animate id="svgSpinnersBlocksShuffle30" fill="freeze" attributeName="x"
+            begin="0;svgSpinnersBlocksShuffle3b.end" dur="0.2s" values="1;13" />
+          <animate id="svgSpinnersBlocksShuffle31" fill="freeze" attributeName="y"
+            begin="svgSpinnersBlocksShuffle38.end" dur="0.2s" values="1;13" />
+          <animate id="svgSpinnersBlocksShuffle32" fill="freeze" attributeName="x"
+            begin="svgSpinnersBlocksShuffle39.end" dur="0.2s" values="13;1" />
+          <animate id="svgSpinnersBlocksShuffle33" fill="freeze" attributeName="y"
+            begin="svgSpinnersBlocksShuffle3a.end" dur="0.2s" values="13;1" />
+        </rect>
+        <rect width="10" height="10" x="1" y="13" fill="currentColor" rx="1">
+          <animate id="svgSpinnersBlocksShuffle34" fill="freeze" attributeName="y"
+            begin="svgSpinnersBlocksShuffle30.end" dur="0.2s" values="13;1" />
+          <animate id="svgSpinnersBlocksShuffle35" fill="freeze" attributeName="x"
+            begin="svgSpinnersBlocksShuffle31.end" dur="0.2s" values="1;13" />
+          <animate id="svgSpinnersBlocksShuffle36" fill="freeze" attributeName="y"
+            begin="svgSpinnersBlocksShuffle32.end" dur="0.2s" values="1;13" />
+          <animate id="svgSpinnersBlocksShuffle37" fill="freeze" attributeName="x"
+            begin="svgSpinnersBlocksShuffle33.end" dur="0.2s" values="13;1" />
+        </rect>
+        <rect width="10" height="10" x="13" y="13" fill="currentColor" rx="1">
+          <animate id="svgSpinnersBlocksShuffle38" fill="freeze" attributeName="x"
+            begin="svgSpinnersBlocksShuffle34.end" dur="0.2s" values="13;1" />
+          <animate id="svgSpinnersBlocksShuffle39" fill="freeze" attributeName="y"
+            begin="svgSpinnersBlocksShuffle35.end" dur="0.2s" values="13;1" />
+          <animate id="svgSpinnersBlocksShuffle3a" fill="freeze" attributeName="x"
+            begin="svgSpinnersBlocksShuffle36.end" dur="0.2s" values="1;13" />
+          <animate id="svgSpinnersBlocksShuffle3b" fill="freeze" attributeName="y"
+            begin="svgSpinnersBlocksShuffle37.end" dur="0.2s" values="1;13" />
+        </rect>
+
+      </svg>
+    </div>
+  </div>
+
+  } @else if (empleados.hasValue()) {
   <!-- Tabla -->
-  <empleado-table [empleados]="filteredEmployees()" (seleccionarEmpleado)="abrirFormulario($event)"></empleado-table>
+  <empleado-table class="animate-fadeIn" [empleados]="empleados.value().items || []"
+    (seleccionarEmpleado)="abrirFormulario($event)" [filterBy]="searchTerm()"
+    (eliminarEmpleado)="eliminarEmpleado($event)">
+  </empleado-table>
+  }
+  <!-- <app-fichaje-card [empleado]="empleadoService.empleadosCache!.get('items')!.items[0]"></app-fichaje-card> -->
+
 </div>
 <!-- <app-selector-temas></app-selector-temas> -->
 
-
-<!-- O si lo querés dentro de un modal manual -->
-<div *ngIf="showAddEmpleado" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+@if (showAddEmpleado) {
+<div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
   <div class="bg-white p-6 rounded-lg w-full max-w-5xl relative">
     <button (click)="cerrarFormulario()" class="absolute top-2 right-2 text-gray-500 hover:text-black">
       ✖
@@ -40,4 +118,8 @@
     <app-empleado-form [empleado]="empleadoSeleccionado()" (clickOutside)="cerrarFormulario()"
       (cerrarVentana)="cerrarFormulario()" (guardarEmpleado)="guardarEmpleado($event)"></app-empleado-form>
   </div>
+</div>
+}
+<div>
+  <button (click)="borrarCache()">borrar cache</button>
 </div>

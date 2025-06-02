@@ -13,6 +13,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+@SuppressWarnings("ALL")
 @Configuration
 @EnableMethodSecurity
 public class SecurityConfig {
@@ -26,26 +27,29 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .cors() // <<=== importante
+                .cors() // habilita CORS
                 .and()
                 .csrf().disable()
                 .authorizeHttpRequests(auth -> auth
-                    .requestMatchers(
-                            "/swagger-ui/**",
-                            "/v3/api-docs/**",
-                            "/swagger-ui.html"
-                    ).permitAll()
-                    .requestMatchers("/ping").permitAll()
-                    .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                    .requestMatchers("/auth/**").permitAll()
-                    .requestMatchers(HttpMethod.POST, "/api/fichajes").hasAnyRole("ADMIN", "EMPLEADO")
-                    .requestMatchers("/auth/whoami", "/auth/check", "/auth/role").authenticated()
-                    .requestMatchers(HttpMethod.POST, "/auth/refresh").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/api/fichajes").hasRole("EMPLEADO")
-                    .requestMatchers(HttpMethod.GET, "/api/fichajes/**").hasAnyRole("EMPLEADO", "ADMIN")
-                    .requestMatchers("/api/empleados/**").hasRole("ADMIN")
-                    .requestMatchers("/api/miperfil").hasRole("EMPLEADO")
-                    .anyRequest().authenticated()
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // ✅ permite preflight
+                        .requestMatchers(
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/swagger-ui.html"
+                        ).permitAll()
+                        .requestMatchers("/ping").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+                        .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/fichajes").hasAnyRole("ADMIN", "EMPLEADO")
+                        .requestMatchers("/auth/whoami", "/auth/check", "/auth/role").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/auth/refresh").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/fichajes").hasAnyRole("EMPLEADO", "ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/fichajes/**").hasAnyRole("EMPLEADO", "ADMIN")
+                        .requestMatchers("/api/empleados/**").hasRole("ADMIN")
+                        .requestMatchers("/api/equipos/**").hasRole("ADMIN")
+                        .requestMatchers("/api/fichajes/**").hasRole("ADMIN")
+                        .requestMatchers("/api/miperfil").hasRole("EMPLEADO")
+                        .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

@@ -34,6 +34,7 @@ export interface Empleado {
   notificaciones: boolean;
   metodoValidacion: string;
   permisosPorDefecto: string;
+  rol: string;
   permisosExtra: string;
   bajaIndefinida: boolean;
   activo: boolean;
@@ -44,6 +45,7 @@ export interface Empleado {
   // Otros flags
   marcarInicio: boolean;
   geolocalizable: boolean;
+  geocercas: boolean;
   permitirCorreccion: boolean;
   permitirHorasExtra: boolean;
 }

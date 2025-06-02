@@ -1,36 +1,92 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { computed, inject, Injectable, signal } from '@angular/core';
+import { catchError, map, Observable, of, switchMap, tap } from 'rxjs';
+import { LoginRequest } from '../../shared/interfaces/Login-Request.interface';
+import { rxResource } from '@angular/core/rxjs-interop';
+import { VariablesEntorno } from '../variablesEntorno';
+import { ConexionConfig } from '../config/Conexion.config';
 
+type AuthStatus = 'checking' | 'authenticated' | 'unauthenticated';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  private baseUrl = 'http://localhost:8080/auth'; // Ajusta la URL según tu backend
+  private conexion = inject(ConexionConfig).server;
 
-  constructor(private http: HttpClient) {}
+  private baseUrl = `${this.conexion}/auth`;
+  private _token = signal<string | null>(localStorage.getItem('accessToken'));
+  private _authStatus = signal<AuthStatus>('checking');
+  private _userId = signal<number | null>(null);
+  private _userEmail = signal<string | null>(null);
+  private _userRole = signal<string | null>(null);
 
-  login(email: string, password: string): Observable<any> {
+  userId = computed(() => this._userId());
+  userEmail = computed(() => this._userEmail());
+  userRole = computed(() => this._userRole());
+
+  checkStatusResource = rxResource({
+    loader: () => this.checkStatus()
+  });
+
+  http = inject(HttpClient);
+
+  authStatus = computed<AuthStatus>(() => {
+    if (this._authStatus() === 'checking') {
+      return 'checking'; // ← corregido el typo
+    }
+    if (this._token()) {
+      return 'authenticated';
+    }
+    return 'unauthenticated';
+  });
+
+  token = computed<string | null>(() => {
+    return this._token();
+  });
+
+
+
+  login(email: string, password: string): Observable<boolean> {
     const body = { email, password };
-    return this.http.post(`${this.baseUrl}/login`, body).pipe(
-      tap((res: any) => {
-        localStorage.setItem('accessToken', res.accessToken);
-        localStorage.setItem('refreshToken', res.refreshToken);
-      })
+    return this.http.post<LoginRequest>(`${this.baseUrl}/login`, body).pipe(
+      switchMap((res) => this.handleAuthSuccess(res)),
+      catchError((error) => this.HandleAuthError(error)),
     );
   }
 
+
+
+  checkStatus(): Observable<boolean> {
+    const token = localStorage.getItem('accessToken');
+    if (!token) {
+      return this.HandleAuthError('Token no encontrado');
+    }
+
+    // Simular un LoginRequest ficticio con el token actual
+    const fakeLogin: LoginRequest = {
+      accessToken: token,
+      refreshToken: this.getRefreshToken() || ''
+    };
+
+    return this.handleAuthSuccess(fakeLogin);
+  }
+
+
+
   logout(): Observable<any> {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    this._token.set(null);
+    this._authStatus.set('unauthenticated');
+    this._userId.set(null);
+    this._userEmail.set(null);
+    this._userRole.set(null);
+
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.getAccessToken()}`
     });
-    return this.http.post(`${this.baseUrl}/logout`, {}, { headers }).pipe(
-      tap(() => {
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
-      })
-    );
+    return this.http.post(`${this.baseUrl}/logout`, {}, { headers });
   }
 
   refreshToken(): Observable<any> {
@@ -43,24 +99,18 @@ export class AuthService {
   }
 
   whoami(): Observable<any> {
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${this.getAccessToken()}`
-    });
-    return this.http.get(`${this.baseUrl}/whoami`, { headers });
+    // Token cargado con authInterceptor
+    return this.http.get(`${this.baseUrl}/whoami`);
   }
 
   checkToken(): Observable<any> {
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${this.getAccessToken()}`
-    });
-    return this.http.get(`${this.baseUrl}/check`, { headers });
+    // Token cargado con authInterceptor
+    return this.http.get(`${this.baseUrl}/check`);
   }
 
   getRole(): Observable<any> {
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${this.getAccessToken()}`
-    });
-    return this.http.get(`${this.baseUrl}/role`, { headers });
+    // Token cargado con authInterceptor
+    return this.http.get(`${this.baseUrl}/role`);
   }
 
   getAccessToken(): string | null {
@@ -74,4 +124,31 @@ export class AuthService {
   isLoggedIn(): boolean {
     return !!this.getAccessToken();
   }
+
+  private handleAuthSuccess(res: LoginRequest): Observable<boolean> {
+    this._authStatus.set('authenticated');
+    this._token.set(res.accessToken);
+    localStorage.setItem('accessToken', res.accessToken);
+    localStorage.setItem('refreshToken', res.refreshToken);
+
+    // Tras guardar los tokens, obtener info del usuario
+    return this.http.get<{ id: number, email: string, rol: string }>(`${this.baseUrl}/whoami`).pipe(
+      tap((whoami) => {
+        console.log('✅ Auth success: whoami →', whoami);
+        this._userId.set(whoami.id);
+        this._userEmail.set(whoami.email);
+        this._userRole.set(whoami.rol);
+        console.log('✅ Auth success: userId →', this._userId());
+      }),
+      map(() => true),
+      catchError((err) => this.HandleAuthError(err))
+    );
+  }
+
+  private HandleAuthError(error: any): Observable<boolean> {
+    console.error('❌ Auth error:', error);
+    this.logout();
+    return of(false);
+  }
+
 }

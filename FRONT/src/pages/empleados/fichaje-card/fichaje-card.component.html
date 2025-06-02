@@ -1,0 +1,44 @@
+<div class="flex items-center justify-center h-screen bg-gray-100 px-4">
+  <div class="w-full max-w-md p-6 bg-white rounded-2xl shadow-xl text-center">
+
+    <h2 class="text-2xl font-bold mb-1">{{ info()!.nombre }} {{ info()!.apellidos }}</h2>
+    <p class="text-sm text-gray-500 mb-4">{{ info()!.puesto }}</p>
+
+    <p class="text-sm text-gray-600 mb-4">
+      Tu horario hoy es: <strong>{{ entrada }} - {{ salida }}</strong>
+    </p>
+
+    <div class="flex gap-4 justify-center mb-4">
+      <button
+        class="bg-green-600 text-white px-4 py-2 rounded-lg font-medium shadow-md hover:bg-green-700 transition disabled:opacity-50"
+        (click)="fichar('ENTRADA')" [disabled]="info()!.estadoSiguiente === 'SALIDA' || geolocalizando">
+        Fichar entrada
+      </button>
+
+      <button
+        class="bg-blue-600 text-white px-4 py-2 rounded-lg font-medium shadow-md hover:bg-blue-700 transition disabled:opacity-50"
+        (click)="fichar('SALIDA')" [disabled]="info()!.estadoSiguiente === 'ENTRADA' || geolocalizando">
+        Fichar salida
+      </button>
+    </div>
+
+    <div class="mb-4">
+      <p class="text-sm">Última entrada: <strong>{{ info()!.ultimaEntrada || 'N/A' }}</strong></p>
+      <p class="text-sm">Última salida: <strong>{{ info()!.ultimaSalida || 'N/A' }}</strong></p>
+    </div>
+
+    <p *ngIf="errorGeo" class="text-red-600 mt-2 text-sm">{{ errorGeo }}</p>
+    <p *ngIf="mensajeFichaje" class="text-green-600 mt-2 text-sm font-semibold">{{ mensajeFichaje }}</p>
+
+    <hr class="my-4" />
+
+    <button (click)="logout()"
+      class="flex items-center gap-2 mx-auto px-5 py-2 bg-red-500 text-white font-medium rounded-xl shadow hover:bg-red-600 transition duration-200">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 002 2h3a2 2 0 002-2V7a2 2 0 00-2-2h-3a2 2 0 00-2 2v1" />
+      </svg>
+      Cerrar sesión
+    </button>
+  </div>
+</div>

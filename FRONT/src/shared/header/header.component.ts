@@ -1,6 +1,6 @@
 import { Route, Router } from '@angular/router';
 import { AuthService } from './../../app/services/auth.service';
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, linkedSignal, signal } from '@angular/core';
 
 @Component({
   selector: 'shared-header',
@@ -10,14 +10,12 @@ import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 })
 export class HeaderComponent {
 
-  user = signal<String>('');
 
-  constructor(private auth: AuthService, private router: Router) {
-    auth.whoami().subscribe(res => {
-      localStorage.setItem('user', res.email);
-      this.user.set(res.email);
-    });
-  }
+  auth = inject(AuthService);
+  router = inject(Router);
+
+
+  user = this.auth.userEmail();
 
   getUser() {
     return localStorage.getItem('user');

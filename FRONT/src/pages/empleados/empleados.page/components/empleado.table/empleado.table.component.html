@@ -4,17 +4,20 @@
     <thead class="bg-gray-100">
       <tr>
         <th class="items-center text-center">Modificar</th>
-        <th class="px-4 py-2">Nombre y apellidos</th>
-        <th class="px-4 py-2">Teléfono</th>
-        <th class="px-4 py-2">Email</th>
-        <th class="px-4 py-2">Contrato</th>
+        <th (click)="ordenarPor.set('nombre')" class="px-4 py-2">Nombre y apellidos</th>
+        <th (click)="ordenarPor.set('telefono')" class="px-4 py-2">Teléfono</th>
+        <th (click)="ordenarPor.set('email')" class="px-4 py-2">Email</th>
+        <th (click)="ordenarPor.set('contratoDesde')" class="px-4 py-2">Contrato</th>
         <th class="px-4 py-2">Docs. Pendientes</th>
+        <th class="items-center text-center">Eliminar</th>
+
       </tr>
     </thead>
     <tbody>
-      @for (empleado of empleados(); track $index) {
+      @for (empleado of empleados() | FilterBy:filterBy() |
+      sortBy:ordenarPor(); track $index) {
       <tr class="border-t hover:bg-gray-50">
-        <!-- Columna 1: botón de detalles -->
+        <!-- Columna 1: botón -->
         <td class="text-center w-12">
           <button (click)="onVerDetalles(empleado)" class="text-gray-500 hover:text-black" title="Ver detalles">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
@@ -43,19 +46,35 @@
 
         <!-- Columna 4: Email -->
         <td class="px-4 py-2">
-          <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs">
-            {{ empleado.email }}
-          </span>
+          <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs">{{ empleado.email }}</span>
         </td>
 
-        <!-- Columna 5: Contrato (calendario) -->
+        <!-- Columna 5: Contrato -->
         <td class="px-4 py-2">{{ empleado.contratoDesde | date: 'dd/MM/yyyy' }}</td>
 
-        <!-- Columna 6: Docs. Pendientes (placeholder) -->
+        <!-- Columna 6: Docs pendientes -->
         <td class="px-4 py-2 text-center">0</td>
+
+        <!-- boton eliminar -->
+        <td class="text-center w-12">
+          <button (click)="onEliminar(empleado)" class="text-red-600 hover:text-red-800" title="Eliminar">
+            🗑️
+          </button>
+        </td>
+
+      </tr>
+      }
+
+      <!-- Mensaje si no hay ningún empleado (ni filtrado ni general) -->
+      @if (empleadosFiltrados().length === 0 && empleados().length === 0) {
+      <tr>
+        <td colspan="6" class="text-center text-gray-500 py-4">
+          No hay empleados disponibles.
+        </td>
       </tr>
       }
     </tbody>
+
 
 
   </table>

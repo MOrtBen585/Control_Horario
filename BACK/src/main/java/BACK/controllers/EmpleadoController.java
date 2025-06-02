@@ -1,19 +1,22 @@
 package BACK.controllers;
 
 import BACK.dtos.EmpleadoDto;
+import BACK.dtos.response.PaginatedResponse;
 import BACK.mappers.EmpleadoMapper;
 import BACK.repositories.models.Empleado;
 import BACK.services.EmpleadoService;
 import jakarta.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 
+import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/empleados")
 @PreAuthorize("hasRole('ADMIN')")
 public class EmpleadoController {
@@ -43,26 +46,45 @@ public class EmpleadoController {
     }
 
     @PostMapping
-    public EmpleadoDto create(@RequestBody @Valid EmpleadoDto dto) {
-        Empleado empleado = empleadoMapper.toEntity(dto);
+    public ResponseEntity<EmpleadoDto> create(@RequestBody @Valid EmpleadoDto empleadoDto) {
+        Empleado empleado = empleadoMapper.toEntity(empleadoDto);
         Empleado saved = empleadoService.save(empleado);
-        return empleadoMapper.toDto(saved);
+        EmpleadoDto savedDto = empleadoMapper.toDto(saved);
+        return ResponseEntity.ok(savedDto);
     }
 
+
     @PutMapping("/{id}")
-    public ResponseEntity<EmpleadoDto> update(@PathVariable Long id, @RequestBody @Valid EmpleadoDto dto) {
-        Empleado updated = empleadoMapper.toEntity(dto);
+    public ResponseEntity<EmpleadoDto> update(@PathVariable Long id, @RequestBody @Valid EmpleadoDto empleadoDto) {
         try {
-            Empleado saved = empleadoService.update(id, updated);
-            return ResponseEntity.ok(empleadoMapper.toDto(saved));
+            EmpleadoDto updated = empleadoService.update(id, empleadoDto);
+            return ResponseEntity.ok(updated);
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }
     }
 
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        empleadoService.delete(id);
+    public ResponseEntity<Void> desactivarEmpleado(@PathVariable Long id) {
+        empleadoService.desactivarEmpleado(id);
         return ResponseEntity.noContent().build();
     }
+
+
+    @GetMapping("/paged")
+    public ResponseEntity<PaginatedResponse<EmpleadoDto>> getAllActivos(Pageable pageable) {
+        Page<EmpleadoDto> page = empleadoService.findAllActivos(pageable)
+                .map(empleadoMapper::toDto);
+
+        return ResponseEntity.ok(PaginatedResponse.buildPaginatedResponse(page));
+    }
+
+
+
+    @GetMapping("/test-empleados")
+    public List<Empleado> test() {
+        return empleadoService.findAll();
+    }
+
 }

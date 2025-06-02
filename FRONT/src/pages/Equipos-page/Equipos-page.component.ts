@@ -1,9 +1,10 @@
-import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { CommonModule, JsonPipe } from '@angular/common';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Empleado, Equipo } from '../../shared/interfaces/Empleado.interface';
 import { EmpleadoFilterComponent } from "../empleados/empleados.page/components/empleado.filter/empleado.filter.component";
-import { MockService } from '../../app/services/Mock.service';
+import { EquipoService } from '../../app/services/Equipos.service';
+import { EmpleadoService } from '../../app/services/Empleado.service';
 
 @Component({
   selector: 'app-equipos-page',
@@ -15,7 +16,8 @@ export class EquiposPageComponent {
 
   equiposFiltrados = signal<Equipo[]>([]);
   mostrarModal = false;
-  mockService = inject(MockService);
+  equipoS = inject(EquipoService);
+  empleadoS = inject(EmpleadoService);
   empleados = signal<Empleado[]>([]);
   equipos = signal<Equipo[]>([]);
   equipoExpandidoId: number | null = null;
@@ -38,9 +40,15 @@ export class EquiposPageComponent {
   }
 
   constructor() {
-    this.empleados.set(this.mockService.empleados);
-    this.equipos.set(this.mockService.equipos);
-    this.equiposFiltrados.set(this.equipos());
+    this.equipoS.getAll().subscribe(res => {
+      this.equipos.set(res);
+      this.equiposFiltrados.set(res);
+    });
+    console.log("equipos", this.equipos())
+    this.empleadoS.getAll().subscribe(res => {
+      this.empleados.set(res);
+    });
+    console.log("empleados", this.empleados());
   }
 
   cerrarModal() {

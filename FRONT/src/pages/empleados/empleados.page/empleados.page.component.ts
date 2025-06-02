@@ -4,14 +4,15 @@ import { EmpleadoTableComponent } from './components/empleado.table/empleado.tab
 import { CommonModule } from '@angular/common';
 import { EmpleadoFilterComponent } from './components/empleado.filter/empleado.filter.component';
 import { EmpleadoFormComponent } from "../../../shared/formularios/EmpleadoForm/EmpleadoForm.component";
-import { MockService } from '../../../app/services/Mock.service';
 import { EmpleadoService } from '../../../app/services/Empleado.service';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { of } from 'rxjs';
+import { PaginationService } from '../../../shared/pagination/pagination.service';
+import { PaginationComponent } from '../../../shared/pagination/pagination.component';
+
 
 @Component({
   selector: 'home-empleados-page',
-  imports: [EmpleadoTableComponent, EmpleadoFilterComponent, CommonModule, EmpleadoFormComponent],
+  imports: [EmpleadoTableComponent, EmpleadoFilterComponent, CommonModule, EmpleadoFormComponent, PaginationComponent],
   templateUrl: './empleados.page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -21,22 +22,37 @@ export class EmpleadosPageComponent {
   showAddEmpleado = false;
   empleadoSeleccionado = signal<Empleado | undefined>(undefined);
   empleadoService = inject(EmpleadoService);
-  empleados = signal<Empleado[]>([]);
-
-
+  paginationService = inject(PaginationService);
   filteredEmployees = signal<Empleado[]>([]);
+  searchTerm = signal<string>('');
 
-  constructor() {
-    console.log('Cargando empleados en el constructor...');
-    this.empleadoService.getAll().subscribe(data => {
-      console.log('data', data);
-      console.log('Cargando empleados...');
-      this.empleados.set(data);
-      this.filteredEmployees.set(data);
+  empleados = rxResource({
+    request: () => ({
+      page: this.paginationService.currentPage() - 1,
+      size: this.paginationService.currentSize(),
+      sort: "nombre,asc",
+    }),
+    loader: ({ request }) =>
+      this.empleadoService.getPaged(request),
+  });
+
+
+  eliminarEmpleado($event: number) {
+    console.log('Empleado a eliminar desde el padre:', $event);
+    this.empleadoService.delete($event).subscribe({
+      next: () => {
+        this.empleadoService.borrarCache(); // TODO Cambiar esto para no tener que borrar la caché
+        this.empleados.reload();
+      },
+      error: (err) => {
+        console.error('Error al eliminar empleado:', err);
+      }
     });
   }
 
-
+  borrarCache() {
+    this.empleadoService.borrarCache();
+  }
 
 
   abrirFormulario(empleado?: Empleado) {
@@ -56,18 +72,28 @@ export class EmpleadosPageComponent {
   }
 
   onSearch(searchTerm: string) {
+    if (searchTerm.length === 0) {
+      this.filteredEmployees.set([]);
+      return;
+    }
     const term = this.normalizarTexto(searchTerm);
 
-    console.log('Buscando:', term);
+    this.empleadoService.getAll().subscribe({
+      next: (empleados) => {
+        const empleadosFiltrados = empleados.filter(e => {
+          const nombre = this.normalizarTexto(e.nombre);
+          const apellidos = this.normalizarTexto(e.apellidos);
+          return nombre.includes(term) || apellidos.includes(term);
+        });
 
-    this.filteredEmployees.set(
-      this.empleados().filter(e => {
-        const nombre = this.normalizarTexto(e.nombre);
-        const apellidos = this.normalizarTexto(e.apellidos);
-        return nombre.includes(term) || apellidos.includes(term);
-      })
-    );
+        this.filteredEmployees.set(empleadosFiltrados);
+      },
+      error: (err) => {
+        console.error('Error al buscar empleados:', err);
+      }
+    });
   }
+
 
   private normalizarTexto(texto: string): string {
     return texto
@@ -77,34 +103,45 @@ export class EmpleadosPageComponent {
       .trim();
   }
 
-  guardarEmpleado($event: Empleado) {
+  guardarEmpleado(empleado: Empleado) {
     console.log('Guardando empleado...');
 
-    this.empleadoService.create($event).subscribe({
-      next: (nuevoEmpleado) => {
-        this.actualizarEmpleados();
-        this.cerrarFormulario();
-      },
-      error: (err) => {
-        console.error('Error al guardar empleado:', err);
-      }
-    });
+    if (empleado.id === undefined) {
+      this.empleadoService.create(empleado).subscribe({
+        next: (nuevoEmpleado) => {
+          this.empleados.reload();
+          this.cerrarFormulario();
+        },
+        error: (err: any) => {
+          console.error('Error al guardar empleado:', err.error);
+        }
+      });
+    } else {
+      this.empleadoService.update(empleado.id, empleado).subscribe({
+        next: (nuevoEmpleado) => {
+          this.empleadoService.borrarCache(); // TODO Cambiar esto para que no haya que borrar la cache.
+          this.empleados.reload();
+          this.cerrarFormulario();
+        },
+        error: (err: any) => {
+          console.error('Error al guardar empleado:', err.error);
+        }
+      });
+    }
+
+    // actualizarEmpleados() {
+    //   this.empleadoService.getAll().subscribe({
+    //     next: (empleadosActualizados) => {
+    //       this.empleados.set(empleadosActualizados);
+    //       this.filteredEmployees.set(empleadosActualizados);
+    //       this.onSearch(''); // opcional: limpia filtro de búsqueda
+    //     },
+    //     error: (err) => {
+    //       console.error('Error al actualizar empleados:', err);
+    //     }
+    //   });
   }
-
-
-  actualizarEmpleados() {
-    this.empleadoService.getAll().subscribe({
-      next: (empleadosActualizados) => {
-        this.empleados.set(empleadosActualizados);
-        this.filteredEmployees.set(empleadosActualizados);
-        this.onSearch(''); // opcional: limpia filtro de búsqueda
-      },
-      error: (err) => {
-        console.error('Error al actualizar empleados:', err);
-      }
-    });
-  }
-
-
 
 }
+
+

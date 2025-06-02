@@ -12,7 +12,7 @@ import { map } from 'rxjs/operators';
   templateUrl: './login.page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LoginPageComponent implements OnInit{
+export class LoginPageComponent implements OnInit {
   form: FormGroup;
   auth = inject(AuthService);
   error = signal<string>('');
@@ -33,6 +33,7 @@ export class LoginPageComponent implements OnInit{
 
   login() {
     const { email, password } = this.form.value;
+    console.log('Email:', email);
 
     this.auth.login(email, password).subscribe({
       next: () => {

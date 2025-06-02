@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">FichajeApp</string>
+    <string name="title_activity_main">FichajeApp</string>
+    <string name="package_name">com.miempresa.fichajeapp</string>
+    <string name="custom_url_scheme">com.miempresa.fichajeapp</string>
+</resources>

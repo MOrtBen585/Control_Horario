@@ -39,22 +39,26 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             String email = jwtUtil.extractUsername(token);
 
             if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                if (jwtUtil.validateToken(token)) {
-                    UserDetails userDetails = userDetailsService.loadUserByUsername(email);
-                    String role = jwtUtil.extractRole(token);
+                try {
+                    if (jwtUtil.validateToken(token)) {
+                        UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+                        String role = jwtUtil.extractRole(token);
 
-                    UsernamePasswordAuthenticationToken authToken =
-                            new UsernamePasswordAuthenticationToken(
-                                    userDetails,
-                                    null,
-                                    List.of(new SimpleGrantedAuthority("ROLE_" + role))
+                        UsernamePasswordAuthenticationToken authToken =
+                                new UsernamePasswordAuthenticationToken(
+                                        userDetails,
+                                        null,
+                                        List.of(new SimpleGrantedAuthority("ROLE_" + role))
+                                );
 
-                            );
-
-                    System.out.println("✅ Aplicando rol: ROLE_" + role);
-                    SecurityContextHolder.getContext().setAuthentication(authToken);
-
+                        System.out.println("✅ Aplicando rol: ROLE_" + role);
+                        SecurityContextHolder.getContext().setAuthentication(authToken);
+                    }
+                } catch (Exception e) {
+                    System.out.println("⚠️ Error validando token: " + e.getMessage());
+                    // No bloquear la petición, solo no autenticar
                 }
+
             }
         }
 

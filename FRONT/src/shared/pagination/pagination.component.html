@@ -1,0 +1,32 @@
+<div class="flex justify-between items-center flex-wrap gap-4 py-4 w-full">
+  <!-- Texto de registros: izquierda -->
+  <div class="text-sm text-gray-600">
+    Mostrando {{ itemPerPage.value }} registros
+  </div>
+
+  <!-- Paginación: centro -->
+  <div class="flex-1 flex justify-center">
+    <div class="join">
+      @for (page of getPagesList(); track page) {
+      <button class="join-item btn btn-sm bg-base-200 text-base-content hover:bg-base-300"
+        [class.btn-primary]="page === activePage()" [class.text-white]="page === activePage()"
+        [class.bg-primary]="page === activePage()" [routerLink]="[]" [queryParams]="{ page: page }"
+        (click)="activePage.set(page)">
+        {{ page }}
+      </button>
+      }
+      @empty {
+      <!-- <p>No hay páginas</p> -->
+      }
+    </div>
+  </div>
+
+  <!-- Selector de tamaño: derecha -->
+  <div class="flex items-center gap-2">
+    <label for="pageSize" class="text-sm text-gray-600">Ver:</label>
+    <select id="pageSize" class="select select-sm bg-base-200 text-base-content hover:bg-base-300"
+      (change)="onSizeChange(+itemPerPage.value)" #itemPerPage>
+      <option *ngFor="let size of [10, 25, 50, 100]" [value]="size">{{ size }}</option>
+    </select>
+  </div>
+</div>

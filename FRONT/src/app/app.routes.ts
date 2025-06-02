@@ -9,6 +9,7 @@ import { adminGuard } from './guards/admin.guard';
 import { UnauthorizedComponent } from '../pages/unauthorized/unauthorized.component';
 import { NotAuthenticatedGuard } from './guards/not-authenticated.guard';
 import { FichajeCardComponent } from '../pages/empleados/fichaje-card/fichaje-card.component';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   { path: '', component: WelcomePageComponent },
@@ -18,6 +19,7 @@ export const routes: Routes = [
   {
     path: 'ficha',
     component: FichajeCardComponent,
+    canMatch: [authGuard],
   },
   {
     path: 'home',

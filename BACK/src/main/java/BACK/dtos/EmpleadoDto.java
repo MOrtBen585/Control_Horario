@@ -1,12 +1,18 @@
 package BACK.dtos;
 
-import BACK.repositories.models.Equipo;
-import jakarta.validation.constraints.*;
-import lombok.Data;
-
 import java.time.LocalDate;
 
-@Data
+import BACK.repositories.models.Equipo;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class EmpleadoDto {
 
     private Long id;
@@ -15,7 +21,7 @@ public class EmpleadoDto {
     @Size(max = 20)
     private String ccc;
 
-    private String foto;
+    private byte[] foto;
 
     @NotBlank(message = "El nombre es obligatorio")
     private String nombre;
@@ -74,4 +80,5 @@ public class EmpleadoDto {
     private boolean permitirHorasExtra;
 
     private Equipo equipo;
+
 }

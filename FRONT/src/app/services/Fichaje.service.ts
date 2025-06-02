@@ -2,8 +2,8 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Fichaje } from '../../shared/interfaces/Fichaje.interface';
-import { PaginatedResponse } from '../../shared/interfaces/PagitatedResponse.interface';
-import { EmpleadoFichajeDto } from '../../shared/interfaces/EmpleadoFichajeDto.interface';
+import { PaginatedResponse } from '../../shared/interfaces/Pagitated-Response.interface';
+import { EmpleadoFichajeDto } from '../../shared/interfaces/Empleado-Fichaje-Dto.interface';
 import { VariablesEntorno } from '../variablesEntorno';
 import { ConexionConfig } from '../config/Conexion.config';
 
@@ -14,9 +14,9 @@ import { ConexionConfig } from '../config/Conexion.config';
 })
 export class FichajeService {
 
-  private server = inject(ConexionConfig).server;
+  private conexion = inject(ConexionConfig).server;
 
-  private baseUrl = `${this.server}/api/fichajes`;
+  private baseUrl = `${this.conexion}/api/fichajes`;
 
   constructor(private http: HttpClient) { }
 

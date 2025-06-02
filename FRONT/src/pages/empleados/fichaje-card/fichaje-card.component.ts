@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Fichaje } from '../../../shared/interfaces/Fichaje.interface';
-import { EmpleadoFichajeDto } from '../../../shared/interfaces/EmpleadoFichajeDto.interface';
+import { EmpleadoFichajeDto } from '../../../shared/interfaces/Empleado-Fichaje-Dto.interface';
 import { FichajeService } from '../../../app/services/Fichaje.service';
 import { AuthService } from '../../../app/services/auth.service';
 import { Router } from '@angular/router';

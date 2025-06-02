@@ -25,7 +25,6 @@ export class PaginationComponent {
 
   activePage = linkedSignal(this.currentPage);
 
-
   getPagesList = computed(() => {
     return Array.from({ length: this.pages() }, (_, i) => i + 1);
   });
@@ -38,6 +37,7 @@ export class PaginationComponent {
       queryParams: {
         ...currentParams,
         size: newSize,
+        page: 1
       },
       queryParamsHandling: 'merge', // mantiene otros parámetros como `page`
     });

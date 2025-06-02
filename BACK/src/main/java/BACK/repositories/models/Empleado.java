@@ -1,13 +1,23 @@
 package BACK.repositories.models;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.*;
-import lombok.Data;
-
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
-@Data
+@Getter
+@Setter
 public class Empleado {
 
     @Id
@@ -70,5 +80,6 @@ public class Empleado {
     @JoinColumn(name = "equipo_id", nullable = true)
     private Equipo equipo;
 
-    // Getters y setters
+	// Getters y setters
+    
 }

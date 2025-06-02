@@ -8,7 +8,7 @@ import { EmpleadoService } from '../../app/services/Empleado.service';
 import { forkJoin, Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { Fichaje } from '../../shared/interfaces/Fichaje.interface';
-import { PaginatedResponse } from '../../shared/interfaces/PagitatedResponse.interface';
+import { PaginatedResponse } from '../../shared/interfaces/Pagitated-Response.interface';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { PaginationComponent } from "../../shared/pagination/pagination.component";
 

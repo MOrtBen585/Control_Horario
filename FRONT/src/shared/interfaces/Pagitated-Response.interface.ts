@@ -3,4 +3,5 @@ export interface PaginatedResponse<T> {
   currentPage: number;
   totalPages: number;
   totalItems: number;
+  ultimaActualizacion: Date;
 }

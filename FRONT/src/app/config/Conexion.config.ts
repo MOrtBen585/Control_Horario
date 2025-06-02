@@ -5,7 +5,12 @@ import { VariablesEntorno } from "../variablesEntorno";
   providedIn: 'root'
 })
 export class ConexionConfig {
-  variablesGlobales = inject(VariablesEntorno);
 
-  public server = this.variablesGlobales.localServer;
+  // variablesGlobales = inject(VariablesEntorno);
+  server: string;
+
+  constructor(private variablesGlobales: VariablesEntorno) {
+    this.server = this.variablesGlobales.localServer;
+  };
+
 }

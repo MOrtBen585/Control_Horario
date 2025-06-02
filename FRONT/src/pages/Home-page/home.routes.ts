@@ -11,9 +11,9 @@ import { GTalentoPageComponent } from '../GTalento-page/GTalento-page.component'
 import { HorariosPageComponent } from '../Horarios-page/Horarios-page.component';
 import { OfertasPageComponent } from '../Ofertas-page/Ofertas-page.component';
 import { SVacacionesPageComponent } from '../SVacaciones-page/SVacaciones-page.component';
-import { VacacionesHorariosPageComponent } from '../VacacionesHorarios-page/VacacionesHorarios-page.component';
 import { EquiposPageComponent } from '../Equipos-page/Equipos-page.component';
 import { InformesPageComponent } from '../Informes-page/Informes-page.component';
+import { VacacionesHorariosPageComponent } from '../Vacaciones-Horarios-page/Vacaciones-Horarios-page.component';
 
 export const homeRoutes: Routes = [
   {

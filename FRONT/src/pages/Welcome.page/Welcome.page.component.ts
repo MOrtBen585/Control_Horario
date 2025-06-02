@@ -1,11 +1,21 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { RouterLink } from '@angular/router';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../../app/services/auth.service';
 
 @Component({
   selector: 'welcome-page',
-  imports: [RouterLink],
+  imports: [],
   templateUrl: './Welcome.page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WelcomePageComponent { }
+export class WelcomePageComponent {
+  auth = inject(AuthService);
+  router = inject(Router);
+  login() {
+    if (this.auth.isLoggedIn()) {
+      this.router.navigate(['/home']);
+    } else {
+      this.router.navigate(['/login']);
+    }
+  }
+}

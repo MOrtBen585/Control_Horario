@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { catchError, map, Observable, of, switchMap, tap } from 'rxjs';
-import { LoginRequest } from '../../shared/interfaces/LoginRequest.interface';
+import { LoginRequest } from '../../shared/interfaces/Login-Request.interface';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { VariablesEntorno } from '../variablesEntorno';
 import { ConexionConfig } from '../config/Conexion.config';
@@ -12,9 +12,9 @@ type AuthStatus = 'checking' | 'authenticated' | 'unauthenticated';
 })
 export class AuthService {
 
-  private server = inject(ConexionConfig).server;
+  private conexion = inject(ConexionConfig).server;
 
-  private baseUrl = `${this.server}/auth`;
+  private baseUrl = `${this.conexion}/auth`;
   private _token = signal<string | null>(localStorage.getItem('accessToken'));
   private _authStatus = signal<AuthStatus>('checking');
   private _userId = signal<number | null>(null);

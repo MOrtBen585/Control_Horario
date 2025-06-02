@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { delay, map, Observable, of, tap, timeout } from 'rxjs';
 import { Empleado } from '../../shared/interfaces/Empleado.interface';
-import { PaginatedResponse } from '../../shared/interfaces/PagitatedResponse.interface';
+import { PaginatedResponse } from '../../shared/interfaces/Pagitated-Response.interface';
 import { VariablesEntorno } from '../variablesEntorno';
 import { ConexionConfig } from '../config/Conexion.config';
 
@@ -12,13 +12,13 @@ import { ConexionConfig } from '../config/Conexion.config';
 export class EmpleadoService {
 
 
-  private server = inject(ConexionConfig).server;
+  private conexion = inject(ConexionConfig).server;
 
-  private apiUrl = `${this.server}/api/empleados`; // Ajusta el puerto si es necesario
+  private apiUrl = `${this.conexion}/api/empleados`; // Ajusta el puerto si es necesario
   empleadosCache = new Map<string, PaginatedResponse<Empleado>>();
 
 
-  constructor(private http: HttpClient) { }
+  private http = inject(HttpClient);
 
   // 🔹 Obtener todos los empleados (sin paginación)
   getAll(): Observable<Empleado[]> {
@@ -29,7 +29,8 @@ export class EmpleadoService {
   getPaged(params?: any): Observable<PaginatedResponse<Empleado>> {
     const key = JSON.stringify(params ?? {});
 
-    if (this.empleadosCache.has(key)) {
+    if (this.empleadosCache.has(key) &&
+      this.empleadosCache.get(key)!.ultimaActualizacion.getMinutes() > new Date().getMinutes() - 1) {
       console.log('Empleados de la cache:', this.empleadosCache.get(key));
       return of(this.empleadosCache.get(key)!)
         .pipe(
@@ -43,6 +44,8 @@ export class EmpleadoService {
       .pipe(
         tap((resp) => {
           console.log('Empleados de la petición:', resp);
+          // Se guarda la fecha de la ultima actualización
+          resp.ultimaActualizacion = new Date();
           this.empleadosCache.set(key, resp);
         }),
         delay(2000)

@@ -1,0 +1,35 @@
+<div class="p-6 bg-white rounded-2xl shadow-xl max-w-lg mx-auto space-y-6 border border-gray-200">
+  <h2 class="text-2xl font-bold text-center text-gray-800">Registro de Fichaje</h2>
+
+  <div class="text-center text-gray-600">
+    Estado actual:
+    <span [ngClass]="{
+      'text-green-600 font-semibold': estadoActual() === 'entrada',
+      'text-red-600 font-semibold': estadoActual() === 'salida',
+      'text-gray-500 italic': estadoActual() === 'ninguno'
+    }">
+      {{ estadoActual() === 'ninguno' ? 'Sin fichaje' : estadoActual() | titlecase }}
+    </span>
+  </div>
+
+  <div class="text-center text-sm text-gray-500" *ngIf="empleado().horario?.horario">
+    Horario de hoy: <strong class="text-gray-700">{{ empleado().horario?.horario }}</strong>
+  </div>
+
+  <div class="text-center text-red-500 font-medium" *ngIf="!esDiaLaboral">
+    No tienes horario asignado para hoy
+  </div>
+
+
+  <div class="flex justify-center gap-6 pt-4">
+    <button [disabled]="!esDiaLaboral"
+      class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg shadow transition"
+      (click)="marcarEntrada()">
+      Fichar entrada
+    </button>
+    <button [disabled]="!esDiaLaboral"
+      class="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg shadow transition" (click)="marcarSalida()">
+      Fichar salida
+    </button>
+  </div>
+</div>

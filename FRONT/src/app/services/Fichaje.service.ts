@@ -40,6 +40,10 @@ export class FichajeService {
     return this.http.get<PaginatedResponse<Fichaje>>(`${this.baseUrl}/activos`, { params });
   }
 
+  obtenerFichajesActivosSinPaginacion(): Observable<Fichaje[]> {
+    return this.http.get<Fichaje[]>(`${this.baseUrl}/activos/list`);
+  }
+
   getInfoParaFichar(empleadoId: number): Observable<EmpleadoFichajeDto> {
     return this.http.get<EmpleadoFichajeDto>(`${this.baseUrl}/info/${empleadoId}`);
   }

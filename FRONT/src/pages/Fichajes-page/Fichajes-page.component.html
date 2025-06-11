@@ -4,9 +4,20 @@
     <p class="text-sm text-gray-600 pb-6">
       Crea equipos para agrupar a tus empleados/as y filtrar información en diferentes informes.
     </p>
-    <app-filtro-fichajes [fichajesOriginales]="fichajes()" (filtrar)="actualizarFiltro($event)"></app-filtro-fichajes>
-    <app-pagination [pages]="fichajesResource.value()?.totalPages ? fichajesResource.value()!.totalPages : 0"
-      [currentPage]="paginationService.currentPage()"></app-pagination>
-    <app-tabla-fichajes [fichajes]="fichajesResource.value()?.items || []"></app-tabla-fichajes>
+
+    <!-- Filtro -->
+    <app-filtro-fichajes (filtrar)="actualizarFiltro($event)">
+    </app-filtro-fichajes>
+
+    <!-- Paginación solo si no hay filtro activo -->
+    @if (fichajesFiltrados().length === 0) {
+    <app-pagination [pages]="fichajesResource.value()?.totalPages || 0" [currentPage]="paginationService.currentPage()">
+    </app-pagination>
+    }
+
+    <!-- Tabla de fichajes -->
+    <app-tabla-fichajes
+      [fichajes]="fichajesFiltrados().length > 0 ? fichajesFiltrados() : fichajesResource.value()?.items || []">
+    </app-tabla-fichajes>
   </div>
 </div>

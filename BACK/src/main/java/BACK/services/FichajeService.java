@@ -1,22 +1,25 @@
 package BACK.services;
 
-import BACK.dtos.EmpleadoDto;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Service;
+
 import BACK.dtos.EmpleadoFichajeDto;
 import BACK.dtos.FichajeDto;
 import BACK.dtos.request.FichajeRequestDto;
 import BACK.mappers.FichajeMapper;
 import BACK.repositories.EmpleadoRepository;
 import BACK.repositories.FichajeRepository;
+import BACK.repositories.HorarioRepository;
 import BACK.repositories.models.Empleado;
 import BACK.repositories.models.Fichaje;
+import BACK.repositories.models.Horario;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Service
 public class FichajeService {
@@ -24,13 +27,15 @@ public class FichajeService {
     private final FichajeRepository fichajeRepository;
     private final EmpleadoRepository empleadoRepository;
     private final FichajeMapper fichajeMapper;
+    private final HorarioRepository horarioRepository;
 
     public FichajeService(FichajeRepository fichajeRepository,
                           EmpleadoRepository empleadoRepository,
-                          FichajeMapper fichajeMapper) {
+                          FichajeMapper fichajeMapper, HorarioRepository horarioRepository) {
         this.fichajeRepository = fichajeRepository;
         this.empleadoRepository = empleadoRepository;
         this.fichajeMapper = fichajeMapper;
+        this.horarioRepository = horarioRepository;
     }
 
     public Fichaje registrarFichaje(FichajeRequestDto request) {
@@ -71,10 +76,21 @@ public class FichajeService {
         return fichajeRepository.findByEmpleado_ActivoTrue(pageable)
                 .map(fichaje -> fichajeMapper.toDto(fichaje, fichaje.getEmpleado()));
     }
+    
+    public List<FichajeDto> getAllActives() {
+        List<Fichaje> fichajes = fichajeRepository.findByEmpleado_ActivoTrue();
+        return fichajes.stream()
+                       .map(fichaje -> fichajeMapper.toDto(fichaje, fichaje.getEmpleado()))
+                       .toList();
+    }
+
 
     public EmpleadoFichajeDto getInfoParaFichar(Long empleadoId) {
         Empleado empleado = empleadoRepository.findById(empleadoId)
                 .orElseThrow(() -> new EntityNotFoundException("Empleado no encontrado con ID: " + empleadoId));
+        
+        Horario horario = horarioRepository.getById(empleado.getHorario().getId());
+        
 
         Optional<Fichaje> ultimoFichaje = fichajeRepository.findTopByEmpleadoIdOrderByFechaDesc(empleadoId);
 
@@ -83,7 +99,7 @@ public class FichajeService {
         dto.setNombre(empleado.getNombre());
         dto.setApellidos(empleado.getApellidos());
         dto.setPuesto(empleado.getPuesto());
-        dto.setHorario(empleado.getHorario()); // 👈 ESTA LÍNEA FALTABA
+        dto.setHorario(empleado.getHorario().getHorario()); 
         dto.setGeolocalizable(empleado.isGeolocalizable());
         dto.setMarcarInicio(empleado.isMarcarInicio());
         dto.setPermitirCorreccion(empleado.isPermitirCorreccion());

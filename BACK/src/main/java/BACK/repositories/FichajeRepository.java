@@ -1,11 +1,13 @@
 package BACK.repositories;
 
-import BACK.repositories.models.Fichaje;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Optional;
+import BACK.repositories.models.Fichaje;
 
 public interface FichajeRepository extends JpaRepository<Fichaje, Long> {
 
@@ -16,5 +18,7 @@ public interface FichajeRepository extends JpaRepository<Fichaje, Long> {
     Page<Fichaje> findByEmpleado_ActivoTrue(Pageable pageable);
 
     Optional<Fichaje> findTopByEmpleadoIdOrderByFechaDesc(Long empleadoId);
+    
+    List<Fichaje> findByEmpleado_ActivoTrue();
 
 }

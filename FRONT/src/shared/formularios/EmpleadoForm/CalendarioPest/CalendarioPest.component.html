@@ -9,9 +9,9 @@
       <div class="flex-1">
         <label class="block text-sm font-medium mb-1" for="calendario">Calendario*</label>
         <select id="calendario" class="w-full border rounded px-3 py-2" [formControl]="calendarioCtrl">
-          <option value="">Selecciona una opción</option>
-          <option value="base">Base</option>
-          <option value="personalizado">Personalizado</option>
+          @for (calendario of calendarios.value(); track calendario.id) {
+          <option [ngValue]="calendario.id">{{ calendario.nombre }}</option>
+          }
         </select>
       </div>
 
@@ -21,4 +21,18 @@
       </button>
     </div>
   </div>
+
+  <!-- Modal flotante -->
+  <div *ngIf="calendario()" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded shadow-lg w-full max-w-4xl max-h-screen overflow-auto relative p-6">
+      <button type="button" (click)="cerrarModal()"
+        class="absolute top-4 right-4 text-gray-500 hover:text-black text-xl">
+        ✖️
+      </button>
+
+      <app-calendario-form [calendario]="calendario()" [editable]="false">
+      </app-calendario-form>
+    </div>
+  </div>
+
 </div>

@@ -16,5 +16,6 @@ export interface Fichaje {
   geocercas: boolean;
   latitud: number,
   longitud: number,
+  hora?: string;
 }
 

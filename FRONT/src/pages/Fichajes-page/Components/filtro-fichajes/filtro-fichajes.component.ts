@@ -1,7 +1,9 @@
-import { ChangeDetectionStrategy, Component, input, NgModule, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, NgModule, output } from '@angular/core';
 import { Fichaje } from '../../../../shared/interfaces/Fichaje.interface';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { FichajeService } from '../../../../app/services/Fichaje.service';
+import { rxResource } from '@angular/core/rxjs-interop';
 
 
 @Component({
@@ -12,9 +14,10 @@ import { FormsModule } from '@angular/forms';
 })
 export class FiltroFichajesComponent {
 
-  fichajesOriginales = input<Fichaje[]>([]);
+
   filtrar = output<Fichaje[]>();
   private debounceTimeout: any;
+  fichajeS = inject(FichajeService);
 
   searchNombre = '';
   mesSeleccionado = '';
@@ -35,12 +38,20 @@ export class FiltroFichajesComponent {
     { nombre: 'Diciembre', valor: '12' },
   ];
 
+  fichajesOriginales = rxResource({
+    loader: () => this.fichajeS.obtenerFichajesActivosSinPaginacion(),
+  });
+
   get anios(): string[] {
-    return [...new Set(this.fichajesOriginales().map(f => f.fecha.substring(0, 4)))];
+    const fichajes = this.fichajesOriginales.value();
+    if (!fichajes) return [];
+
+    return [...new Set(fichajes.map(f => f.fecha.substring(0, 4)))];
   }
 
+
   aplicarFiltro() {
-    const filtrados = this.fichajesOriginales().filter(f => {
+    const filtrados = this.fichajesOriginales.value()!.filter(f => {
       const nombreCompleto = `${f.empleado.nombre ?? ''} ${f.empleado.apellidos ?? ''}`;
       const coincideNombre = this.normalizarTexto(nombreCompleto).includes(this.searchNombre.toLowerCase());
       const coincideMes = this.mesSeleccionado ? f.fecha.substring(5, 7) === this.mesSeleccionado : true;
@@ -48,14 +59,19 @@ export class FiltroFichajesComponent {
       return coincideNombre && coincideMes && coincideAnio;
     });
 
-    this.filtrar.emit(filtrados);
+    if (filtrados.length === 0) {
+      this.filtrar.emit([]);
+    } else {
+      this.filtrar.emit(filtrados);
+    }
+
   }
 
   limpiarFiltro() {
     this.searchNombre = '';
     this.mesSeleccionado = '';
     this.anioSeleccionado = '';
-    this.aplicarFiltro();
+    this.filtrar.emit([]);
   }
 
   actualizarFiltro(filtrados: Fichaje[]) {

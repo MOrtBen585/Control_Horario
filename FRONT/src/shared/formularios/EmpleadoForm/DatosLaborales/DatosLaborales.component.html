@@ -14,13 +14,14 @@
 
     <div>
       <label class="block text-sm font-medium mb-1">Horario laboral</label>
-      <select formControlName="horario" class="w-full border px-3 py-2 rounded">
-        <option value="">Selecciona un horario</option>
-        <option value="mañana">Mañana</option>
-        <option value="tarde">Tarde</option>
-        <option value="completo">Jornada completa</option>
+      <select formControlName="horarioId" class="w-full border px-3 py-2 rounded">
+        @for (horario of horarios.value(); track horario.id) {
+        <option [ngValue]="horario.id">{{ horario.nombre }}</option>
+        }
       </select>
     </div>
+
+
 
     <div>
       <label class="block text-sm font-medium mb-1">Tipo de contrato</label>

@@ -85,16 +85,20 @@ Este proyecto nace como respuesta a la normativa vigente que obliga a las empres
    sudo nano /etc/systemd/system/miapp.service
    ```
 
-   Ejemplo de contenido:
+   Contenido real del servicio (según el manual):
    ```ini
    [Unit]
    Description=MiApp API
    After=network.target
 
    [Service]
-   User=usuario
    ExecStart=/usr/bin/java -jar /home/usuario/app/control-horario.jar --spring.config.location=file:/home/usuario/app/application.properties
-   SuccessExitStatus=143
+   WorkingDirectory=/home/usuario/app
+   Restart=always
+   RestartSec=10
+   StandardOutput=journal
+   StandardError=journal
+   User=usuario
 
    [Install]
    WantedBy=multi-user.target

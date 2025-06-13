@@ -8,23 +8,24 @@ Este proyecto nace como respuesta a la normativa vigente que obliga a las empres
 
 ## 📌 Índice
 
-1. [Introducción](#introducción)
-2. [Tecnologías Utilizadas](#tecnologías-utilizadas)
-3. [Requisitos del Sistema](#requisitos-del-sistema)
-4. [Instalación](#instalación)
-5. [Uso](#uso)
-6. [Desarrollo](#desarrollo)
-7. [Pruebas](#pruebas)
-8. [Despliegue](#despliegue)
-9. [Mantenimiento](#mantenimiento)
-10. [Conclusión](#conclusión)
+1. [Introducción](#introducción)  
+2. [Tecnologías Utilizadas](#tecnologías-utilizadas)  
+3. [Requisitos del Sistema](#requisitos-del-sistema)  
+4. [Instalación](#instalación)  
+5. [Uso](#uso)  
+6. [Desarrollo](#desarrollo)  
+7. [Pruebas](#pruebas)  
+8. [Despliegue](#despliegue)  
+9. [Mantenimiento](#mantenimiento)  
+10. [Conclusión](#conclusión)  
+11. [Contacto](#contacto)  
 
 ---
 
 ## 🧭 Introducción
 
 - **Nombre del Proyecto**: Control Horario  
-- **Objetivo**: Gestionar la jornada laboral de trabajadores y permitir auditorías por parte del estado.
+- **Objetivo**: Gestionar la jornada laboral de trabajadores y permitir auditorías por parte del estado.  
 - **Autor**: Manuel Ortiz Benítez  
 - **Instituto**: IES Fuentezuelas  
 
@@ -34,7 +35,9 @@ Este proyecto nace como respuesta a la normativa vigente que obliga a las empres
 
 - **Backend**: Spring Boot (Java)
 - **Frontend**: Angular + Tailwind CSS
-- **Base de Datos**: MariaDB
+- **Base de Datos**: MariaDB / MySQL
+- **Servidor Web**: Nginx
+- **Certificados SSL**: Certbot + Let's Encrypt
 - **Control de versiones**: Git + GitHub
 
 ---
@@ -51,27 +54,95 @@ Este proyecto nace como respuesta a la normativa vigente que obliga a las empres
 
 ### Software
 
-- Compatible con cualquier sistema operativo con navegador moderno.
-- Java 17
+- Sistema Operativo: Ubuntu 22.04 LTS o superior
+- Java 17+
 - Node.js y Angular CLI
+- Nginx
+- Certbot
+- Ionic (para la app Android)
+- Acceso SSH, dominio con DNS configurado, puertos 80 y 443 abiertos
 
 ---
 
 ## ⚙️ Instalación
 
-1. **Backend**:  
-   - Abrir el proyecto en Eclipse.  
-   - Instalar dependencias Maven.  
-   - Ejecutar el proyecto Spring Boot.
+### Backend (Spring Boot)
 
-2. **Frontend**:  
-   - Instalar Node.js  
-   - `npm install` dentro del proyecto Angular  
-   - `ng serve` para iniciar
+1. Compilar el proyecto y generar el `.jar`.
+2. Subir el `.jar` al servidor (por ejemplo: `/home/usuario/app/`) usando `scp`.
+3. Conectarse por SSH:
+   ```bash
+   ssh usuario@IP
+   ```
 
-3. **Base de Datos**:  
-   - Instalar MariaDB  
-   - Crear esquema y credenciales según configuración del backend.
+4. Crear archivo `application.properties` con:
+   - Configuración del puerto.
+   - Conexión a la base de datos remota.
+   - Parámetros de JPA y codificación UTF-8.
+
+5. Crear un servicio `systemd` para el backend:
+   ```bash
+   sudo nano /etc/systemd/system/miapp.service
+   ```
+
+   Ejemplo de contenido:
+   ```ini
+   [Unit]
+   Description=MiApp API
+   After=network.target
+
+   [Service]
+   User=usuario
+   ExecStart=/usr/bin/java -jar /home/usuario/app/control-horario.jar --spring.config.location=file:/home/usuario/app/application.properties
+   SuccessExitStatus=143
+
+   [Install]
+   WantedBy=multi-user.target
+   ```
+
+6. Activar y arrancar el servicio:
+   ```bash
+   sudo systemctl daemon-reexec
+   sudo systemctl enable miapp
+   sudo systemctl start miapp
+   sudo systemctl status miapp
+   ```
+
+### Base de Datos (MariaDB / MySQL)
+
+1. Instalar MariaDB:  
+   ```bash
+   sudo apt update && sudo apt upgrade  
+   sudo apt install mariadb-server  
+   sudo systemctl start mariadb  
+   sudo systemctl enable mariadb  
+   sudo mysql_secure_installation
+   ```
+
+2. Crear base de datos y usuario:
+   ```sql
+   CREATE USER 'MANUEL'@'localhost' IDENTIFIED BY 'tu_contraseña';
+   GRANT ALL PRIVILEGES ON *.* TO 'MANUEL'@'localhost' WITH GRANT OPTION;
+   FLUSH PRIVILEGES;
+   CREATE DATABASE BD_TFC;
+   ```
+
+### Frontend (Angular)
+
+1. Compilar con Angular CLI:
+   ```bash
+   ng build --configuration production
+   ```
+
+2. Subir contenido de la carpeta `dist/` al servidor:
+   ```bash
+   scp -r dist/usuario@IP:/var/www/miApp-front/browser/
+   ```
+
+3. Ajustar permisos:
+   ```bash
+   sudo chown -R www-data:www-data /var/www/miApp-front/
+   ```
 
 ---
 
@@ -98,7 +169,6 @@ Al iniciar sesión, el usuario recibe una configuración personalizada según su
 ## 🛠 Desarrollo
 
 - Proyecto desarrollado íntegramente por Manuel Ortiz Benítez.
-- Actualmente en fase de desarrollo.
 - Arquitectura dividida por capas en backend y estructura modular en frontend.
 
 ---
@@ -112,16 +182,23 @@ Al iniciar sesión, el usuario recibe una configuración personalizada según su
 
 ## 🚀 Despliegue
 
-1. Contratar hosting (ej. DonDominio)
-2. Subir backend con base de datos configurada
-3. Deploy de frontend como SPA o desde el mismo backend (si se empaqueta con `ng build`)
+### 🧱 Requisitos previos
+
+- Servidor con Ubuntu 22.04 LTS o superior.
+- Dominio apuntando al servidor desde la zona DNS.
+- Puertos 80 y 443 abiertos en el firewall.
+- Acceso SSH.
+- Certbot instalado para la gestión de certificados SSL.
+- MariaDB/MySQL y Java 17+ instalados.
+
+(El resto continúa desde la sección anterior, ya incluida...)
 
 ---
 
 ## 🔧 Mantenimiento
 
-- Actualizaciones se desarrollan en local y se suben tras validación manual.
-- La solución de errores se documentará una vez estable.
+- Actualizaciones desarrolladas localmente y subidas tras validación manual.
+- Documentación de errores y cambios planificada tras despliegue estable.
 
 ---
 
@@ -133,5 +210,5 @@ Este proyecto ha sido una experiencia clave en mi formación como desarrollador 
 
 ## 📬 Contacto
 
-- **Email**: [me@mortizb.dev](mailto:me@mortizb.dev)
+- **Email**: [me@mortizb.dev](mailto:me@mortizb.dev)  
 - **GitHub**: [MOrtBen585](https://github.com/MOrtBen585)

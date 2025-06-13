@@ -1,0 +1,43 @@
+.bg-gradient {
+  background: linear-gradient(to bottom right, #6b7280, #bfdbfe);
+  min-height: 100%;
+}
+
+.ficha-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 56px); // Altura restante del contenido
+}
+
+.custom-card {
+  width: 100%;
+  max-width: 420px;
+  border-radius: 1.5rem;
+  background: #f3f4f6;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: #1f2937;
+}
+
+.card-subtitle {
+  font-size: 0.9rem;
+  color: #6b7280;
+  margin-top: 0.2rem;
+}
+
+.horario-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  font-size: 0.95rem;
+}

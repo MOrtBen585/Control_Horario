@@ -4,51 +4,84 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding ion-text-center content-centered">
-  <ng-container *ngIf="!fichajeEmpleado.isLoading(); else loading">
-    <div class="ficha-container">
+<ion-content class="ion-padding bg-gradient">
 
-      <ion-card>
-        <ion-card-header>
-          <ion-card-title>Hola, {{ fichajeEmpleado.value()!.nombre }}</ion-card-title>
-          <ion-card-subtitle>{{ fichajeEmpleado.value()!.puesto }}</ion-card-subtitle>
+  <ng-container *ngIf="!infoFichaje.isLoading(); else loading">
+    <div class="ion-text-center ficha-wrapper">
+
+      <ion-card class="custom-card">
+        <ion-card-header class="ion-text-center">
+          <h2 class="card-title">
+            <ion-icon name="person-circle-outline" size="large"></ion-icon>
+            {{ infoFichaje.value()?.nombre }} {{ infoFichaje.value()?.apellidos }}
+          </h2>
+          <p class="card-subtitle">{{ infoFichaje.value()?.puesto }}</p>
         </ion-card-header>
 
         <ion-card-content>
-          <p class="ion-text-center">Horario estimado: <strong>{{ fichajeEmpleado.value()!.horario || 'No definido'
-              }}</strong></p>
 
-          <ion-button expand="block" color="success" class="ion-margin-top" (click)="fichar('ENTRADA')"
-            [disabled]="fichajeEmpleado.value()!.estadoSiguiente === 'SALIDA'">
-            Fichar entrada
-          </ion-button>
+          <div class="horario-box ion-margin-top">
+            <ion-icon name="time-outline"></ion-icon>
+            <span><strong>Horario de hoy: </strong> <span class="text-primary">{{ entrada }} - {{ salida
+                }}</span></span>
+          </div>
 
-          <ion-button expand="block" color="tertiary" class="ion-margin-top" (click)="fichar('SALIDA')"
-            [disabled]="fichajeEmpleado.value()!.estadoSiguiente === 'ENTRADA'">
-            Fichar salida
-          </ion-button>
+          <div class="ion-margin-top">
+            <ion-button expand="block" shape="round" color="success" (click)="fichar('ENTRADA')"
+              [disabled]="infoFichaje.value()?.estadoSiguiente === 'SALIDA'">
+              <ion-icon slot="start" name="log-in-outline"></ion-icon>
+              Entrada
+            </ion-button>
+
+            <ion-button expand="block" shape="round" color="tertiary" class="ion-margin-top" (click)="fichar('SALIDA')"
+              [disabled]="infoFichaje.value()?.estadoSiguiente === 'ENTRADA'">
+              <ion-icon slot="start" name="log-out-outline"></ion-icon>
+              Salida
+            </ion-button>
+          </div>
 
           <ion-text color="danger" *ngIf="geoError()">
             <p class="ion-margin-top">{{ geoError() }}</p>
           </ion-text>
 
-          <ion-text color="medium">
-            <p class="ion-margin-top">Última entrada: <strong>{{ fichajeEmpleado.value()!.ultimaEntrada || 'N/A'
-                }}</strong></p>
-            <p>Última salida: <strong>{{ fichajeEmpleado.value()!.ultimaSalida || 'N/A' }}</strong></p>
+          <ion-text *ngIf="mensajeFichaje()" class="text-green-600 font-semibold text-sm mt-2">
+            {{ mensajeFichaje() }}
           </ion-text>
+
+          <div *ngIf="mensajeToast()" class="custom-toast">
+            {{ mensajeToast() }}
+          </div>
+
+
+
+          <ion-text color="medium">
+            <p class="ion-margin-top">
+              <strong>Última entrada:</strong> {{ infoFichaje.value()?.ultimaEntrada || 'N/A' }}
+            </p>
+            <p>
+              <strong>Última salida:</strong> {{ infoFichaje.value()?.ultimaSalida || 'N/A' }}
+            </p>
+          </ion-text>
+
+          <ion-button expand="block" disabled class="ion-margin-top" fill="solid" color="warning" shape="round">
+            <ion-icon name="ticket-outline" slot="start"></ion-icon>
+            Crear ticket
+          </ion-button>
+
+          <ion-button expand="block" class="ion-margin-top" fill="solid" color="danger" shape="round"
+            (click)="logout()">
+            <ion-icon name="exit-outline" slot="start"></ion-icon>
+            Cerrar sesión
+          </ion-button>
+
         </ion-card-content>
       </ion-card>
-
-      <ion-button expand="block" color="danger" fill="outline" class="ion-margin-top" (click)="logout()">
-        Cerrar sesión
-      </ion-button>
 
     </div>
   </ng-container>
 
   <ng-template #loading>
-    <div class="ion-padding ion-text-center">
+    <div class="ion-text-center ion-padding">
       <ion-spinner name="crescent"></ion-spinner>
       <p>Cargando datos del fichaje...</p>
     </div>

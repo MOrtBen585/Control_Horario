@@ -79,17 +79,22 @@ export class LoginPage implements OnInit {
 
   login(): void {
     const { email, password } = this.form.value;
-    console.log('Email:', email);
 
     this.auth.login(email, password).subscribe({
-      next: (resp) => {
-        console.log('✅ Login success', resp);
-        this.router.navigate(['/ficha']);
+      next: (resp: boolean) => {
+        if (resp) {
+          this.router.navigate(['/ficha']);
+        } else {
+          this.error.set('Email o contraseña inválidos');
+        }
       },
       error: (err) => {
-        console.error('Error en login:', err);
-        this.error.set('Email o contraseña inválidos');
+        console.error('❌ Error inesperado en login:', err);
+        this.error.set('No se pudo conectar con el servidor');
       },
     });
   }
+
+
+
 }

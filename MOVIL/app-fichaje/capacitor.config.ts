@@ -4,6 +4,11 @@ const config: CapacitorConfig = {
   appId: 'com.miempresa.fichajeapp',
   appName: 'FichajeApp',
   webDir: 'www', // importante: debe ser el output de Angular (`ng build`)
+  plugins: {
+    SplashScreen: {
+      launchShowDuration: 0,
+    }
+  },
 
 };
 

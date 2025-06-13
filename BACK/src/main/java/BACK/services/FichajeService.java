@@ -18,7 +18,6 @@ import BACK.repositories.FichajeRepository;
 import BACK.repositories.HorarioRepository;
 import BACK.repositories.models.Empleado;
 import BACK.repositories.models.Fichaje;
-import BACK.repositories.models.Horario;
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
@@ -27,7 +26,6 @@ public class FichajeService {
     private final FichajeRepository fichajeRepository;
     private final EmpleadoRepository empleadoRepository;
     private final FichajeMapper fichajeMapper;
-    private final HorarioRepository horarioRepository;
 
     public FichajeService(FichajeRepository fichajeRepository,
                           EmpleadoRepository empleadoRepository,
@@ -35,7 +33,6 @@ public class FichajeService {
         this.fichajeRepository = fichajeRepository;
         this.empleadoRepository = empleadoRepository;
         this.fichajeMapper = fichajeMapper;
-        this.horarioRepository = horarioRepository;
     }
 
     public Fichaje registrarFichaje(FichajeRequestDto request) {
@@ -88,8 +85,7 @@ public class FichajeService {
     public EmpleadoFichajeDto getInfoParaFichar(Long empleadoId) {
         Empleado empleado = empleadoRepository.findById(empleadoId)
                 .orElseThrow(() -> new EntityNotFoundException("Empleado no encontrado con ID: " + empleadoId));
-        
-        Horario horario = horarioRepository.getById(empleado.getHorario().getId());
+       
         
 
         Optional<Fichaje> ultimoFichaje = fichajeRepository.findTopByEmpleadoIdOrderByFechaDesc(empleadoId);

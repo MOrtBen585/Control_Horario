@@ -214,5 +214,5 @@ Este proyecto ha sido una experiencia clave en mi formación como desarrollador 
 
 ## 📬 Contacto
 
-- **Email**: [mortizbdev@gamil.com](mailto:mortizbdev@gamil.com)  
+- **Email**: [mortizbdev@gmail.com](mailto:mortizbdev@gmail.com)  
 - **GitHub**: [MOrtBen585](https://github.com/MOrtBen585)

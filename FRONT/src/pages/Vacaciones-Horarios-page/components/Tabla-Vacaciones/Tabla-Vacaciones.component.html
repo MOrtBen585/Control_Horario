@@ -1,0 +1,30 @@
+<div class="overflow-x-auto">
+  <table class="table-auto w-full text-sm text-left border-collapse text-black">
+    <thead>
+      <tr>
+        <th class="px-4 py-2">Empleado</th>
+        @for (dia of diasDelMes(); track $index) {
+        <th class="px-2 py-2 text-center">{{ dia | date:'d' }}</th>
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @for (empleado of empleados(); track empleado.id) {
+      <tr class="border-t hover:bg-gray-50">
+        <td class="px-4 py-2 font-medium whitespace-nowrap">
+          {{ empleado.nombre }} {{ empleado.apellidos }}
+        </td>
+        @for (dia of diasDelMes(); track $index) {
+        <td class="text-center">
+          {{ tieneVacaciones(empleado, dia) ? '✔️' : '' }}
+        </td>
+        }
+      </tr>
+      }
+    </tbody>
+  </table>
+
+  <div class="mt-2 text-sm text-gray-600">
+    Visualizando mes: <strong>{{ fechaReferencia() | date: 'MMMM y' }}</strong>
+  </div>
+</div>

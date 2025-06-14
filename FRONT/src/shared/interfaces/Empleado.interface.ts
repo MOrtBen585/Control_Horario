@@ -1,3 +1,6 @@
+import { Calendario } from "./Calendario.interface";
+import { Horario } from "./Hoarario.interface";
+
 export interface MetodosContacto {
   appMovil: boolean;
   appWeb: boolean;
@@ -12,16 +15,22 @@ export interface Empleado {
   foto: string;
   nombre: string;
   apellidos: string;
-  calendario: string;
+  calendarioId?: number;
+  calendarioNombre?: string;
   dni: string;
   telefono: string;
   email: string;
+  password: string;
   fechaNacimiento: string;
   genero: string;
 
+  horario?: Horario;
+  calendario?: Calendario;
+
   // Datos laborales
   convenio: string;
-  horario: string;
+  horarioId: number | null;
+  horarioNomre?: string;
   tipoContrato: string;
   contratoDesde: Date;
   indefinido: boolean;

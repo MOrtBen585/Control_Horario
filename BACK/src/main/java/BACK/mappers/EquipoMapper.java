@@ -1,13 +1,13 @@
 package BACK.mappers;
 
+import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Component;
+
 import BACK.dtos.EquipoDto;
 import BACK.repositories.EmpleadoRepository;
 import BACK.repositories.models.Empleado;
 import BACK.repositories.models.Equipo;
-import org.mapstruct.Mapper;
-import org.springframework.stereotype.Component;
-
-import java.util.stream.Collectors;
 
 
 @Component

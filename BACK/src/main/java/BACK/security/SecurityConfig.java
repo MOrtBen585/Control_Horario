@@ -7,13 +7,13 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-@SuppressWarnings("ALL")
+@SuppressWarnings("all")
 @Configuration
 @EnableMethodSecurity
 public class SecurityConfig {
@@ -45,7 +45,10 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/auth/refresh").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/fichajes").hasAnyRole("EMPLEADO", "ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/fichajes/**").hasAnyRole("EMPLEADO", "ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/horarios/**").hasAnyRole("EMPLEADO", "ADMIN")
                         .requestMatchers("/api/empleados/**").hasRole("ADMIN")
+                        .requestMatchers("/api/horarios/**").authenticated() // TODO cambiar restricción DESARROLLO
+                        .requestMatchers("/api/calendarios/**").authenticated() // TODO cambiar restricción DESARROLLO
                         .requestMatchers("/api/equipos/**").hasRole("ADMIN")
                         .requestMatchers("/api/fichajes/**").hasRole("ADMIN")
                         .requestMatchers("/api/miperfil").hasRole("EMPLEADO")

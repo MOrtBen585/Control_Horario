@@ -95,21 +95,29 @@ export class AuthService {
   }
 
   logout(): Observable<any> {
-    this._token.set(null);
-    this._authStatus.set('unauthenticated');
-    this._userId.set(null);
-    this._userEmail.set(null);
-    this._userRole.set(null);
-
-    Preferences.remove({ key: 'accessToken' });
-    Preferences.remove({ key: 'refreshToken' });
+    const currentToken = this._token(); // guarda el token actual
 
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${this._token()}`
+      Authorization: `Bearer ${currentToken}`
     });
 
-    return this.http.post(`${this.baseUrl}/logout`, {}, { headers });
+    return this.http.post(`${this.baseUrl}/logout`, {}, { headers }).pipe(
+      catchError(err => {
+        console.error('Error durante logout:', err);
+        return of(null); // igual continuar con limpieza
+      }),
+      tap(() => {
+        this._token.set(null);
+        this._authStatus.set('unauthenticated');
+        this._userId.set(null);
+        this._userEmail.set(null);
+        this._userRole.set(null);
+        Preferences.remove({ key: 'accessToken' });
+        Preferences.remove({ key: 'refreshToken' });
+      })
+    );
   }
+
 
   refreshToken(): Observable<any> {
     return from(Preferences.get({ key: 'refreshToken' })).pipe(

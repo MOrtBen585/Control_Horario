@@ -4,7 +4,6 @@ import { LoginPageComponent } from '../pages/login.page/login.page.component';
 
 import { WelcomePageComponent } from '../pages/Welcome.page/Welcome.page.component';
 import { HomePageComponent } from '../pages/Home-page/Home-page.component';
-import { FichajeEmpleadoComponent } from '../pages/fichaje-empleado/fichaje-empleado.component';
 import { adminGuard } from './guards/admin.guard';
 import { UnauthorizedComponent } from '../pages/unauthorized/unauthorized.component';
 import { NotAuthenticatedGuard } from './guards/not-authenticated.guard';

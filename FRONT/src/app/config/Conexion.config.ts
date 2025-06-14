@@ -10,7 +10,7 @@ export class ConexionConfig {
   server: string;
 
   constructor(private variablesGlobales: VariablesEntorno) {
-    this.server = this.variablesGlobales.localServer;
+    this.server = this.variablesGlobales.apiServer;
   };
 
 }

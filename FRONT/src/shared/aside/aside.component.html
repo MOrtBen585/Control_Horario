@@ -30,22 +30,44 @@
           </span>
         </li>
 
-        <!-- Informes -->
+        <!-- TODO Informes
         <li class="flex items-center gap-2">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600" fill="currentColor" viewBox="0 0 24 24">
             <path d="M3 3h18v2H3V3zm0 6h12v2H3V9zm0 6h18v2H3v-2z" />
           </svg>
           <span [routerLink]="['/home/informes']" class="p-2 rounded hover:bg-gray-300 cursor-pointer">Informes</span>
         </li>
+        -->
 
         <!-- Fichajes -->
         <li class="flex items-center gap-2">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600" fill="currentColor" viewBox="0 0 24 24">
             <path
-              d="M12 20c4.41 0 8-3.59 8-8s-3.59-8-8-8s-8 3.59-8 8s3.59 8 8 8zm1-13h-2v6l5.25 3.15l1-1.65l-4.25-2.5V7z" />
+              d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V6h16v12zM6 8h5v2H6zm0 4h8v2H6z" />
           </svg>
           <span [routerLink]="['/home/fichajes']" class="p-2 rounded hover:bg-gray-300 cursor-pointer">Fichajes</span>
         </li>
+
+
+        <!-- Horarios -->
+        <li class="flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M12 8v5h5v-2h-3V8zm7-5H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z" />
+          </svg>
+          <span [routerLink]="['/home/horarios']" class="p-2 rounded hover:bg-gray-300 cursor-pointer">Horarios</span>
+        </li>
+
+        <!-- Calendarios -->
+        <li class="flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z" />
+          </svg>
+          <span [routerLink]="['/home/calendarios']"
+            class="p-2 rounded hover:bg-gray-300 cursor-pointer">Calendarios</span>
+        </li>
+
 
         <!-- Gastos -->
         <li class="flex items-center gap-2">
@@ -53,10 +75,10 @@
             <path
               d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-2.83.48-5.48-1.18-6.36-3.87H13v1.93zm6.36-4.93H11v-2h7.36c-.48-1.82-2.04-3.28-3.94-3.7V6h-2v1.29c-1.44.35-2.62 1.43-3.13 2.81H5.64C6.53 7.18 9.18 5.52 12 6.07V4h2v2.07c2.82.55 5.47 2.21 6.36 4.93z" />
           </svg>
-          <span [routerLink]="['/home/gastos']" class="p-2 rounded hover:bg-gray-300 cursor-pointer">Gastos</span>
+          <span [routerLink]="['/home/gastos']" class="p-2 rounded hover:bg-gray-300 cursor-pointer">Estadísticas</span>
         </li>
 
-        <!-- Gestión de talento -->
+        <!-- TODO Gestión de talento
         <li class="flex items-center gap-2">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600" fill="currentColor" viewBox="0 0 24 24">
             <path
@@ -65,8 +87,9 @@
           <span [routerLink]="['/home/GTalento']" class="p-2 rounded hover:bg-gray-300 cursor-pointer">Gestión de
             talento</span>
         </li>
+        -->
 
-        <!-- Ofertas de trabajo -->
+        <!-- TODO Ofertas de trabajo
         <li class="flex items-center gap-2">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600" fill="currentColor" viewBox="0 0 24 24">
             <path d="M14 6V4h-4v2H5v14h14V6h-5zM6 18V8h12v10H6zm7-7h-2v2H9v2h2v2h2v-2h2v-2h-2v-2z" />
@@ -74,8 +97,9 @@
           <span [routerLink]="['/home/ofertas']" class="p-2 rounded hover:bg-gray-300 cursor-pointer">Ofertas de
             trabajo</span>
         </li>
+        -->
 
-        <!-- Configuraciones -->
+        <!-- TODO Configuraciones
         <li class="flex items-center gap-2">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600" fill="currentColor" viewBox="0 0 24 24">
             <path
@@ -84,31 +108,26 @@
           <span [routerLink]="['/home/config']"
             class="p-2 rounded hover:bg-gray-300 cursor-pointer">Configuraciones</span>
         </li>
+        -->
 
-        <!-- Empresas -->
+        <!-- TODO Empresas
         <li class="flex items-center gap-2">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600" fill="currentColor" viewBox="0 0 24 24">
             <path d="M3 21h18v-2H3v2zm2-4h14v-5h-4V8H9v4H5v5z" />
           </svg>
           <span [routerLink]="['/home/empresas']" class="p-2 rounded hover:bg-gray-300 cursor-pointer">Empresas</span>
         </li>
+        -->
 
-        <!-- Convenios -->
+        <!-- TODO Convenios
         <li class="flex items-center gap-2">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600" fill="currentColor" viewBox="0 0 24 24">
             <path d="M14 2H6c-1.1 0-2 .9-2 2v16l4-4h6c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z" />
           </svg>
           <span [routerLink]="['/home/convenios']" class="p-2 rounded hover:bg-gray-300 cursor-pointer">Convenios</span>
         </li>
+        -->
 
-        <!-- Horarios -->
-        <li class="flex items-center gap-2">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600" fill="currentColor" viewBox="0 0 24 24">
-            <path
-              d="M12 20c4.41 0 8-3.59 8-8s-3.59-8-8-8s-8 3.59-8 8s3.59 8 8 8zm1-13h-2v6l4.5 2.67l1-1.73l-3.5-2.1V7z" />
-          </svg>
-          <span [routerLink]="['/home/horarios']" class="p-2 rounded hover:bg-gray-300 cursor-pointer">Horarios</span>
-        </li>
       </ul>
     </nav>
   </div>

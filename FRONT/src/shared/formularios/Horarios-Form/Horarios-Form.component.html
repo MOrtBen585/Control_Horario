@@ -1,0 +1,73 @@
+<form [formGroup]="form" class="space-y-4">
+  <!-- Nombre y Predeterminado -->
+  <div class="flex gap-4">
+    <div class="flex-1">
+      <label class="block text-sm font-medium">Nombre*</label>
+      <input formControlName="nombre" class="w-full border px-3 py-2 rounded" />
+    </div>
+    <label class="inline-flex items-center gap-2 mt-6">
+      <input type="checkbox" formControlName="predeterminado" />
+      Predeterminado
+    </label>
+  </div>
+
+  <!-- Días de aplicación -->
+  <div>
+    <h4 class="font-semibold mb-2">Días de aplicación</h4>
+    <div class="flex gap-2">
+      <label *ngFor="let ctrl of diasArray.controls; let i = index" class="inline-flex items-center gap-1">
+        <input type="checkbox" [formControl]="getDiaControl(i)" />
+        {{ ['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'][i] }}
+      </label>
+    </div>
+  </div>
+
+  <!-- Meses de aplicación -->
+  <div>
+    <h4 class="font-semibold mb-2">Meses de aplicación</h4>
+    <div class="flex gap-2 flex-wrap">
+      <label *ngFor="let ctrl of mesesArray.controls; let i = index" class="inline-flex items-center gap-1">
+        <input type="checkbox" [formControl]="ctrl" />
+        {{ ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'][i] }}
+      </label>
+    </div>
+  </div>
+
+  <!-- Rotación -->
+  <div>
+    <h4 class="font-semibold mb-2">Rotación</h4>
+    <label class="inline-flex items-center gap-2">
+      <input type="radio" formControlName="rotacion" value="none" /> Sin rotación
+    </label>
+    <label class="inline-flex items-center gap-2 ml-4">
+      <input type="radio" formControlName="rotacion" value="weekly" /> Semanal
+    </label>
+    <label class="inline-flex items-center gap-2 ml-4">
+      <input type="radio" formControlName="rotacion" value="daily" /> Diaria
+    </label>
+  </div>
+
+  <!-- Bloques horarios -->
+  <div>
+    <h4 class="font-semibold mb-2">Bloques horarios generales</h4>
+    <div class="space-y-2">
+
+      <div *ngFor="let b of bloques.controls; let i = index" [formGroup]="getBloque(i)" class="flex gap-2 items-center">
+        <input formControlName="inicio" type="time" class="border px-2 py-1 rounded" />
+        <span>-</span>
+        <input formControlName="fin" type="time" class="border px-2 py-1 rounded" />
+        <button type="button" (click)="removeBloque(i)" class="text-red-600">✖️</button>
+      </div>
+
+      <button type="button" (click)="addBloque()" class="btn btn-success btn-sm">
+        ➕ Crear bloque
+      </button>
+    </div>
+  </div>
+
+  <!-- Acciones -->
+  <div class="flex justify-end gap-2">
+    <button type="button" (click)="save()" class="btn btn-primary">Aceptar</button>
+    <button type="button" (click)="saved.emit()" class="btn btn-ghost">Cancelar</button>
+  </div>
+</form>

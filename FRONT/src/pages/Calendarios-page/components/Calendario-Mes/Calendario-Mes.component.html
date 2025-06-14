@@ -1,0 +1,10 @@
+<div class="grid grid-cols-7 gap-2">
+  <div class="text-center font-semibold" *ngFor="let d of ['L', 'M', 'X', 'J', 'V', 'S', 'D']">{{ d }}</div>
+
+  <ng-container *ngFor="let dia of dias()">
+    <button (click)="toggleDia(dia)" [class.bg-primary]="isSeleccionado(dia)"
+      class="p-2 rounded hover:bg-primary/70 text-sm text-center border">
+      {{ dia.getDate() }}
+    </button>
+  </ng-container>
+</div>

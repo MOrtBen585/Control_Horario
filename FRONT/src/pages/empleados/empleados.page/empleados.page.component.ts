@@ -119,6 +119,7 @@ export class EmpleadosPageComponent {
     } else {
       this.empleadoService.update(empleado.id, empleado).subscribe({
         next: (nuevoEmpleado) => {
+
           this.empleadoService.borrarCache(); // TODO Cambiar esto para que no haya que borrar la cache.
           this.empleados.reload();
           this.cerrarFormulario();

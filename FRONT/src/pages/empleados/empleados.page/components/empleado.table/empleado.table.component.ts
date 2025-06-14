@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, input, output, signal } from '@angular/core';
 import { Empleado } from '../../../../../shared/interfaces/Empleado.interface';
 import { CommonModule, DatePipe } from '@angular/common';
-import { sortByPipe } from '../../../../../app/pipes/sort-by.pipe';
 import { FilterByPipe } from '../../../../../app/pipes/filter-by.pipe';
+import { SortByPipe } from '../../../../../app/pipes/sort-by.pipe';
 
 @Component({
   selector: 'empleado-table',
-  imports: [CommonModule, DatePipe, sortByPipe, FilterByPipe],
+  imports: [CommonModule, DatePipe, SortByPipe, FilterByPipe],
   templateUrl: './empleado.table.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

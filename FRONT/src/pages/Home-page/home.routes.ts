@@ -14,6 +14,7 @@ import { SVacacionesPageComponent } from '../SVacaciones-page/SVacaciones-page.c
 import { EquiposPageComponent } from '../Equipos-page/Equipos-page.component';
 import { InformesPageComponent } from '../Informes-page/Informes-page.component';
 import { VacacionesHorariosPageComponent } from '../Vacaciones-Horarios-page/Vacaciones-Horarios-page.component';
+import { CalendariosPageComponent } from '../Calendarios-page/Calendarios-page.component';
 
 export const homeRoutes: Routes = [
   {
@@ -71,6 +72,10 @@ export const homeRoutes: Routes = [
   {
     path: 'informes',
     component: InformesPageComponent,
+  },
+  {
+    path: 'calendarios',
+    component: CalendariosPageComponent,
   },
   {
     path: '**',

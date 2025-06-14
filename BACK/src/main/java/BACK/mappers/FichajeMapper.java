@@ -1,12 +1,13 @@
 package BACK.mappers;
 
-import BACK.dtos.FichajeDto;
-import BACK.repositories.models.Empleado;
-import BACK.repositories.models.Fichaje;
-import BACK.dtos.request.FichajeRequestDto;
+import java.time.DayOfWeek;
+
 import org.springframework.stereotype.Component;
 
-import java.time.DayOfWeek;
+import BACK.dtos.FichajeDto;
+import BACK.dtos.request.FichajeRequestDto;
+import BACK.repositories.models.Empleado;
+import BACK.repositories.models.Fichaje;
 
 @Component
 public class FichajeMapper {
@@ -37,7 +38,7 @@ public class FichajeMapper {
         dto.setEstado(fichaje.getEstado());
         dto.setFecha(fichaje.getFecha());
         dto.setDiaSemana(traducirDia(fichaje.getFecha().getDayOfWeek()));
-        dto.setHorario(empleado.getHorario());
+        dto.setHorario(obtenerHorarioDelDia(empleado)); // ✅ Correcto
         dto.setMetodoRegistro(fichaje.getMetodoRegistro());
         dto.setGeolocalizacion(fichaje.isGeolocalizacion());
         dto.setGeocercas(fichaje.isGeocercas());
@@ -57,5 +58,13 @@ public class FichajeMapper {
             default: return "";
         }
     }
+    
+    private String obtenerHorarioDelDia(Empleado empleado) {
+        if (empleado.getHorario() == null) return "N/A";
+
+        String horarioGeneral = empleado.getHorario().getHorario(); // por ejemplo, "09:00-14:00"
+        return horarioGeneral != null ? horarioGeneral : "N/A";
+    }
+
 
 }

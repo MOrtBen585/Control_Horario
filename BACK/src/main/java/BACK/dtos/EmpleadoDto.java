@@ -29,7 +29,8 @@ public class EmpleadoDto {
     @NotBlank(message = "Los apellidos son obligatorios")
     private String apellidos;
 
-    private String calendario;
+    private Long calendarioId;
+    private String calendarioNombre;
 
     private String password;
 
@@ -52,7 +53,9 @@ public class EmpleadoDto {
 
     // Datos laborales
     private String convenio;
-    private String horario;
+
+    private Long horarioId;
+    private String horarioNombre;
     private String tipoContrato;
     private LocalDate contratoDesde;
     private boolean indefinido;

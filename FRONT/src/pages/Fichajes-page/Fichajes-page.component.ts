@@ -33,6 +33,8 @@ export class FichajesPageComponent {
   totalPages = signal<number>(0);
   pageSize = signal<number>(10);
 
+
+
   fichajesResource = rxResource({
     request: () => ({
       page: this.paginationService.currentPage() - 1,
@@ -44,7 +46,12 @@ export class FichajesPageComponent {
   });
 
   actualizarFiltro(filtrados: Fichaje[]): void {
-    this.fichajesFiltrados.set(filtrados);
+    if (filtrados.length === 0) {
+      this.fichajesFiltrados.set([]);
+    } else {
+      this.fichajesFiltrados.set(filtrados);
+    }
+
   }
 
 }

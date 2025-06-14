@@ -32,7 +32,9 @@ public class Empleado {
     private byte[] foto;
     private String nombre;
     private String apellidos;
-    private String calendario;
+    @ManyToOne
+    @JoinColumn(name = "calendario_id")
+    private Calendario calendario;
     private String dni;
     private String telefono;
     @Column(nullable = false, unique = true)
@@ -45,7 +47,10 @@ public class Empleado {
 
     // Datos laborales
     private String convenio;
-    private String horario;
+    @ManyToOne
+    @JoinColumn(name = "horario_id")
+    private Horario horario;
+
     private String tipoContrato;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate contratoDesde;

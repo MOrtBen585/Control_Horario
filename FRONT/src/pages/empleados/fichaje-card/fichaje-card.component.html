@@ -1,44 +1,100 @@
-<div class="flex items-center justify-center h-screen bg-gray-100 px-4">
-  <div class="w-full max-w-md p-6 bg-white rounded-2xl shadow-xl text-center">
+<div class="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-500 to-blue-100 px-4">
+  <div class="w-full max-w-md p-6 bg-gray-400 rounded-3xl shadow-2xl text-center space-y-4">
 
-    <h2 class="text-2xl font-bold mb-1">{{ info()!.nombre }} {{ info()!.apellidos }}</h2>
-    <p class="text-sm text-gray-500 mb-4">{{ info()!.puesto }}</p>
+    <div class="text-center">
+      <h2 class="text-2xl font-bold text-gray-800 flex items-center justify-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+          <g fill="none" stroke="currentColor" stroke-dasharray="28" stroke-dashoffset="28" stroke-linecap="round"
+            stroke-linejoin="round" stroke-width="2">
+            <path d="M4 21v-1c0 -3.31 2.69 -6 6 -6h4c3.31 0 6 2.69 6 6v1">
+              <animate fill="freeze" attributeName="stroke-dashoffset" dur="0.4s" values="28;0" />
+            </path>
+            <path d="M12 11c-2.21 0 -4 -1.79 -4 -4c0 -2.21 1.79 -4 4 -4c2.21 0 4 1.79 4 4c0 2.21 -1.79 4 -4 4Z">
+              <animate fill="freeze" attributeName="stroke-dashoffset" begin="0.4s" dur="0.4s" values="28;0" />
+            </path>
+          </g>
+        </svg>
+        {{ infoFichaje.value()?.nombre }} {{ infoFichaje.value()?.apellidos }}
+      </h2>
+      <p class="text-sm text-gray-500 mt-1">{{ infoFichaje.value()!.puesto }}</p>
+    </div>
 
-    <p class="text-sm text-gray-600 mb-4">
-      Tu horario hoy es: <strong>{{ entrada }} - {{ salida }}</strong>
-    </p>
+    <div class="border-t border-gray-200 pt-4">
+      <p class="text-sm text-gray-700 flex items-center justify-center gap-2">
+        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6l4 2" />
+        </svg>
+        <span class="font-semibold">Horario de hoy:</span>
+        <span class="text-blue-600 font-medium">{{ entrada }} - {{ salida }}</span>
+      </p>
+    </div>
 
-    <div class="flex gap-4 justify-center mb-4">
-      <button
-        class="bg-green-600 text-white px-4 py-2 rounded-lg font-medium shadow-md hover:bg-green-700 transition disabled:opacity-50"
-        (click)="fichar('ENTRADA')" [disabled]="info()!.estadoSiguiente === 'SALIDA' || geolocalizando">
-        Fichar entrada
+    <div class="flex justify-center gap-4">
+      <button (click)="fichar('ENTRADA')"
+        [disabled]="infoFichaje.value()!.estadoSiguiente === 'SALIDA' || geolocalizando()" [ngClass]="{
+    'bg-green-500 hover:bg-green-600 cursor-pointer': infoFichaje.value()!.estadoSiguiente !== 'SALIDA' && !geolocalizando(),
+    'bg-gray-400 cursor-not-allowed opacity-50': infoFichaje.value()!.estadoSiguiente === 'SALIDA' || geolocalizando()
+  }" class="flex items-center gap-2 text-white px-5 py-2.5 rounded-full shadow-lg transition text-sm font-semibold">
+
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5l7 7-7 7" />
+        </svg>
+        Entrada
       </button>
 
-      <button
-        class="bg-blue-600 text-white px-4 py-2 rounded-lg font-medium shadow-md hover:bg-blue-700 transition disabled:opacity-50"
-        (click)="fichar('SALIDA')" [disabled]="info()!.estadoSiguiente === 'ENTRADA' || geolocalizando">
-        Fichar salida
+      <button (click)="fichar('SALIDA')"
+        [disabled]="infoFichaje.value()!.estadoSiguiente === 'ENTRADA' || geolocalizando()" [ngClass]="{
+    'bg-blue-500 hover:bg-blue-600 cursor-pointer': infoFichaje.value()!.estadoSiguiente !== 'ENTRADA' && !geolocalizando(),
+    'bg-gray-400 cursor-not-allowed opacity-50': infoFichaje.value()!.estadoSiguiente === 'ENTRADA' || geolocalizando()
+  }" class="flex items-center gap-2 text-white px-5 py-2.5 rounded-full shadow-lg transition text-sm font-semibold">
+
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5M12 5l-7 7 7 7" />
+        </svg>
+        Salida
       </button>
     </div>
 
-    <div class="mb-4">
-      <p class="text-sm">Última entrada: <strong>{{ info()!.ultimaEntrada || 'N/A' }}</strong></p>
-      <p class="text-sm">Última salida: <strong>{{ info()!.ultimaSalida || 'N/A' }}</strong></p>
+    <div class="text-sm mt-4 space-y-1">
+      <p class="text-gray-600"><span class="font-medium">Última entrada:</span> {{ infoFichaje.value()!.ultimaEntrada ||
+        'N/A' }}</p>
+      <p class="text-gray-600"><span class="font-medium">Última salida:</span> {{ infoFichaje.value()!.ultimaSalida ||
+        'N/A' }}</p>
     </div>
 
-    <p *ngIf="errorGeo" class="text-red-600 mt-2 text-sm">{{ errorGeo }}</p>
-    <p *ngIf="mensajeFichaje" class="text-green-600 mt-2 text-sm font-semibold">{{ mensajeFichaje }}</p>
+    <div *ngIf="geolocalizando()" class="text-blue-500 text-sm mt-2 animate-pulse">
+      Obteniendo ubicación...
+    </div>
 
-    <hr class="my-4" />
+    <div *ngIf="mensajeFichaje" class="text-green-600 font-semibold text-sm mt-2">
+      {{ mensajeFichaje() }}
+    </div>
 
+    <div *ngIf="errorGeo" class="text-red-500 text-sm mt-2">
+      {{ errorGeo() }}
+    </div>
+
+    <hr class="my-4 border-gray-300" />
+
+    <!-- Botón Crear Ticket (deshabilitado) -->
+    <button disabled
+      class="flex items-center justify-center gap-2 w-full py-2 bg-yellow-400 text-white rounded-full shadow cursor-not-allowed opacity-70 mt-4">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M9 12h6m2 0a2 2 0 002-2V8a2 2 0 00-2-2h-1.5a1.5 1.5 0 01-3 0H9a2 2 0 00-2 2v2a2 2 0 002 2m0 0v4m6 0v-4" />
+      </svg>
+      Crear ticket
+    </button>
+
+    <!-- Botón Cerrar sesión -->
     <button (click)="logout()"
-      class="flex items-center gap-2 mx-auto px-5 py-2 bg-red-500 text-white font-medium rounded-xl shadow hover:bg-red-600 transition duration-200">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      class="flex items-center justify-center gap-2 w-full py-2 bg-red-500 text-white rounded-full shadow hover:bg-red-600 transition mt-4">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
           d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 002 2h3a2 2 0 002-2V7a2 2 0 00-2-2h-3a2 2 0 00-2 2v1" />
       </svg>
       Cerrar sesión
     </button>
+
   </div>
 </div>

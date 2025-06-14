@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit, OnChanges, SimpleChanges, signal, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, OnChanges, SimpleChanges, signal, output, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Empleado } from '../../interfaces/Empleado.interface';
 
 // Subcomponentes
@@ -11,6 +11,7 @@ import { CalendarioComponent } from './CalendarioPest/CalendarioPest.component';
 import { MetodoRegistroComponent } from './MetodoRegistro/MetodoRegistro.component';
 import { ActivacionComponent } from './activacion/activacion.component';
 import { PermisosComponent } from './components/Permisos/Permisos.component';
+import { HorarioService } from '../../../app/services/Horario.service';
 
 
 @Component({
@@ -36,6 +37,7 @@ export class EmpleadoFormComponent implements OnInit, OnChanges {
   estaEditando = signal<boolean>(false);
   cerrarVentana = output<boolean>();
   guardarEmpleado = output<Empleado>();
+  horariosService = inject(HorarioService);
 
   formGroup: FormGroup;
 
@@ -56,7 +58,7 @@ export class EmpleadoFormComponent implements OnInit, OnChanges {
       foto: [''],
       nombre: [''],
       apellidos: [''],
-      calendario: [''],
+      calendarioId: [''],
       dni: [''],
       rol: [''],
       telefono: [''],
@@ -65,7 +67,8 @@ export class EmpleadoFormComponent implements OnInit, OnChanges {
       fechaNacimiento: [''],
       genero: [''],
       convenio: [''],
-      horario: [''],
+      horarioId: [1, [Validators.required]],
+      horarioNombre: [''],
       tipoContrato: [''],
       contratoDesde: [''],
       indefinido: [false],
@@ -143,8 +146,8 @@ export class EmpleadoFormComponent implements OnInit, OnChanges {
 
       // console.log('Foto base64:', fotoBase64);
       // console.log('Datos completos del formulario:', datosEmpleado);
-
       this.guardarEmpleado.emit(datosEmpleado as Empleado);
+      console.log({ 'Guardando empleado...': datosEmpleado });
     } else {
       console.log('Formulario inválido');
       this.formGroup.markAllAsTouched();

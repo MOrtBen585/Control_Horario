@@ -1,9 +1,9 @@
 package BACK.dtos;
 
+import java.time.LocalDateTime;
+
 import BACK.repositories.models.Empleado;
 import lombok.Data;
-
-import java.time.LocalDateTime;
 
 @Data
 public class FichajeDto {

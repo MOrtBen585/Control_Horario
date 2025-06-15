@@ -15,39 +15,23 @@ export class VariablesEntorno {
   private readonly _apiServer = '/api';
 
   // Getters públicos
-  get /**
- * Método server
- * @param 
- * @returns string 
- */
-server(): string {
+
+  get server(): string {
     return this._server;
   }
 
-  get /**
- * Método localServer
- * @param 
- * @returns string 
- */
-localServer(): string {
+
+  get localServer(): string {
     return this._localServer;
   }
 
-  get /**
- * Método api
- * @param 
- * @returns string 
- */
-api(): string {
+
+  get api(): string {
     return this._api;
   }
 
-  get /**
- * Método apiServer
- * @param 
- * @returns string 
- */
-apiServer(): string {
+
+  get apiServer(): string {
     return this._apiServer;
   }
 }

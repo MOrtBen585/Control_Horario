@@ -4,8 +4,16 @@ import { Fichaje } from '../../shared/interfaces/Fichaje.interface';
 @Pipe({
   name: 'sortFichajes'
 })
+/**
+ * Clase SortFichajesPipe
+ */
 export class SortFichajesPipe implements PipeTransform {
-  transform(value: Fichaje[], sortBy: string | null, direction: 'asc' | 'desc' = 'asc'): Fichaje[] {
+  /**
+ * Método transform
+ * @param value: Fichaje[], sortBy: string | null, direction: 'asc' | 'desc' = 'asc'
+ * @returns Fichaje[] 
+ */
+transform(value: Fichaje[], sortBy: string | null, direction: 'asc' | 'desc' = 'asc'): Fichaje[] {
     if (!value || !sortBy) return value;
 
     const sorted = [...value];

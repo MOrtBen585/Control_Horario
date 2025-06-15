@@ -8,6 +8,9 @@ import { CommonModule } from '@angular/common';
   templateUrl: './calendario-mes.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+/**
+ * Clase CalendarioMesComponent
+ */
 export class CalendarioMesComponent {
   // Inputs
   mes = input<number>();
@@ -33,11 +36,21 @@ export class CalendarioMesComponent {
     return result;
   });
 
-  formatearFecha(d: Date): string {
+  /**
+ * Método formatearFecha
+ * @param d: Date
+ * @returns string 
+ */
+formatearFecha(d: Date): string {
     return d.toISOString().split('T')[0]; // 'YYYY-MM-DD'
   }
 
-  isSeleccionado(d: Date): boolean {
+  /**
+ * Método isSeleccionado
+ * @param d: Date
+ * @returns boolean 
+ */
+isSeleccionado(d: Date): boolean {
     return this.seleccionados()?.has(this.formatearFecha(d));
   }
 

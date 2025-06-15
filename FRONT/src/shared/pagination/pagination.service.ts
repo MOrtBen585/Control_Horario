@@ -4,6 +4,9 @@ import { ActivatedRoute } from '@angular/router';
 import { map, tap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
+/**
+ * Clase PaginationService
+ */
 export class PaginationService {
   private activatedRoute = inject(ActivatedRoute);
   private actualSize = signal<number>(10);

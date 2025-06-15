@@ -7,6 +7,9 @@ import { RouterLink } from '@angular/router';
   templateUrl: './Navbar.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+/**
+ * Clase NavbarComponent
+ */
 export class NavbarComponent {
   desplegado = signal<boolean>(false);
 }

@@ -7,12 +7,20 @@ import { Component } from '@angular/core';
   templateUrl: './SelectorTemas.component.html',
 
 })
+/**
+ * Clase SelectorTemasComponent
+ */
 export class SelectorTemasComponent {
   temas: string[] = [
     "light", "dark", "forest", "dracula", "synthwave", "cupcake", "corporate"
   ];
 
-  cambiarTema(tema: string): void {
+  /**
+ * Método cambiarTema
+ * @param tema: string
+ * @returns void 
+ */
+cambiarTema(tema: string): void {
     document.documentElement!.setAttribute('data-theme', tema);
   }
 

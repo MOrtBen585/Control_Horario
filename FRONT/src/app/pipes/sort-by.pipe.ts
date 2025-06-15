@@ -5,8 +5,16 @@ import { Empleado } from '../../shared/interfaces/Empleado.interface';
 @Pipe({
   name: 'sortBy'
 })
+/**
+ * Clase SortByPipe
+ */
 export class SortByPipe implements PipeTransform {
-  transform(value: Empleado[], sortBy: keyof Empleado | null): Empleado[] {
+  /**
+ * Método transform
+ * @param value: Empleado[], sortBy: keyof Empleado | null
+ * @returns Empleado[] 
+ */
+transform(value: Empleado[], sortBy: keyof Empleado | null): Empleado[] {
     // Si no hay valor, el array está vacío o no hay clave de ordenación, devuelve el array original
     if (!value || value.length === 0 || !sortBy) {
       return value;

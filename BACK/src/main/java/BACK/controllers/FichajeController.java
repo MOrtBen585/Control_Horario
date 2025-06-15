@@ -21,17 +21,32 @@ import BACK.repositories.models.Fichaje;
 import BACK.services.FichajeService;
 import jakarta.validation.Valid;
 
+/**
+ * The Class FichajeController.
+ */
 @RestController
 @RequestMapping("/api/fichajes")
 @PreAuthorize("hasRole('ADMIN')")
 public class FichajeController {
 
+    /** The fichaje service. */
     private final FichajeService fichajeService;
 
+    /**
+     * Instantiates a new fichaje controller.
+     *
+     * @param fichajeService the fichaje service
+     */
     public FichajeController(FichajeService fichajeService) {
         this.fichajeService = fichajeService;
     }
 
+    /**
+     * Registrar fichaje.
+     *
+     * @param dto the dto
+     * @return the response entity
+     */
     @PreAuthorize("hasRole('EMPLEADO')")
     @PostMapping
     public ResponseEntity<Fichaje> registrarFichaje(@RequestBody @Valid FichajeDto dto) {
@@ -39,36 +54,75 @@ public class FichajeController {
         return ResponseEntity.ok(saved);
     }
 
+    /**
+     * Listar fichajes propios.
+     *
+     * @param auth the auth
+     * @param pageable the pageable
+     * @return the response entity
+     */
     @GetMapping
     public ResponseEntity<PaginatedResponse<FichajeDto>> listarFichajesPropios(Authentication auth, Pageable pageable) {
         Page<FichajeDto> page = fichajeService.obtenerFichajesDelUsuarioActual(auth, pageable);
         return ResponseEntity.ok(PaginatedResponse.buildPaginatedResponse(page));
     }
 
+    /**
+     * Fichajes por fecha.
+     *
+     * @param fecha the fecha
+     * @param auth the auth
+     * @param pageable the pageable
+     * @return the response entity
+     */
     @GetMapping("/{fecha}")
     public ResponseEntity<PaginatedResponse<FichajeDto>> fichajesPorFecha(@PathVariable String fecha, Authentication auth, Pageable pageable) {
         Page<FichajeDto> page = fichajeService.obtenerFichajesDelUsuarioPorFecha(auth, fecha, pageable);
         return ResponseEntity.ok(PaginatedResponse.buildPaginatedResponse(page));
     }
 
+    /**
+     * Fichajes de empleado.
+     *
+     * @param id the id
+     * @param pageable the pageable
+     * @return the response entity
+     */
     @GetMapping("/empleado/{id}")
     public ResponseEntity<PaginatedResponse<FichajeDto>> fichajesDeEmpleado(@PathVariable Long id, Pageable pageable) {
         Page<FichajeDto> page = fichajeService.obtenerFichajesPorEmpleado(id, pageable);
         return ResponseEntity.ok(PaginatedResponse.buildPaginatedResponse(page));
     }
 
+    /**
+     * Obtener todos los fichajes.
+     *
+     * @param pageable the pageable
+     * @return the response entity
+     */
     @GetMapping("/all")
     public ResponseEntity<PaginatedResponse<FichajeDto>> obtenerTodosLosFichajes(Pageable pageable) {
         Page<FichajeDto> page = fichajeService.obtenerTodos(pageable);
         return ResponseEntity.ok(PaginatedResponse.buildPaginatedResponse(page));
     }
 
+    /**
+     * Gets the fichajes activos.
+     *
+     * @param pageable the pageable
+     * @return the fichajes activos
+     */
     @GetMapping("/activos")
     public ResponseEntity<PaginatedResponse<FichajeDto>> getFichajesActivos(Pageable pageable) {
         Page<FichajeDto> page = fichajeService.getFichajesDeEmpleadosActivos(pageable);
         return ResponseEntity.ok(PaginatedResponse.buildPaginatedResponse(page));
     }
     
+    /**
+     * Gets the fichajes activos sin paginacion.
+     *
+     * @return the fichajes activos sin paginacion
+     */
     @PreAuthorize("hasAnyRole('ADMIN', 'EMPLEADO')")
     @GetMapping("/activos/list")
     public ResponseEntity<List<FichajeDto>> getFichajesActivosSinPaginacion() {
@@ -76,6 +130,12 @@ public class FichajeController {
     }
 
 
+    /**
+     * Gets the info para fichar.
+     *
+     * @param empleadoId the empleado id
+     * @return the info para fichar
+     */
     @PreAuthorize("hasRole('EMPLEADO')")
     @GetMapping("/info/{empleadoId}")
     public ResponseEntity<EmpleadoFichajeDto> getInfoParaFichar(@PathVariable Long empleadoId) {

@@ -11,4 +11,7 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './Home-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+/**
+ * Clase HomePageComponent
+ */
 export class HomePageComponent { }

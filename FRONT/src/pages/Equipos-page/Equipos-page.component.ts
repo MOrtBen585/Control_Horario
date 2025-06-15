@@ -12,6 +12,9 @@ import { EmpleadoService } from '../../app/services/Empleado.service';
   templateUrl: './Equipos-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+/**
+ * Clase EquiposPageComponent
+ */
 export class EquiposPageComponent {
 
   equiposFiltrados = signal<Equipo[]>([]);
@@ -123,6 +126,11 @@ export class EquiposPageComponent {
 
 
 
+  /**
+ * Método empleadosSinEquipo
+ * @param equipo: Equipo
+ * @returns Empleado[]
+ */
   empleadosSinEquipo(equipo: Equipo): Empleado[] {
     return this.empleados().filter(emp =>
       !equipo.empleados.some(e => e.id === emp.id)
@@ -185,6 +193,11 @@ export class EquiposPageComponent {
     );
   }
 
+  /**
+* Método normalizarTexto
+* @param texto: string
+* @returns string
+*/
   private normalizarTexto(texto: string): string {
     return texto
       .toLowerCase()

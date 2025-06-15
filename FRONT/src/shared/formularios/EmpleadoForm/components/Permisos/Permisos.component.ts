@@ -12,6 +12,9 @@ import { FotoUploaderComponent } from '../../FotoUploader/FotoUploader.component
   imports: [CommonModule, FormsModule, ReactiveFormsModule, FotoUploaderComponent],
   templateUrl: './permisos.component.html',
 })
+/**
+ * Clase PermisosComponent
+ */
 export class PermisosComponent {
   formGroup = input.required<FormGroup>();
 

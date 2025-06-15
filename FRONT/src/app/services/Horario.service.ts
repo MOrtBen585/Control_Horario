@@ -8,6 +8,9 @@ import { ConexionConfig } from '../config/Conexion.config';
 
 
 @Injectable({ providedIn: 'root' })
+/**
+ * Clase HorarioService
+ */
 export class HorarioService {
   private conexion = inject(ConexionConfig).server;
 
@@ -16,28 +19,53 @@ export class HorarioService {
   constructor(private http: HttpClient) { }
 
   /** Obtener todos los horarios */
-  getAll(): Observable<HorarioResponseDto[]> {
+  /**
+ * Método getAll
+ * @param 
+ * @returns Observable<HorarioResponseDto[]> 
+ */
+getAll(): Observable<HorarioResponseDto[]> {
     console.log('Obteniendo todos los horarios');
     return this.http.get<HorarioResponseDto[]>(this.baseUrl);
   }
 
   /** Obtener un horario por ID */
-  getById(id: number): Observable<HorarioResponseDto> {
+  /**
+ * Método getById
+ * @param id: number
+ * @returns Observable<HorarioResponseDto> 
+ */
+getById(id: number): Observable<HorarioResponseDto> {
     return this.http.get<HorarioResponseDto>(`${this.baseUrl}/${id}`);
   }
 
   /** Crear un nuevo horario */
-  create(dto: HorarioRequestDto): Observable<HorarioResponseDto> {
+  /**
+ * Método create
+ * @param dto: HorarioRequestDto
+ * @returns Observable<HorarioResponseDto> 
+ */
+create(dto: HorarioRequestDto): Observable<HorarioResponseDto> {
     return this.http.post<HorarioResponseDto>(this.baseUrl, dto);
   }
 
   /** Actualizar un horario existente */
-  update(id: number, dto: HorarioRequestDto): Observable<HorarioResponseDto> {
+  /**
+ * Método update
+ * @param id: number, dto: HorarioRequestDto
+ * @returns Observable<HorarioResponseDto> 
+ */
+update(id: number, dto: HorarioRequestDto): Observable<HorarioResponseDto> {
     return this.http.put<HorarioResponseDto>(`${this.baseUrl}/${id}`, dto);
   }
 
   /** Eliminar un horario */
-  delete(id: number): Observable<void> {
+  /**
+ * Método delete
+ * @param id: number
+ * @returns Observable<void> 
+ */
+delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
 }

@@ -12,6 +12,9 @@ import { map } from 'rxjs/operators';
   templateUrl: './login.page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+/**
+ * Clase LoginPageComponent
+ */
 export class LoginPageComponent implements OnInit {
   form: FormGroup;
   auth = inject(AuthService);

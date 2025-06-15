@@ -19,14 +19,29 @@ import BACK.repositories.HorarioRepository;
 import BACK.repositories.models.Empleado;
 import BACK.repositories.models.Fichaje;
 import jakarta.persistence.EntityNotFoundException;
-
+/**
+ * The Class FichajeService.
+ */
 @Service
 public class FichajeService {
 
+    /** The fichaje repository. */
     private final FichajeRepository fichajeRepository;
+    
+    /** The empleado repository. */
     private final EmpleadoRepository empleadoRepository;
+    
+    /** The fichaje mapper. */
     private final FichajeMapper fichajeMapper;
 
+    /**
+     * Instantiates a new fichaje service.
+     *
+     * @param fichajeRepository the fichaje repository
+     * @param empleadoRepository the empleado repository
+     * @param fichajeMapper the fichaje mapper
+     * @param horarioRepository the horario repository
+     */
     public FichajeService(FichajeRepository fichajeRepository,
                           EmpleadoRepository empleadoRepository,
                           FichajeMapper fichajeMapper, HorarioRepository horarioRepository) {
@@ -35,6 +50,12 @@ public class FichajeService {
         this.fichajeMapper = fichajeMapper;
     }
 
+    /**
+     * Registrar fichaje.
+     *
+     * @param request the request
+     * @return the fichaje
+     */
     public Fichaje registrarFichaje(FichajeRequestDto request) {
         Empleado empleado = empleadoRepository.findById(request.getEmpleadoId())
                 .orElseThrow(() -> new RuntimeException("Empleado no encontrado"));
@@ -43,6 +64,13 @@ public class FichajeService {
         return fichajeRepository.save(fichaje);
     }
 
+    /**
+     * Obtener fichajes del usuario actual.
+     *
+     * @param auth the auth
+     * @param pageable the pageable
+     * @return the page
+     */
     public Page<FichajeDto> obtenerFichajesDelUsuarioActual(Authentication auth, Pageable pageable) {
         Empleado empleado = empleadoRepository.findByEmail(auth.getName())
                 .orElseThrow(() -> new RuntimeException("Empleado no encontrado"));
@@ -51,6 +79,14 @@ public class FichajeService {
                 .map(fichaje -> fichajeMapper.toDto(fichaje, fichaje.getEmpleado()));
     }
 
+    /**
+     * Obtener fichajes del usuario por fecha.
+     *
+     * @param auth the auth
+     * @param fecha the fecha
+     * @param pageable the pageable
+     * @return the page
+     */
     public Page<FichajeDto> obtenerFichajesDelUsuarioPorFecha(Authentication auth, String fecha, Pageable pageable) {
         Empleado empleado = empleadoRepository.findByEmail(auth.getName())
                 .orElseThrow(() -> new RuntimeException("Empleado no encontrado"));
@@ -59,21 +95,45 @@ public class FichajeService {
                 .map(fichaje -> fichajeMapper.toDto(fichaje, fichaje.getEmpleado()));
     }
 
+    /**
+     * Obtener fichajes por empleado.
+     *
+     * @param id the id
+     * @param pageable the pageable
+     * @return the page
+     */
     public Page<FichajeDto> obtenerFichajesPorEmpleado(Long id, Pageable pageable) {
         return fichajeRepository.findByEmpleadoId(id, pageable)
                 .map(fichaje -> fichajeMapper.toDto(fichaje, fichaje.getEmpleado()));
     }
 
+    /**
+     * Obtener todos.
+     *
+     * @param pageable the pageable
+     * @return the page
+     */
     public Page<FichajeDto> obtenerTodos(Pageable pageable) {
         return fichajeRepository.findAll(pageable)
                 .map(fichaje -> fichajeMapper.toDto(fichaje, fichaje.getEmpleado()));
     }
 
+    /**
+     * Gets the fichajes de empleados activos.
+     *
+     * @param pageable the pageable
+     * @return the fichajes de empleados activos
+     */
     public Page<FichajeDto> getFichajesDeEmpleadosActivos(Pageable pageable) {
         return fichajeRepository.findByEmpleado_ActivoTrue(pageable)
                 .map(fichaje -> fichajeMapper.toDto(fichaje, fichaje.getEmpleado()));
     }
     
+    /**
+     * Gets the all actives.
+     *
+     * @return the all actives
+     */
     public List<FichajeDto> getAllActives() {
         List<Fichaje> fichajes = fichajeRepository.findByEmpleado_ActivoTrue();
         return fichajes.stream()
@@ -82,6 +142,12 @@ public class FichajeService {
     }
 
 
+    /**
+     * Gets the info para fichar.
+     *
+     * @param empleadoId the empleado id
+     * @return the info para fichar
+     */
     public EmpleadoFichajeDto getInfoParaFichar(Long empleadoId) {
         Empleado empleado = empleadoRepository.findById(empleadoId)
                 .orElseThrow(() -> new EntityNotFoundException("Empleado no encontrado con ID: " + empleadoId));
@@ -117,6 +183,12 @@ public class FichajeService {
     }
 
 
+    /**
+     * Registrar fichaje.
+     *
+     * @param dto the dto
+     * @return the fichaje
+     */
     public Fichaje registrarFichaje(FichajeDto dto) {
         Empleado empleado = empleadoRepository.findById(dto.getEmpleadoId())
                 .orElseThrow(() -> new EntityNotFoundException("Empleado no encontrado"));

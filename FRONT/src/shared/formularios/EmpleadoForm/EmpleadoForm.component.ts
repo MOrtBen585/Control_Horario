@@ -32,6 +32,9 @@ import { HorarioService } from '../../../app/services/Horario.service';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+/**
+ * Clase EmpleadoFormComponent
+ */
 export class EmpleadoFormComponent implements OnInit, OnChanges {
   @Input() empleado?: Empleado;
   estaEditando = signal<boolean>(false);
@@ -101,7 +104,12 @@ export class EmpleadoFormComponent implements OnInit, OnChanges {
     console.log('Empleado:', this.empleado);
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  /**
+ * Método ngOnChanges
+ * @param changes: SimpleChanges
+ * @returns void 
+ */
+ngOnChanges(changes: SimpleChanges): void {
     if (changes['empleado'] && !changes['empleado'].firstChange) {
       this.cargarEmpleadoSiAplica();
       console.log('Cambios en empleado:', changes['empleado'].currentValue);

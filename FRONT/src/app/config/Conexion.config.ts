@@ -4,13 +4,15 @@ import { VariablesEntorno } from "../variablesEntorno";
 @Injectable({
   providedIn: 'root'
 })
+/**
+ * Clase ConexionConfig
+ */
 export class ConexionConfig {
 
-  // variablesGlobales = inject(VariablesEntorno);
   server: string;
 
   constructor(private variablesGlobales: VariablesEntorno) {
-    this.server = this.variablesGlobales.apiServer;
+    this.server = this.variablesGlobales.localServer;
   };
 
 }

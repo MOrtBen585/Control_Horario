@@ -7,6 +7,9 @@ import { Router } from '@angular/router';
   templateUrl: './unauthorized.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+/**
+ * Clase UnauthorizedComponent
+ */
 export class UnauthorizedComponent {
   constructor(private router: Router) {}
 

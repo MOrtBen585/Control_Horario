@@ -23,19 +23,36 @@ import BACK.repositories.models.Empleado;
 import BACK.services.EmpleadoService;
 import jakarta.validation.Valid;
 
+/**
+ * The Class EmpleadoController.
+ */
 @RestController
 @RequestMapping("/api/empleados")
 @PreAuthorize("hasRole('ADMIN')")
 public class EmpleadoController {
 
+    /** The empleado service. */
     private final EmpleadoService empleadoService;
+    
+    /** The empleado mapper. */
     private final EmpleadoMapper empleadoMapper;
 
+    /**
+     * Instantiates a new empleado controller.
+     *
+     * @param empleadoService the empleado service
+     * @param empleadoMapper the empleado mapper
+     */
     public EmpleadoController(EmpleadoService empleadoService, EmpleadoMapper empleadoMapper) {
         this.empleadoService = empleadoService;
         this.empleadoMapper = empleadoMapper;
     }
 
+    /**
+     * Gets the all.
+     *
+     * @return the all
+     */
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public List<EmpleadoDto> getAll() {
@@ -44,6 +61,12 @@ public class EmpleadoController {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Gets the by id.
+     *
+     * @param id the id
+     * @return the by id
+     */
     @GetMapping("/{id}")
     public ResponseEntity<EmpleadoDto> getById(@PathVariable Long id) {
         return empleadoService.findById(id)
@@ -52,6 +75,12 @@ public class EmpleadoController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    /**
+     * Creates the Empleado.
+     *
+     * @param empleadoDto the empleado dto
+     * @return the response entity
+     */
     @PostMapping
     public ResponseEntity<EmpleadoDto> create(@RequestBody @Valid EmpleadoDto empleadoDto) {
         Empleado empleado = empleadoMapper.toEntity(empleadoDto);
@@ -61,6 +90,13 @@ public class EmpleadoController {
     }
 
 
+    /**
+     * Update.
+     *
+     * @param id the id
+     * @param empleadoDto the empleado dto
+     * @return the response entity
+     */
     @PutMapping("/{id}")
     public ResponseEntity<EmpleadoDto> update(@PathVariable Long id, @RequestBody @Valid EmpleadoDto empleadoDto) {
         try {
@@ -72,6 +108,12 @@ public class EmpleadoController {
     }
 
 
+    /**
+     * Desactivar empleado.
+     *
+     * @param id the id
+     * @return the response entity
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> desactivarEmpleado(@PathVariable Long id) {
         empleadoService.desactivarEmpleado(id);
@@ -79,6 +121,12 @@ public class EmpleadoController {
     }
 
 
+    /**
+     * Gets the all activos.
+     *
+     * @param pageable the pageable
+     * @return the all activos
+     */
     @GetMapping("/paged")
     public ResponseEntity<PaginatedResponse<EmpleadoDto>> getAllActivos(Pageable pageable) {
         Page<EmpleadoDto> page = empleadoService.findAllActivos(pageable)
@@ -89,6 +137,11 @@ public class EmpleadoController {
 
 
 
+    /**
+     * Test.
+     *
+     * @return the list
+     */
     @GetMapping("/test-empleados")
     public List<Empleado> test() {
         return empleadoService.findAll();

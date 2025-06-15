@@ -4,9 +4,17 @@ import { Empleado } from '../../shared/interfaces/Empleado.interface';
 @Pipe({
   name: 'FilterBy',
 })
+/**
+ * Clase FilterByPipe
+ */
 export class FilterByPipe implements PipeTransform {
 
-  transform(value: Empleado[], searchTerm: string): Empleado[] {
+  /**
+ * Método transform
+ * @param value: Empleado[], searchTerm: string
+ * @returns Empleado[] 
+ */
+transform(value: Empleado[], searchTerm: string): Empleado[] {
     if (searchTerm.length === 0) {
       return value;
     }

@@ -10,6 +10,9 @@ import { ConexionConfig } from '../config/Conexion.config';
 @Injectable({
   providedIn: 'root'
 })
+/**
+ * Clase EquipoService
+ */
 export class EquipoService {
 
   private server = inject(ConexionConfig).server;
@@ -17,24 +20,49 @@ export class EquipoService {
   private baseUrl = `${this.server}/api/equipos`;
   http = inject(HttpClient);
 
-  getAll(): Observable<Equipo[]> {
+  /**
+ * Método getAll
+ * @param 
+ * @returns Observable<Equipo[]> 
+ */
+getAll(): Observable<Equipo[]> {
     console.log("getAll")
     return this.http.get<Equipo[]>(this.baseUrl);
   }
 
-  getById(id: number): Observable<Equipo> {
+  /**
+ * Método getById
+ * @param id: number
+ * @returns Observable<Equipo> 
+ */
+getById(id: number): Observable<Equipo> {
     return this.http.get<Equipo>(`${this.baseUrl}/${id}`);
   }
 
-  create(equipo: Equipo): Observable<Equipo> {
+  /**
+ * Método create
+ * @param equipo: Equipo
+ * @returns Observable<Equipo> 
+ */
+create(equipo: Equipo): Observable<Equipo> {
     return this.http.post<Equipo>(this.baseUrl, equipo);
   }
 
-  update(id: number, equipo: Equipo): Observable<Equipo> {
+  /**
+ * Método update
+ * @param id: number, equipo: Equipo
+ * @returns Observable<Equipo> 
+ */
+update(id: number, equipo: Equipo): Observable<Equipo> {
     return this.http.put<Equipo>(`${this.baseUrl}/${id}`, equipo);
   }
 
-  delete(id: number): Observable<void> {
+  /**
+ * Método delete
+ * @param id: number
+ * @returns Observable<void> 
+ */
+delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
 }

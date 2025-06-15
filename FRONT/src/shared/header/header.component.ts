@@ -8,6 +8,9 @@ import { ChangeDetectionStrategy, Component, inject, linkedSignal, signal } from
   templateUrl: './header.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+/**
+ * Clase HeaderComponent
+ */
 export class HeaderComponent {
 
 

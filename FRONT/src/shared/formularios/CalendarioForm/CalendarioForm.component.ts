@@ -12,6 +12,9 @@ import { CalendarioMesComponent } from '../../../pages/Calendarios-page/componen
   templateUrl: './calendarioform.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+/**
+ * Clase CalendarioFormComponent
+ */
 export class CalendarioFormComponent implements OnInit {
   calendario = input<Calendario | null>(null);
   saved = output<Calendario>();
@@ -20,7 +23,12 @@ export class CalendarioFormComponent implements OnInit {
 
   private fb = inject(FormBuilder);
 
-  nombreMes(m: number): string {
+  /**
+ * Método nombreMes
+ * @param m: number
+ * @returns string 
+ */
+nombreMes(m: number): string {
     return ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
       'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'][m];
   }
@@ -34,7 +42,12 @@ export class CalendarioFormComponent implements OnInit {
   anio = new Date().getFullYear();
   meses = Array.from({ length: 12 }, (_, i) => i);
 
-  ngOnInit(): void {
+  /**
+ * Método ngOnInit
+ * @param 
+ * @returns void 
+ */
+ngOnInit(): void {
     const cal = this.calendario();
     if (cal) {
       this.form.patchValue({ nombre: cal.nombre });
@@ -42,7 +55,12 @@ export class CalendarioFormComponent implements OnInit {
     }
   }
 
-  toggleDia(dia: string): void {
+  /**
+ * Método toggleDia
+ * @param dia: string
+ * @returns void 
+ */
+toggleDia(dia: string): void {
     if (this.diasSeleccionados.has(dia)) {
       this.diasSeleccionados.delete(dia);
     } else {

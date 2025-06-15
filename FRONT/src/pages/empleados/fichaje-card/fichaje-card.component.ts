@@ -21,6 +21,9 @@ import { rxResource } from '@angular/core/rxjs-interop';
   templateUrl: './fichaje-card.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+/**
+ * Clase FichajeCardComponent
+ */
 export class FichajeCardComponent {
   info = signal<EmpleadoFichajeDto | null>(null);
   cargando = signal<boolean>(true);
@@ -41,6 +44,11 @@ export class FichajeCardComponent {
       this.fichajeService.getInfoParaFichar(request.id!),
   });
 
+  // /**
+  //   * Método ngOnInit
+  //   * @param
+  //   * @returns void
+  //   */
   // ngOnInit(): void {
   //   console.log('✅ FichajeCardComponent: ngOnInit');
   //   console.log('✅ FichajeCardComponent: userId →', this.authService.userId());
@@ -149,11 +157,21 @@ export class FichajeCardComponent {
     });
   }
 
+  /**
+* Método entrada
+* @param
+* @returns string
+*/
   get entrada(): string {
     const horario = this.infoFichaje.value()?.horario;
     return horario ? horario.split('-')[0] : 'N/A';
   }
 
+  /**
+* Método salida
+* @param
+* @returns string
+*/
   get salida(): string {
     const horario = this.infoFichaje.value()?.horario;
     return horario ? horario.split('-')[1] : 'N/A';

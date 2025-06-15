@@ -15,6 +15,9 @@ import { tap } from 'rxjs';
   templateUrl: './horarios-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+/**
+ * Clase HorariosPageComponent
+ */
 export class HorariosPageComponent {
   horarioService = inject(HorarioService);
   horarios = rxResource({

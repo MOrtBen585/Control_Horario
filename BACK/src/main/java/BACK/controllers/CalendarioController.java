@@ -16,21 +16,41 @@ import org.springframework.web.bind.annotation.RestController;
 import BACK.dtos.CalendarioDto;
 import BACK.services.CalendarioService;
 
+/**
+ * The Class CalendarioController.
+ */
 @RestController
 @RequestMapping("/api/calendarios")
 public class CalendarioController {
 
+ /** The service. */
  private final CalendarioService service;
 
+ /**
+  * Instantiates a new calendario controller.
+  *
+  * @param service the service
+  */
  public CalendarioController(CalendarioService service) {
      this.service = service;
  }
 
+ /**
+  * Gets the all.
+  *
+  * @return the all
+  */
  @GetMapping
  public ResponseEntity<List<CalendarioDto>> getAll() {
      return ResponseEntity.ok(service.findAll());
  }
 
+ /**
+  * Gets the by id.
+  *
+  * @param id the id
+  * @return the by id
+  */
  @GetMapping("/{id}")
  public ResponseEntity<CalendarioDto> getById(@PathVariable Long id) {
      return service.findById(id)
@@ -38,16 +58,35 @@ public class CalendarioController {
              .orElse(ResponseEntity.notFound().build());
  }
 
+ /**
+  * Creates the.
+  *
+  * @param dto the dto
+  * @return the response entity
+  */
  @PostMapping
  public ResponseEntity<CalendarioDto> create(@RequestBody CalendarioDto dto) {
      return ResponseEntity.ok(service.create(dto));
  }
 
+ /**
+  * Update.
+  *
+  * @param id the id
+  * @param dto the dto
+  * @return the response entity
+  */
  @PutMapping("/{id}")
  public ResponseEntity<CalendarioDto> update(@PathVariable Long id, @RequestBody CalendarioDto dto) {
      return ResponseEntity.ok(service.update(id, dto));
  }
 
+ /**
+  * Delete.
+  *
+  * @param id the id
+  * @return the response entity
+  */
  @DeleteMapping("/{id}")
  public ResponseEntity<Void> delete(@PathVariable Long id) {
      service.delete(id);

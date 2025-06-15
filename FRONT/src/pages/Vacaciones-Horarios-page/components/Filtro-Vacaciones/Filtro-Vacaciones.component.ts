@@ -7,6 +7,9 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   templateUrl: './filtro-vacaciones.component.html',
 })
+/**
+ * Clase FiltroVacacionesComponent
+ */
 export class FiltroVacacionesComponent {
   search = output<string>();
 

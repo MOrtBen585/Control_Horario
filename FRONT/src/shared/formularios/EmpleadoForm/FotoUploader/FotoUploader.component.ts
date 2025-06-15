@@ -8,6 +8,9 @@ import { FormGroup } from '@angular/forms';
   templateUrl: './FotoUploader.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+/**
+ * Clase FotoUploaderComponent
+ */
 export class FotoUploaderComponent {
   formGroup = input.required<FormGroup>();
   cdr = inject(ChangeDetectorRef);

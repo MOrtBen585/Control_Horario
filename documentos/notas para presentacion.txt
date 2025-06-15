@@ -1,0 +1,9 @@
+Conectar por ssh --> ssh root@157.180.121.10
+
+Direcciones de interés en el server
+carpeta donde se sirve el front /var/www/miApp-front/
+carpeta donde está el jar y el application properties. /root
+Archivo de configuración del servicio /etc/systemd/system/miapp.service
+Archivos de configuración de sitios NginX /etc/nginx/sites-available/default
+Subir back desde la carpeta target por SCP --> scp scp .\BACK-0.0.1-SNAPSHOT.jar root@157.180.121.10:/root/
+Subir front desde la carpeta dist/front/ --> scp -r .\ root@157.180.121.10:/var/www/miApp-front/ 

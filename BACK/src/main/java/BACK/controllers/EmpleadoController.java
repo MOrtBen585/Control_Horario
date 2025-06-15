@@ -76,7 +76,7 @@ public class EmpleadoController {
     }
 
     /**
-     * Creates the.
+     * Creates the Empleado.
      *
      * @param empleadoDto the empleado dto
      * @return the response entity

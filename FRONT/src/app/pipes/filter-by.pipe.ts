@@ -12,9 +12,9 @@ export class FilterByPipe implements PipeTransform {
   /**
  * Método transform
  * @param value: Empleado[], searchTerm: string
- * @returns Empleado[] 
+ * @returns Empleado[]
  */
-transform(value: Empleado[], searchTerm: string): Empleado[] {
+  transform(value: Empleado[], searchTerm: string): Empleado[] {
     if (searchTerm.length === 0) {
       return value;
     }

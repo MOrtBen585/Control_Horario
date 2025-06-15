@@ -37,7 +37,7 @@ public class CorsConfig {
         config.setAllowCredentials(true); // Solo permitido con orígenes explícitos
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", config); // Aplica globalmente
+        source.registerCorsConfiguration("/**", config); // Se aplica globalmente
         return new CorsFilter(source);
     }
 }

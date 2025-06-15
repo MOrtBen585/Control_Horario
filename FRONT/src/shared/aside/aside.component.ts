@@ -8,4 +8,7 @@ import { RouterLink } from '@angular/router';
   templateUrl: './aside.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+/**
+ * Clase AsideComponent
+ */
 export class AsideComponent { }

@@ -6,4 +6,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   templateUrl: './Convenios-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+/**
+ * Clase ConveniosPageComponent
+ */
 export class ConveniosPageComponent { }

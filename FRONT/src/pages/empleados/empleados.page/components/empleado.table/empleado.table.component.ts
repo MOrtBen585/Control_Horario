@@ -10,6 +10,9 @@ import { SortByPipe } from '../../../../../app/pipes/sort-by.pipe';
   templateUrl: './empleado.table.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+/**
+ * Clase EmpleadoTableComponent
+ */
 export class EmpleadoTableComponent {
 
   empleados = input<Empleado[]>([]);

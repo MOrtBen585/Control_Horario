@@ -16,6 +16,9 @@ import { PaginationComponent } from '../../../shared/pagination/pagination.compo
   templateUrl: './empleados.page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+/**
+ * Clase EmpleadosPageComponent
+ */
 export class EmpleadosPageComponent {
 
 
@@ -95,6 +98,11 @@ export class EmpleadosPageComponent {
   }
 
 
+  /**
+* Método normalizarTexto
+* @param texto: string
+* @returns string
+*/
   private normalizarTexto(texto: string): string {
     return texto
       .toLowerCase()

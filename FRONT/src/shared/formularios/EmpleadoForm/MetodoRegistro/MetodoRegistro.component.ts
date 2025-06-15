@@ -10,50 +10,108 @@ import { FotoUploaderComponent } from '../FotoUploader/FotoUploader.component';
   imports: [CommonModule, FormsModule, ReactiveFormsModule, FotoUploaderComponent],
   templateUrl: './metodoregistro.component.html',
 })
+/**
+ * Clase MetodoRegistroComponent
+ */
 export class MetodoRegistroComponent {
   @Input() formGroup!: FormGroup;
 
-  get notificacionesCtrl(): FormControl {
+  get /**
+ * Método notificacionesCtrl
+ * @param 
+ * @returns FormControl 
+ */
+notificacionesCtrl(): FormControl {
     return this.formGroup.get('notificaciones') as FormControl;
   }
 
-  get metodoValidacionCtrl(): FormControl {
+  get /**
+ * Método metodoValidacionCtrl
+ * @param 
+ * @returns FormControl 
+ */
+metodoValidacionCtrl(): FormControl {
     return this.formGroup.get('metodoValidacion') as FormControl;
   }
 
-  get marcarInicioCtrl(): FormControl {
+  get /**
+ * Método marcarInicioCtrl
+ * @param 
+ * @returns FormControl 
+ */
+marcarInicioCtrl(): FormControl {
     return this.formGroup.get('marcarInicio') as FormControl;
   }
 
-  get geolocalizableCtrl(): FormControl {
+  get /**
+ * Método geolocalizableCtrl
+ * @param 
+ * @returns FormControl 
+ */
+geolocalizableCtrl(): FormControl {
     return this.formGroup.get('geolocalizable') as FormControl;
   }
 
-  get permitirCorreccionCtrl(): FormControl {
+  get /**
+ * Método permitirCorreccionCtrl
+ * @param 
+ * @returns FormControl 
+ */
+permitirCorreccionCtrl(): FormControl {
     return this.formGroup.get('permitirCorreccion') as FormControl;
   }
 
-  get permitirHorasExtraCtrl(): FormControl {
+  get /**
+ * Método permitirHorasExtraCtrl
+ * @param 
+ * @returns FormControl 
+ */
+permitirHorasExtraCtrl(): FormControl {
     return this.formGroup.get('permitirHorasExtra') as FormControl;
   }
 
-  get metodos(): FormGroup {
+  get /**
+ * Método metodos
+ * @param 
+ * @returns FormGroup 
+ */
+metodos(): FormGroup {
     return this.formGroup.get('metodos') as FormGroup;
   }
 
-  get metodoAppMovilCtrl(): FormControl {
+  get /**
+ * Método metodoAppMovilCtrl
+ * @param 
+ * @returns FormControl 
+ */
+metodoAppMovilCtrl(): FormControl {
     return this.metodos.get('appMovil') as FormControl;
   }
 
-  get metodoAppWebCtrl(): FormControl {
+  get /**
+ * Método metodoAppWebCtrl
+ * @param 
+ * @returns FormControl 
+ */
+metodoAppWebCtrl(): FormControl {
     return this.metodos.get('appWeb') as FormControl;
   }
 
-  get metodoTelefonoCtrl(): FormControl {
+  get /**
+ * Método metodoTelefonoCtrl
+ * @param 
+ * @returns FormControl 
+ */
+metodoTelefonoCtrl(): FormControl {
     return this.metodos.get('telefono') as FormControl;
   }
 
-  get metodoEmailCtrl(): FormControl {
+  get /**
+ * Método metodoEmailCtrl
+ * @param 
+ * @returns FormControl 
+ */
+metodoEmailCtrl(): FormControl {
     return this.metodos.get('email') as FormControl;
   }
 

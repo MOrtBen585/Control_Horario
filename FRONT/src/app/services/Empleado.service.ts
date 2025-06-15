@@ -9,6 +9,9 @@ import { ConexionConfig } from '../config/Conexion.config';
 @Injectable({
   providedIn: 'root'
 })
+/**
+ * Clase EmpleadoService
+ */
 export class EmpleadoService {
 
 
@@ -21,12 +24,22 @@ export class EmpleadoService {
   private http = inject(HttpClient);
 
   // 🔹 Obtener todos los empleados (sin paginación)
-  getAll(): Observable<Empleado[]> {
+  /**
+ * Método getAll
+ * @param 
+ * @returns Observable<Empleado[]> 
+ */
+getAll(): Observable<Empleado[]> {
     return this.http.get<Empleado[]>(this.apiUrl);
   }
 
   // 🔹 Obtener empleados paginados
-  getPaged(params?: any): Observable<PaginatedResponse<Empleado>> {
+  /**
+ * Método getPaged
+ * @param params?: any
+ * @returns Observable<PaginatedResponse<Empleado>> 
+ */
+getPaged(params?: any): Observable<PaginatedResponse<Empleado>> {
     const key = JSON.stringify(params ?? {});
 
     if (this.empleadosCache.has(key) &&
@@ -58,22 +71,42 @@ export class EmpleadoService {
   }
 
   // 🔹 Obtener un empleado por ID
-  getById(id: number): Observable<Empleado> {
+  /**
+ * Método getById
+ * @param id: number
+ * @returns Observable<Empleado> 
+ */
+getById(id: number): Observable<Empleado> {
     return this.http.get<Empleado>(`${this.apiUrl}/${id}`);
   }
 
   // 🔹 Crear un nuevo empleado
-  create(empleado: Empleado): Observable<Empleado> {
+  /**
+ * Método create
+ * @param empleado: Empleado
+ * @returns Observable<Empleado> 
+ */
+create(empleado: Empleado): Observable<Empleado> {
     return this.http.post<Empleado>(this.apiUrl, empleado);
   }
 
   // 🔹 Actualizar empleado
-  update(id: number, empleado: Empleado): Observable<Empleado> {
+  /**
+ * Método update
+ * @param id: number, empleado: Empleado
+ * @returns Observable<Empleado> 
+ */
+update(id: number, empleado: Empleado): Observable<Empleado> {
     return this.http.put<Empleado>(`${this.apiUrl}/${id}`, empleado);
   }
 
   // 🔹 Eliminar empleado
-  delete(id: number): Observable<void> {
+  /**
+ * Método delete
+ * @param id: number
+ * @returns Observable<void> 
+ */
+delete(id: number): Observable<void> {
     console.log("Eliminando en el servicio empleado...")
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }

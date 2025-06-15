@@ -8,6 +8,9 @@ import { AuthService } from '../../app/services/auth.service';
   templateUrl: './Welcome.page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+/**
+ * Clase WelcomePageComponent
+ */
 export class WelcomePageComponent {
   auth = inject(AuthService);
   router = inject(Router);

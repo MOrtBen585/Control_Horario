@@ -6,4 +6,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   templateUrl: './Configuraciones-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+/**
+ * Clase ConfiguracionesPageComponent
+ */
 export class ConfiguracionesPageComponent { }

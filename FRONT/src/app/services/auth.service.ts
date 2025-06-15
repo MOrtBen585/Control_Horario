@@ -10,6 +10,9 @@ type AuthStatus = 'checking' | 'authenticated' | 'unauthenticated';
 @Injectable({
   providedIn: 'root'
 })
+/**
+ * Clase AuthService
+ */
 export class AuthService {
 
   private conexion = inject(ConexionConfig).server;
@@ -47,6 +50,11 @@ export class AuthService {
 
 
 
+  /**
+ * Método login
+ * @param email: string, password: string
+ * @returns Observable<boolean>
+ */
   login(email: string, password: string): Observable<boolean> {
     const body = { email, password };
     return this.http.post<LoginRequest>(`${this.baseUrl}/login`, body).pipe(
@@ -57,6 +65,11 @@ export class AuthService {
 
 
 
+  /**
+ * Método checkStatus
+ * @param
+ * @returns Observable<boolean>
+ */
   checkStatus(): Observable<boolean> {
     const token = localStorage.getItem('accessToken');
     if (!token) {
@@ -74,6 +87,11 @@ export class AuthService {
 
 
 
+  /**
+ * Método logout
+ * @param
+ * @returns Observable<any>
+ */
   logout(): Observable<any> {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
@@ -89,6 +107,11 @@ export class AuthService {
     return this.http.post(`${this.baseUrl}/logout`, {}, { headers });
   }
 
+  /**
+ * Método refreshToken
+ * @param
+ * @returns Observable<any>
+ */
   refreshToken(): Observable<any> {
     const refreshToken = this.getRefreshToken();
     return this.http.post(`${this.baseUrl}/refresh`, { refreshToken }).pipe(
@@ -98,33 +121,68 @@ export class AuthService {
     );
   }
 
+  /**
+ * Método whoami
+ * @param
+ * @returns Observable<any>
+ */
   whoami(): Observable<any> {
     // Token cargado con authInterceptor
     return this.http.get(`${this.baseUrl}/whoami`);
   }
 
+  /**
+ * Método checkToken
+ * @param
+ * @returns Observable<any>
+ */
   checkToken(): Observable<any> {
     // Token cargado con authInterceptor
     return this.http.get(`${this.baseUrl}/check`);
   }
 
+  /**
+ * Método getRole
+ * @param
+ * @returns Observable<any>
+ */
   getRole(): Observable<any> {
     // Token cargado con authInterceptor
     return this.http.get(`${this.baseUrl}/role`);
   }
 
+  /**
+ * Método getAccessToken
+ * @param
+ * @returns string | null
+ */
   getAccessToken(): string | null {
     return localStorage.getItem('accessToken');
   }
 
+  /**
+ * Método getRefreshToken
+ * @param
+ * @returns string | null
+ */
   getRefreshToken(): string | null {
     return localStorage.getItem('refreshToken');
   }
 
+  /**
+ * Método isLoggedIn
+ * @param
+ * @returns boolean
+ */
   isLoggedIn(): boolean {
     return !!this.getAccessToken();
   }
 
+  /**
+* Método handleAuthSuccess
+* @param res: LoginRequest
+* @returns Observable<boolean>
+*/
   private handleAuthSuccess(res: LoginRequest): Observable<boolean> {
     this._authStatus.set('authenticated');
     this._token.set(res.accessToken);
@@ -145,6 +203,11 @@ export class AuthService {
     );
   }
 
+  /**
+* Método HandleAuthError
+* @param error: any
+* @returns Observable<boolean>
+*/
   private HandleAuthError(error: any): Observable<boolean> {
     console.error('❌ Auth error:', error);
     this.logout();

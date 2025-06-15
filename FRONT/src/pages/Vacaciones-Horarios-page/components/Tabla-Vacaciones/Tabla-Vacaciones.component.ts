@@ -10,6 +10,9 @@ import { Empleado } from '../../../../shared/interfaces/Empleado.interface';
   templateUrl: './tabla-vacaciones.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+/**
+ * Clase TablaVacacionesComponent
+ */
 export class TablaVacacionesComponent {
   empleados = input<Empleado[]>([]);
   filterBy = input<string>('');
@@ -29,7 +32,12 @@ export class TablaVacacionesComponent {
     return dias;
   });
 
-  tieneVacaciones(empleado: Empleado, dia: Date): boolean {
+  /**
+ * Método tieneVacaciones
+ * @param empleado: Empleado, dia: Date
+ * @returns boolean 
+ */
+tieneVacaciones(empleado: Empleado, dia: Date): boolean {
     // Ajustar este método según el formato real del array de vacaciones del empleado
     const fechaStr = dia.toISOString().split('T')[0];
     return (empleado as any).vacaciones?.includes(fechaStr); // Suponemos vacaciones: string[] con formato YYYY-MM-DD

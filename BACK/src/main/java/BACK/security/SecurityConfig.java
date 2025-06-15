@@ -13,17 +13,33 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+/**
+ * The Class SecurityConfig.
+ */
 @SuppressWarnings("all")
 @Configuration
 @EnableMethodSecurity
 public class SecurityConfig {
 
+    /** The jwt filter. */
     private final JwtAuthenticationFilter jwtFilter;
 
+    /**
+     * Instantiates a new security config.
+     *
+     * @param jwtFilter the jwt filter
+     */
     public SecurityConfig(JwtAuthenticationFilter jwtFilter) {
         this.jwtFilter = jwtFilter;
     }
 
+    /**
+     * Filter chain.
+     *
+     * @param http the http
+     * @return the security filter chain
+     * @throws Exception the exception
+     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -63,11 +79,23 @@ public class SecurityConfig {
     }
 
 
+    /**
+     * Authentication manager.
+     *
+     * @param config the config
+     * @return the authentication manager
+     * @throws Exception the exception
+     */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
 
+    /**
+     * Password encoder.
+     *
+     * @return the password encoder
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

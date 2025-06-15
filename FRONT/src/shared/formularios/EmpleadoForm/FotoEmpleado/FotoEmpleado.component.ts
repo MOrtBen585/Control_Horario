@@ -7,6 +7,9 @@ import { FormGroup } from '@angular/forms';
   imports: [CommonModule],
   templateUrl: './FotoEmpleado.component.html',
 })
+/**
+ * Clase FotoEmpleadoComponent
+ */
 export class FotoEmpleadoComponent {
   formGroup = input.required<FormGroup>();
 

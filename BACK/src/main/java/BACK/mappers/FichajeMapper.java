@@ -9,9 +9,19 @@ import BACK.dtos.request.FichajeRequestDto;
 import BACK.repositories.models.Empleado;
 import BACK.repositories.models.Fichaje;
 
+/**
+ * The Class FichajeMapper.
+ */
 @Component
 public class FichajeMapper {
 
+    /**
+     * To entity.
+     *
+     * @param request the request
+     * @param empleado the empleado
+     * @return the fichaje
+     */
     public Fichaje toEntity(FichajeRequestDto request, Empleado empleado) {
         Fichaje fichaje = new Fichaje();
         fichaje.setFecha(request.getFecha());
@@ -31,6 +41,13 @@ public class FichajeMapper {
         return fichaje;
     }
 
+    /**
+     * To dto.
+     *
+     * @param fichaje the fichaje
+     * @param empleado the empleado
+     * @return the fichaje dto
+     */
     public FichajeDto toDto(Fichaje fichaje, Empleado empleado) {
         FichajeDto dto = new FichajeDto();
         dto.setId(fichaje.getId());
@@ -46,6 +63,12 @@ public class FichajeMapper {
         return dto;
     }
 
+    /**
+     * Traducir dia.
+     *
+     * @param dia the dia
+     * @return the string
+     */
     private static String traducirDia(DayOfWeek dia) {
         switch (dia) {
             case MONDAY: return "Lunes";
@@ -59,6 +82,12 @@ public class FichajeMapper {
         }
     }
     
+    /**
+     * Obtener horario del dia.
+     *
+     * @param empleado the empleado
+     * @return the string
+     */
     private String obtenerHorarioDelDia(Empleado empleado) {
         if (empleado.getHorario() == null) return "N/A";
 

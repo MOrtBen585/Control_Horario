@@ -1,16 +1,24 @@
 package BACK.config;
 
+import java.util.List;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-import java.util.List;
-
+/**
+ * The Class CorsConfig.
+ */
 @Configuration
 public class CorsConfig {
 
+    /**
+     * Cors filter.
+     *
+     * @return the cors filter
+     */
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();

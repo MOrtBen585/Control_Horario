@@ -9,14 +9,27 @@ import { FotoUploaderComponent } from '../FotoUploader/FotoUploader.component';
   imports: [CommonModule, FormsModule, ReactiveFormsModule, FotoUploaderComponent],
   templateUrl: './activacion.component.html',
 })
+/**
+ * Clase ActivacionComponent
+ */
 export class ActivacionComponent {
   formGroup = input.required<FormGroup>();
 
-  get bajaIndefinidaCtrl(): FormControl {
+  get /**
+ * Método bajaIndefinidaCtrl
+ * @param 
+ * @returns FormControl 
+ */
+bajaIndefinidaCtrl(): FormControl {
     return this.formGroup().get('bajaIndefinida') as FormControl;
   }
 
-  get activoCtrl(): FormControl {
+  get /**
+ * Método activoCtrl
+ * @param 
+ * @returns FormControl 
+ */
+activoCtrl(): FormControl {
     return this.formGroup().get('activo') as FormControl;
   }
 }

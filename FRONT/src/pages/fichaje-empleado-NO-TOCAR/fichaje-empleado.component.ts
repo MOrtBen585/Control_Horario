@@ -10,6 +10,9 @@ import { Empleado } from '../../shared/interfaces/Empleado.interface';
   templateUrl: './fichaje-empleado.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+/**
+ * Clase FichajeEmpleadoComponent
+ */
 export class FichajeEmpleadoComponent {
   empleado = input.required<Empleado>();
   realizarFichaje = output<Fichaje>();
@@ -26,7 +29,12 @@ export class FichajeEmpleadoComponent {
     this.emitirFichaje('salida');
   }
 
-  get esDiaLaboral(): boolean {
+  get /**
+ * Método esDiaLaboral
+ * @param 
+ * @returns boolean 
+ */
+esDiaLaboral(): boolean {
     const diaIndex = new Date().getDay(); // 0 (domingo) - 6 (sábado)
     return this.empleado().horario?.dias?.[diaIndex] ?? false;
   }

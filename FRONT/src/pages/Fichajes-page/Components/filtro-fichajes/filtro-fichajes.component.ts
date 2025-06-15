@@ -12,6 +12,9 @@ import { rxResource } from '@angular/core/rxjs-interop';
   templateUrl: './filtro-fichajes.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+/**
+ * Clase FiltroFichajesComponent
+ */
 export class FiltroFichajesComponent {
 
 
@@ -42,7 +45,12 @@ export class FiltroFichajesComponent {
     loader: () => this.fichajeS.obtenerFichajesActivosSinPaginacion(),
   });
 
-  get anios(): string[] {
+  get /**
+ * Método anios
+ * @param
+ * @returns string[]
+ */
+    anios(): string[] {
     const fichajes = this.fichajesOriginales.value();
     if (!fichajes) return [];
 
@@ -85,6 +93,11 @@ export class FiltroFichajesComponent {
     }, 1000); // 1000 ms = 1 segundo
   }
 
+  /**
+* Método normalizarTexto
+* @param texto: string
+* @returns string
+*/
   private normalizarTexto(texto: string): string {
     return texto
       .toLowerCase()

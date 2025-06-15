@@ -20,6 +20,9 @@ import { PaginationComponent } from "../../shared/pagination/pagination.componen
   templateUrl: './Fichajes-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+/**
+ * Clase FichajesPageComponent
+ */
 export class FichajesPageComponent {
 
   private fichajeS = inject(FichajeService);
@@ -45,7 +48,12 @@ export class FichajesPageComponent {
       this.fichajeS.obtenerTodosLosFichajesActivos(request),
   });
 
-  actualizarFiltro(filtrados: Fichaje[]): void {
+  /**
+ * Método actualizarFiltro
+ * @param filtrados: Fichaje[]
+ * @returns void 
+ */
+actualizarFiltro(filtrados: Fichaje[]): void {
     if (filtrados.length === 0) {
       this.fichajesFiltrados.set([]);
     } else {

@@ -13,6 +13,9 @@ import { Calendario } from '../../../interfaces/Calendario.interface';
   imports: [CommonModule, FormsModule, ReactiveFormsModule, FotoUploaderComponent, CalendarioFormComponent],
   templateUrl: './calendariopest.component.html',
 })
+/**
+ * Clase CalendarioComponent
+ */
 export class CalendarioComponent {
   formGroup = input.required<FormGroup>();
   calendarioService = inject(CalendarioService);
@@ -22,7 +25,12 @@ export class CalendarioComponent {
     loader: () => this.calendarioService.getAll()
   });
 
-  get calendarioCtrl(): FormControl {
+  get /**
+ * Método calendarioCtrl
+ * @param 
+ * @returns FormControl 
+ */
+calendarioCtrl(): FormControl {
     return this.formGroup()!.get('calendarioId') as FormControl;
   }
 

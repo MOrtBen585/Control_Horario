@@ -14,6 +14,9 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
   imports: [RouterLink, CommonModule],
   templateUrl: './pagination.component.html',
 })
+/**
+ * Clase PaginationComponent
+ */
 export class PaginationComponent {
   pages = input(0);
   currentPage = input<number>(1);

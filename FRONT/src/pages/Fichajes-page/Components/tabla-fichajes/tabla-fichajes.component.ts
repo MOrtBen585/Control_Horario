@@ -12,6 +12,9 @@ import { SortFichajesPipe } from "../../../../app/pipes/sort-fichajes.pipe";
   templateUrl: './tabla-fichajes.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+/**
+ * Clase TablaFichajesComponent
+ */
 export class TablaFichajesComponent {
 
   // Entradas

@@ -10,16 +10,31 @@ import BACK.repositories.models.Empleado;
 import BACK.repositories.models.Equipo;
 
 
+/**
+ * The Class EquipoMapper.
+ */
 @Component
 public class EquipoMapper {
 
 
+    /** The empleado repository. */
     private final EmpleadoRepository empleadoRepository;
 
+    /**
+     * Instantiates a new equipo mapper.
+     *
+     * @param empleadoRepository the empleado repository
+     */
     public EquipoMapper(EmpleadoRepository empleadoRepository) {
         this.empleadoRepository = empleadoRepository;
     }
 
+    /**
+     * To dto.
+     *
+     * @param equipo the equipo
+     * @return the equipo dto
+     */
     public EquipoDto toDto(Equipo equipo) {
         EquipoDto dto = new EquipoDto();
         dto.setId(equipo.getId());
@@ -32,6 +47,12 @@ public class EquipoMapper {
         return dto;
     }
 
+    /**
+     * To entity.
+     *
+     * @param dto the dto
+     * @return the equipo
+     */
     public Equipo toEntity(EquipoDto dto) {
         Equipo equipo = new Equipo();
         equipo.setId(dto.getId());

@@ -12,6 +12,9 @@ import { ConexionConfig } from '../config/Conexion.config';
 @Injectable({
   providedIn: 'root'
 })
+/**
+ * Clase FichajeService
+ */
 export class FichajeService {
 
   private conexion = inject(ConexionConfig).server;
@@ -20,35 +23,75 @@ export class FichajeService {
 
   constructor(private http: HttpClient) { }
 
-  obtenerMisFichajes(params?: any): Observable<PaginatedResponse<Fichaje>> {
+  /**
+ * Método obtenerMisFichajes
+ * @param params?: any
+ * @returns Observable<PaginatedResponse<Fichaje>> 
+ */
+obtenerMisFichajes(params?: any): Observable<PaginatedResponse<Fichaje>> {
     return this.http.get<PaginatedResponse<Fichaje>>(this.baseUrl, { params });
   }
 
-  obtenerMisFichajesPorFecha(fecha: string, params?: any): Observable<PaginatedResponse<Fichaje>> {
+  /**
+ * Método obtenerMisFichajesPorFecha
+ * @param fecha: string, params?: any
+ * @returns Observable<PaginatedResponse<Fichaje>> 
+ */
+obtenerMisFichajesPorFecha(fecha: string, params?: any): Observable<PaginatedResponse<Fichaje>> {
     return this.http.get<PaginatedResponse<Fichaje>>(`${this.baseUrl}/${fecha}`, { params });
   }
 
-  obtenerFichajesDeEmpleado(id: number, params?: any): Observable<PaginatedResponse<Fichaje>> {
+  /**
+ * Método obtenerFichajesDeEmpleado
+ * @param id: number, params?: any
+ * @returns Observable<PaginatedResponse<Fichaje>> 
+ */
+obtenerFichajesDeEmpleado(id: number, params?: any): Observable<PaginatedResponse<Fichaje>> {
     return this.http.get<PaginatedResponse<Fichaje>>(`${this.baseUrl}/empleado/${id}`, { params });
   }
 
-  obtenerTodosLosFichajes(params?: any): Observable<PaginatedResponse<Fichaje>> {
+  /**
+ * Método obtenerTodosLosFichajes
+ * @param params?: any
+ * @returns Observable<PaginatedResponse<Fichaje>> 
+ */
+obtenerTodosLosFichajes(params?: any): Observable<PaginatedResponse<Fichaje>> {
     return this.http.get<PaginatedResponse<Fichaje>>(`${this.baseUrl}/all`, { params });
   }
 
-  obtenerTodosLosFichajesActivos(params?: any): Observable<PaginatedResponse<Fichaje>> {
+  /**
+ * Método obtenerTodosLosFichajesActivos
+ * @param params?: any
+ * @returns Observable<PaginatedResponse<Fichaje>> 
+ */
+obtenerTodosLosFichajesActivos(params?: any): Observable<PaginatedResponse<Fichaje>> {
     return this.http.get<PaginatedResponse<Fichaje>>(`${this.baseUrl}/activos`, { params });
   }
 
-  obtenerFichajesActivosSinPaginacion(): Observable<Fichaje[]> {
+  /**
+ * Método obtenerFichajesActivosSinPaginacion
+ * @param 
+ * @returns Observable<Fichaje[]> 
+ */
+obtenerFichajesActivosSinPaginacion(): Observable<Fichaje[]> {
     return this.http.get<Fichaje[]>(`${this.baseUrl}/activos/list`);
   }
 
-  getInfoParaFichar(empleadoId: number): Observable<EmpleadoFichajeDto> {
+  /**
+ * Método getInfoParaFichar
+ * @param empleadoId: number
+ * @returns Observable<EmpleadoFichajeDto> 
+ */
+getInfoParaFichar(empleadoId: number): Observable<EmpleadoFichajeDto> {
     return this.http.get<EmpleadoFichajeDto>(`${this.baseUrl}/info/${empleadoId}`);
   }
 
-  registrarFichaje(fichaje: Partial<Fichaje>): Observable<Fichaje> {
+  /**
+ * Método registrarFichaje
+ * @param fichaje: Partial<Fichaje>
+ * @returns Observable<Fichaje> 
+ */
+registrarFichaje(fichaje: Partial<Fichaje>): Observable<Fichaje> {
     return this.http.post<Fichaje>(`${this.baseUrl}`, fichaje);
   }
 }

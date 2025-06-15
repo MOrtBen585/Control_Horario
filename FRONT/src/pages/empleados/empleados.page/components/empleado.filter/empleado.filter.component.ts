@@ -7,6 +7,9 @@ import { ChangeDetectionStrategy, Component, EventEmitter, NgModule, output, Out
   templateUrl: './empleado.filter.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+/**
+ * Clase EmpleadoFilterComponent
+ */
 export class EmpleadoFilterComponent {
   search = output<string>();
   itemsPerPage = 10;

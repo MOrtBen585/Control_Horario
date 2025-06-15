@@ -9,6 +9,9 @@ import { FotoUploaderComponent } from '../FotoUploader/FotoUploader.component';
   templateUrl: './datos-generales.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+/**
+ * Clase DatosGeneralesComponent
+ */
 export class DatosGeneralesComponent {
   formGroup = input.required<FormGroup>();
 }

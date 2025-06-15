@@ -4,5 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import BACK.repositories.models.Horario;
 
+/**
+ * The Interface HorarioRepository.
+ */
 public interface HorarioRepository extends JpaRepository<Horario, Long> {
 }

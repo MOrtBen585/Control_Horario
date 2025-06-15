@@ -7,6 +7,9 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './register.page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+/**
+ * Clase RegisterPageComponent
+ */
 export class RegisterPageComponent {
   name = '';
   email = '';

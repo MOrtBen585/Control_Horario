@@ -3,6 +3,9 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
+/**
+ * Clase VariablesEntorno
+ */
 export class VariablesEntorno {
 
   // Variables privadas y constantes
@@ -12,19 +15,39 @@ export class VariablesEntorno {
   private readonly _apiServer = '/api';
 
   // Getters públicos
-  get server(): string {
+  get /**
+ * Método server
+ * @param 
+ * @returns string 
+ */
+server(): string {
     return this._server;
   }
 
-  get localServer(): string {
+  get /**
+ * Método localServer
+ * @param 
+ * @returns string 
+ */
+localServer(): string {
     return this._localServer;
   }
 
-  get api(): string {
+  get /**
+ * Método api
+ * @param 
+ * @returns string 
+ */
+api(): string {
     return this._api;
   }
 
-  get apiServer(): string {
+  get /**
+ * Método apiServer
+ * @param 
+ * @returns string 
+ */
+apiServer(): string {
     return this._apiServer;
   }
 }

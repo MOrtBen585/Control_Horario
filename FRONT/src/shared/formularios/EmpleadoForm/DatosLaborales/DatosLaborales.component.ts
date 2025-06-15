@@ -11,6 +11,9 @@ import { HorarioService } from '../../../../app/services/Horario.service';
   templateUrl: './DatosLaborales.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+/**
+ * Clase DatosLaboralesComponent
+ */
 export class DatosLaboralesComponent {
   formGroup = input.required<FormGroup>();
 

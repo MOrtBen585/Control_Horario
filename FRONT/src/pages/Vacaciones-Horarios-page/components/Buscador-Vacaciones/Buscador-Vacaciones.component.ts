@@ -6,4 +6,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   templateUrl: './Buscador-Vacaciones.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+/**
+ * Clase BuscadorVacacionesComponent
+ */
 export class BuscadorVacacionesComponent { }

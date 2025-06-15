@@ -6,4 +6,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   templateUrl: './welcome-page-inside.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+/**
+ * Clase WelcomePageInsideComponent
+ */
 export class WelcomePageInsideComponent { }

@@ -13,6 +13,9 @@ import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 
 
 
+/**
+ * Clase EmpleadoRowComponent
+ */
 export class EmpleadoRowComponent {
 
   empleado = input.required<Empleado>();

@@ -13,6 +13,9 @@ import { tap } from 'rxjs';
   templateUrl: './calendarios-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+/**
+ * Clase CalendariosPageComponent
+ */
 export class CalendariosPageComponent {
   private calendarioService = inject(CalendarioService);
 

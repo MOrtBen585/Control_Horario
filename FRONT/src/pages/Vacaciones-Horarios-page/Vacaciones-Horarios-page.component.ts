@@ -18,6 +18,9 @@ import { EmpleadoService } from '../../app/services/Empleado.service';
   templateUrl: './vacaciones-horarios-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+/**
+ * Clase VacacionesHorariosPageComponent
+ */
 export class VacacionesHorariosPageComponent {
 
   searchTerm = signal<string>('');

@@ -1,12 +1,14 @@
 # ⏱️ Control Horario – Fullstack Application
 
-Aplicación fullstack para la gestión del registro horario de empleados, desarrollada con tecnologías modernas y desplegada en un entorno real en servidor Linux.
+Aplicación fullstack para la gestión del registro horario de empleados, desarrollada con arquitectura moderna y desplegada en un entorno real en servidor Linux.
 
 ---
 
 ## 📌 Descripción
 
-Este proyecto permite a empresas gestionar el control horario de sus trabajadores cumpliendo con la normativa vigente. Incluye funcionalidades de fichaje, gestión de usuarios y configuración adaptable a diferentes organizaciones.
+Sistema diseñado para gestionar el control horario de trabajadores cumpliendo con la normativa vigente.
+
+Permite registrar fichajes, gestionar empleados y configurar el sistema de forma dinámica según las necesidades de cada empresa.
 
 ---
 
@@ -14,6 +16,7 @@ Este proyecto permite a empresas gestionar el control horario de sus trabajadore
 
 - **Backend:** Java 17, Spring Boot  
 - **Frontend:** Angular, Tailwind CSS  
+- **Mobile:** Ionic (generación de APK con Android Studio)  
 - **Base de datos:** MySQL / MariaDB  
 - **Infraestructura:** Nginx, systemd, Linux (Ubuntu)  
 - **Seguridad:** SSL (Let's Encrypt)  
@@ -24,13 +27,14 @@ Este proyecto permite a empresas gestionar el control horario de sus trabajadore
 ## 🧠 Funcionalidades
 
 - Registro de entrada y salida de empleados  
-- Cálculo de horas trabajadas y horas extra  
+- Cálculo automático de horas trabajadas y horas extra  
 - Sistema de roles:
-  - 👤 Trabajador
-  - 🔐 Administrador
-  - 🏢 Empresa  
-- Gestión de empleados, horarios y configuraciones  
-- Configuración dinámica según empresa  
+  - 👤 Trabajador (fichajes, consulta de horas)
+  - 🔐 Administrador (gestión de empleados y horarios)
+  - 🏢 Empresa (configuración global)  
+- Gestión de usuarios, grupos y horarios  
+- Configuración dinámica por empresa  
+- Versión móvil para fichajes desde dispositivos Android  
 
 ---
 
@@ -39,39 +43,54 @@ Este proyecto permite a empresas gestionar el control horario de sus trabajadore
 - Backend estructurado en capas:
   - Controladores
   - Servicios
-  - Acceso a datos (DAO/Repository)
-- API REST para comunicación entre frontend y backend  
+  - Repositorios (DAO)
+- API REST para comunicación frontend-backend  
 - Frontend modular basado en Angular  
+- Separación clara de responsabilidades  
 
 ---
 
 ## ⚙️ Despliegue
 
-La aplicación ha sido desplegada en un servidor Linux (Ubuntu):
+Aplicación desplegada en entorno real:
 
 - Backend ejecutado como servicio (`systemd`)
 - Frontend servido mediante Nginx
-- Configuración de dominio y SSL con Let's Encrypt
-- Base de datos en servidor remoto (MySQL/MariaDB)
+- Configuración de dominio y HTTPS con Let's Encrypt
+- Base de datos en servidor remoto
+- Aplicación accesible desde navegador y móvil
+
+---
+
+## 📱 Aplicación móvil
+
+Se ha desarrollado una versión móvil utilizando **Ionic**, permitiendo:
+
+- Fichaje desde dispositivos móviles  
+- Acceso a funcionalidades básicas del sistema  
+- Generación de APK mediante Android Studio  
 
 ---
 
 ## 🧪 Estado del proyecto
 
 - Aplicación funcional en entorno real  
-- Sin pruebas automatizadas (pendiente de implementación)  
+- Despliegue completo realizado  
+- Sin tests automatizados (pendiente de implementación futura)  
 
 ---
 
 ## 📈 Aprendizajes clave
 
-Este proyecto me ha permitido adquirir experiencia en:
+Este proyecto demuestra experiencia en:
 
 - Desarrollo backend con Spring Boot  
-- Creación de APIs REST  
-- Integración frontend-backend  
-- Gestión de bases de datos relacionales  
-- Despliegue y configuración en servidores Linux  
+- Creación y consumo de APIs REST  
+- Integración fullstack (Angular + backend)  
+- Modelado y gestión de bases de datos  
+- Despliegue en servidores Linux  
+- Configuración de servicios y seguridad (SSL)  
+- Desarrollo de aplicaciones móviles con Ionic  
 - Resolución de problemas en entornos reales  
 
 ---
